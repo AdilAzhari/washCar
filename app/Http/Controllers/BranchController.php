@@ -136,6 +136,7 @@ class BranchController extends Controller
     {
         return Inertia::render('Branches/QRCode', [
             'branch' => $branch,
+            'appUrl' => config('app.url'),
         ]);
     }
 }

@@ -14,13 +14,14 @@ interface Branch {
 
 const props = defineProps<{
   branch: Branch
+  appUrl: string
 }>()
 
 const qrCodeUrl = ref('')
 const canvasRef = ref<HTMLCanvasElement | null>(null)
 
 const generateQRCode = async () => {
-  const joinUrl = `${window.location.origin}/queue/join/${props.branch.code}`
+  const joinUrl = `${props.appUrl}/queue/join/${props.branch.code}`
 
   if (canvasRef.value) {
     try {
