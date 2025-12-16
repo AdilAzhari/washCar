@@ -2,7 +2,13 @@
   "permissions": {
     "allow": [
       "Bash(npm run build:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(ssh:*)",
+      "Bash(cat:*)",
+      "Bash(curl:*)",
+      "Bash(timeout 15 ssh:*)",
+      "Bash(php artisan migrate:fresh:*)",
+      "Bash(git add:*)"
     ]
   }
 }
