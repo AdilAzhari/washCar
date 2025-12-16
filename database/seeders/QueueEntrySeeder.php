@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\QueueEntry;
 use App\Models\Branch;
 use App\Models\Customer;
 use App\Models\Package;
+use App\Models\QueueEntry;
 use Illuminate\Database\Seeder;
 
 class QueueEntrySeeder extends Seeder

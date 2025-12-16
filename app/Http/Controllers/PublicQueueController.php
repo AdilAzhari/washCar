@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Branch;
-use App\Models\QueueEntry;
 use App\Models\Customer;
 use App\Models\Package;
+use App\Models\QueueEntry;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
-use Illuminate\Http\RedirectResponse;
 
 class PublicQueueController extends Controller
 {
@@ -58,7 +58,7 @@ class PublicQueueController extends Controller
         );
 
         // Update plate_number if customer exists but plate changed
-        if (!$customer->wasRecentlyCreated && $customer->plate_number !== $validated['plate_number']) {
+        if (! $customer->wasRecentlyCreated && $customer->plate_number !== $validated['plate_number']) {
             $customer->update([
                 'plate_number' => $validated['plate_number'],
                 'vehicle_type' => $validated['vehicle_type'] ?? $customer->vehicle_type,
@@ -83,7 +83,7 @@ class PublicQueueController extends Controller
 
         return redirect()->route('queue.status', [
             'branchCode' => $branchCode,
-            'queueId' => $queueEntry->id
+            'queueId' => $queueEntry->id,
         ]);
     }
 

@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Wash;
+use App\Models\Bay;
 use App\Models\Branch;
 use App\Models\Customer;
 use App\Models\Package;
-use App\Models\Bay;
+use App\Models\Wash;
 use Illuminate\Database\Seeder;
 
 class WashSeeder extends Seeder

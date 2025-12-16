@@ -1,21 +1,19 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\BranchController;
 use App\Http\Controllers\BayController;
+use App\Http\Controllers\BranchController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PackageController;
-use App\Http\Controllers\WashController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PublicQueueController;
 use App\Http\Controllers\QueueController;
 use App\Http\Controllers\StaffController;
-use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\TransactionController;
-use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\PublicQueueController;
-use Illuminate\Foundation\Application;
+use App\Http\Controllers\WashController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -77,4 +75,4 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

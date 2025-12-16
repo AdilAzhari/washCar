@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bay;
-use App\Models\Branch;
 use App\Models\BayActivityLog;
+use App\Models\Branch;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
 
 class BayController extends Controller
 {
@@ -18,19 +18,19 @@ class BayController extends Controller
         $bays = Bay::with(['branch', 'washes' => function ($query) {
             $query->where('status', 'active')->latest();
         }])
-        ->latest()
-        ->get()
-        ->map(function ($bay) {
-            return [
-                'id' => $bay->id,
-                'name' => $bay->name,
-                'status' => $bay->status,
-                'branch' => $bay->branch,
-                'currentWash' => $bay->washes->first(),
-                'created_at' => $bay->created_at,
-                'updated_at' => $bay->updated_at,
-            ];
-        });
+            ->latest()
+            ->get()
+            ->map(function ($bay) {
+                return [
+                    'id' => $bay->id,
+                    'name' => $bay->name,
+                    'status' => $bay->status,
+                    'branch' => $bay->branch,
+                    'currentWash' => $bay->washes->first(),
+                    'created_at' => $bay->created_at,
+                    'updated_at' => $bay->updated_at,
+                ];
+            });
 
         $branches = Branch::where('is_active', true)->get();
 

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\InventoryItem;
 use App\Models\Branch;
+use App\Models\InventoryItem;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
-use Illuminate\Http\RedirectResponse;
 
 class InventoryController extends Controller
 {

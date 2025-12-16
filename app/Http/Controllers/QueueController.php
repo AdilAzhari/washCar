@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\QueueEntry;
+use App\Models\Bay;
 use App\Models\Branch;
 use App\Models\Customer;
 use App\Models\Package;
+use App\Models\QueueEntry;
 use App\Models\Wash;
-use App\Models\Bay;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
-use Illuminate\Http\RedirectResponse;
 
 class QueueController extends Controller
 {
@@ -60,7 +60,7 @@ class QueueController extends Controller
             'status' => 'required|in:waiting,in_progress,completed,cancelled',
         ]);
 
-        if ($validated['status'] === 'in_progress' && !$queue->started_at) {
+        if ($validated['status'] === 'in_progress' && ! $queue->started_at) {
             $validated['started_at'] = now();
         }
 
@@ -120,7 +120,7 @@ class QueueController extends Controller
             ->where('status', 'idle')
             ->first();
 
-        if (!$bay) {
+        if (! $bay) {
             return back()->with('error', 'No available bays in this branch.');
         }
 

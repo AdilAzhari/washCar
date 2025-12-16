@@ -3,14 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Branch;
-use App\Models\User;
-use App\Models\Wash;
 use App\Models\QueueEntry;
+use App\Models\Wash;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\DB;
 
 class BranchController extends Controller
 {

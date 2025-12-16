@@ -3,14 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bay;
-use App\Models\Wash;
-use App\Models\QueueEntry;
 use App\Models\Package;
-use App\Models\Customer;
+use App\Models\QueueEntry;
+use App\Models\Wash;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
-use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
@@ -36,7 +35,7 @@ class DashboardController extends Controller
                 $query->where('status', 'active')
                     ->with(['customer', 'package'])
                     ->latest();
-            }
+            },
         ])->get()->map(function ($bay) {
             $currentWash = $bay->washes->first();
             $queueCount = QueueEntry::where('status', 'waiting')->count();
@@ -86,9 +85,9 @@ class DashboardController extends Controller
                 ->where('washes.status', 'completed')
                 ->whereDate('washes.completed_at', Carbon::today());
         })
-        ->select('packages.id', 'packages.name', 'packages.color', DB::raw('COUNT(washes.id) as count'))
-        ->groupBy('packages.id', 'packages.name', 'packages.color')
-        ->get();
+            ->select('packages.id', 'packages.name', 'packages.color', DB::raw('COUNT(washes.id) as count'))
+            ->groupBy('packages.id', 'packages.name', 'packages.color')
+            ->get();
 
         $stats = [
             'ongoingWashes' => $ongoingWashes,

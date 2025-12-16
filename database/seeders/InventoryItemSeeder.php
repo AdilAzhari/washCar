@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\InventoryItem;
 use App\Models\Branch;
+use App\Models\InventoryItem;
 use Illuminate\Database\Seeder;
 
 class InventoryItemSeeder extends Seeder
