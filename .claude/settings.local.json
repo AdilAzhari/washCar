@@ -8,7 +8,16 @@
       "Bash(curl:*)",
       "Bash(timeout 15 ssh:*)",
       "Bash(php artisan migrate:fresh:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(php artisan:*)",
+      "Bash(composer show:*)",
+      "Bash(composer require:*)",
+      "Bash(composer audit:*)",
+      "Bash(npm audit:*)",
+      "Bash(./vendor/bin/pint:*)",
+      "Bash(composer update:*)",
+      "Bash(composer install --no-interaction)",
+      "Bash(npm install)"
     ]
   }
 }
