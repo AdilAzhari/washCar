@@ -65,6 +65,11 @@ jobs:
       - name: Generate application key
         run: php artisan key:generate
 
+      - name: Configure SQLite database
+        run: |
+          sed -i 's/DB_CONNECTION=.*/DB_CONNECTION=sqlite/' .env
+          sed -i 's/DB_DATABASE=.*/DB_DATABASE=database\/database.sqlite/' .env
+
       - name: Run migrations
         run: php artisan migrate --force
 
