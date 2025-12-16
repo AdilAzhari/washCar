@@ -32,15 +32,15 @@ const form = useForm({
   is_active: true,
 })
 
-watch(() => props.isOpen, (isOpen) => {
+watch([() => props.isOpen, () => props.branch], ([isOpen, branch]) => {
   if (isOpen) {
-    if (props.branch) {
-      form.name = props.branch.name
-      form.code = props.branch.code
-      form.address = props.branch.address || ''
-      form.phone = props.branch.phone || ''
-      form.operating_hours = props.branch.operating_hours || ''
-      form.is_active = props.branch.is_active
+    if (branch) {
+      form.name = branch.name
+      form.code = branch.code
+      form.address = branch.address || ''
+      form.phone = branch.phone || ''
+      form.operating_hours = branch.operating_hours || ''
+      form.is_active = branch.is_active
     } else {
       form.reset()
       form.code = `BR-${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}`

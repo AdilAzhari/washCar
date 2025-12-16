@@ -20,12 +20,12 @@ const form = useForm({
   branch_id: null as number | null,
 })
 
-watch(() => props.isOpen, (isOpen) => {
-  if (isOpen && props.staff) {
-    form.name = props.staff.name
-    form.email = props.staff.email
-    form.role = props.staff.role
-    form.branch_id = props.staff.branch?.id || null
+watch([() => props.isOpen, () => props.staff], ([isOpen, staff]) => {
+  if (isOpen && staff) {
+    form.name = staff.name
+    form.email = staff.email
+    form.role = staff.role
+    form.branch_id = staff.branch?.id || null
     form.password = ''
   } else if (isOpen) {
     form.reset()

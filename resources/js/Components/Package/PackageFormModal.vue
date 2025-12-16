@@ -43,15 +43,15 @@ const predefinedColors = [
   { name: 'Yellow', value: '#eab308' },
 ]
 
-watch(() => props.isOpen, (isOpen) => {
+watch([() => props.isOpen, () => props.package], ([isOpen, pkg]) => {
   if (isOpen) {
-    if (props.package) {
-      form.name = props.package.name
-      form.description = props.package.description || ''
-      form.price = props.package.price
-      form.duration_minutes = props.package.duration_minutes
-      form.color = props.package.color
-      form.is_active = props.package.is_active
+    if (pkg) {
+      form.name = pkg.name
+      form.description = pkg.description || ''
+      form.price = pkg.price
+      form.duration_minutes = pkg.duration_minutes
+      form.color = pkg.color
+      form.is_active = pkg.is_active
     } else {
       form.reset()
       form.duration_minutes = 15

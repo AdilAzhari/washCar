@@ -36,12 +36,12 @@ const form = useForm({
   status: 'idle' as 'idle' | 'active' | 'maintenance',
 })
 
-watch(() => props.isOpen, (isOpen) => {
+watch([() => props.isOpen, () => props.bay], ([isOpen, bay]) => {
   if (isOpen) {
-    if (props.bay) {
-      form.name = props.bay.name
-      form.branch_id = props.bay.branch_id || props.bay.branch?.id || null
-      form.status = props.bay.status as any
+    if (bay) {
+      form.name = bay.name
+      form.branch_id = bay.branch_id || bay.branch?.id || null
+      form.status = bay.status as any
     } else {
       form.reset()
       form.status = 'idle'
