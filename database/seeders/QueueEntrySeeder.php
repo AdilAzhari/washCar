@@ -12,35 +12,123 @@ class QueueEntrySeeder extends Seeder
 {
     public function run(): void
     {
-        $branches = Branch::all();
-        $customers = Customer::all();
-        $packages = Package::all();
+        $branches = Branch::where('is_active', true)->get();
+        $customers = Customer::where('status', 'active')->get();
+        $packages = Package::where('is_active', true)->get();
 
         if ($branches->isEmpty() || $customers->isEmpty() || $packages->isEmpty()) {
             return;
         }
 
-        $statuses = ['waiting', 'in_progress', 'completed'];
-        $plateNumbers = [
-            'ABC-123', 'XYZ-789', 'DEF-456', 'GHI-321', 'JKL-654',
-            'MNO-987', 'PQR-147', 'STU-258', 'VWX-369', 'YZA-741'
-        ];
+        // Create historical queue entries for the past 7 days
+        for ($day = 7; $day >= 1; $day--) {
+            $date = now()->subDays($day);
 
-        $position = 1;
-        foreach ($branches->take(2) as $branch) {
-            for ($i = 0; $i < 5; $i++) {
-                $status = $statuses[array_rand($statuses)];
+            foreach ($branches as $branch) {
+                // Create 3-8 queue entries per day per branch
+                $queueCount = rand(3, 8);
+
+                for ($i = 0; $i < $queueCount; $i++) {
+                    $customer = $customers->random();
+                    $package = $packages->random();
+
+                    $joinedAt = $date->copy()->addHours(rand(7, 19))->addMinutes(rand(0, 59));
+                    $startedAt = $joinedAt->copy()->addMinutes(rand(5, 30));
+                    $completedAt = $startedAt->copy()->addMinutes($package->duration_minutes + rand(-5, 10));
+
+                    QueueEntry::create([
+                        'branch_id' => $branch->id,
+                        'customer_id' => $customer->id,
+                        'package_id' => $package->id,
+                        'plate_number' => $customer->plate_number,
+                        'position' => $i + 1,
+                        'status' => 'completed',
+                        'joined_at' => $joinedAt,
+                        'started_at' => $startedAt,
+                        'completed_at' => $completedAt,
+                        'created_at' => $joinedAt,
+                        'updated_at' => $completedAt,
+                    ]);
+                }
+            }
+        }
+
+        // Create current queue entries for today
+        $activeStatuses = ['waiting', 'in_progress'];
+
+        // Add waiting queue for first 4 branches
+        foreach ($branches->take(4) as $branchIndex => $branch) {
+            $waitingCount = rand(2, 6);
+            $inProgressCount = rand(0, 2);
+
+            // Create waiting entries
+            for ($i = 0; $i < $waitingCount; $i++) {
+                $customer = $customers->random();
+                $package = $packages->random();
+                $joinedAt = now()->subMinutes(rand(5, 45));
 
                 QueueEntry::create([
                     'branch_id' => $branch->id,
-                    'customer_id' => $customers->random()->id,
-                    'package_id' => $packages->random()->id,
-                    'plate_number' => $plateNumbers[$i % count($plateNumbers)],
-                    'position' => $status === 'waiting' ? $position++ : $i + 1,
-                    'status' => $status,
-                    'joined_at' => now()->subMinutes(rand(5, 120)),
-                    'started_at' => in_array($status, ['in_progress', 'completed']) ? now()->subMinutes(rand(5, 60)) : null,
-                    'completed_at' => $status === 'completed' ? now()->subMinutes(rand(1, 30)) : null,
+                    'customer_id' => $customer->id,
+                    'package_id' => $package->id,
+                    'plate_number' => $customer->plate_number,
+                    'position' => $i + 1,
+                    'status' => 'waiting',
+                    'joined_at' => $joinedAt,
+                    'started_at' => null,
+                    'completed_at' => null,
+                    'created_at' => $joinedAt,
+                    'updated_at' => $joinedAt,
+                ]);
+            }
+
+            // Create in-progress entries
+            for ($i = 0; $i < $inProgressCount; $i++) {
+                $customer = $customers->random();
+                $package = $packages->random();
+                $joinedAt = now()->subMinutes(rand(20, 60));
+                $startedAt = now()->subMinutes(rand(5, 20));
+
+                QueueEntry::create([
+                    'branch_id' => $branch->id,
+                    'customer_id' => $customer->id,
+                    'package_id' => $package->id,
+                    'plate_number' => $customer->plate_number,
+                    'position' => $waitingCount + $i + 1,
+                    'status' => 'in_progress',
+                    'joined_at' => $joinedAt,
+                    'started_at' => $startedAt,
+                    'completed_at' => null,
+                    'created_at' => $joinedAt,
+                    'updated_at' => $startedAt,
+                ]);
+            }
+        }
+
+        // Add some completed entries from earlier today
+        foreach ($branches->take(3) as $branch) {
+            $completedCount = rand(3, 7);
+
+            for ($i = 0; $i < $completedCount; $i++) {
+                $customer = $customers->random();
+                $package = $packages->random();
+
+                $joinedAt = now()->subHours(rand(3, 8))->subMinutes(rand(0, 59));
+                $startedAt = $joinedAt->copy()->addMinutes(rand(5, 20));
+                $completedAt = $startedAt->copy()->addMinutes($package->duration_minutes + rand(-5, 10));
+
+                QueueEntry::create([
+                    'branch_id' => $branch->id,
+                    'customer_id' => $customer->id,
+                    'package_id' => $package->id,
+                    'plate_number' => $customer->plate_number,
+                    'position' => $i + 100, // High position to indicate they were served earlier
+                    'status' => 'completed',
+                    'joined_at' => $joinedAt,
+                    'started_at' => $startedAt,
+                    'completed_at' => $completedAt,
+                    'created_at' => $joinedAt,
+                    'updated_at' => $completedAt,
                 ]);
             }
         }

@@ -13,9 +13,9 @@ class WashSeeder extends Seeder
 {
     public function run(): void
     {
-        $branches = Branch::all();
-        $customers = Customer::all();
-        $packages = Package::all();
+        $branches = Branch::where('is_active', true)->get();
+        $customers = Customer::where('status', 'active')->get();
+        $packages = Package::where('is_active', true)->get();
         $bays = Bay::all();
 
         if ($branches->isEmpty() || $customers->isEmpty() || $packages->isEmpty() || $bays->isEmpty()) {
@@ -24,30 +24,77 @@ class WashSeeder extends Seeder
 
         $statuses = ['active', 'completed'];
 
-        // Create 20 wash transactions
-        for ($i = 0; $i < 20; $i++) {
-            $branch = $branches->random();
-            $branchBays = $bays->where('branch_id', $branch->id);
+        // Create historical washes (last 60 days)
+        for ($day = 60; $day >= 1; $day--) {
+            $date = now()->subDays($day);
+
+            // Skip if it's the inactive branch
+            foreach ($branches as $branch) {
+                // Create 5-15 washes per day per branch
+                $washCount = rand(5, 15);
+
+                for ($i = 0; $i < $washCount; $i++) {
+                    $branchBays = $bays->where('branch_id', $branch->id);
+
+                    if ($branchBays->isEmpty()) {
+                        continue;
+                    }
+
+                    $package = $packages->random();
+                    $startedAt = $date->copy()->addHours(rand(7, 20))->addMinutes(rand(0, 59));
+
+                    // Historical washes are all completed
+                    if ($day > 0) {
+                        $status = 'completed';
+                        $completedAt = $startedAt->copy()->addMinutes($package->duration_minutes + rand(-5, 10));
+                    } else {
+                        // Today's washes can be active or completed
+                        $status = $statuses[array_rand($statuses)];
+                        $completedAt = $status === 'completed' ?
+                            $startedAt->copy()->addMinutes($package->duration_minutes + rand(-5, 10)) : null;
+                    }
+
+                    Wash::create([
+                        'branch_id' => $branch->id,
+                        'customer_id' => rand(0, 4) === 0 ? null : $customers->random()->id, // 20% walk-in without customer record
+                        'package_id' => $package->id,
+                        'bay_id' => $branchBays->random()->id,
+                        'status' => $status,
+                        'started_at' => $startedAt,
+                        'completed_at' => $completedAt,
+                        'created_at' => $startedAt,
+                        'updated_at' => $completedAt ?? $startedAt,
+                    ]);
+                }
+            }
+        }
+
+        // Create some active washes for today
+        foreach ($branches->take(3) as $branch) {
+            $branchBays = $bays->where('branch_id', $branch->id)->where('status', '!=', 'maintenance');
 
             if ($branchBays->isEmpty()) {
                 continue;
             }
 
-            $status = $statuses[array_rand($statuses)];
-            $startedAt = now()->subDays(rand(0, 30))->subHours(rand(0, 23));
-            $completedAt = $status === 'completed' ? $startedAt->copy()->addMinutes(rand(15, 45)) : null;
+            $activeCount = rand(1, min(3, $branchBays->count()));
 
-            Wash::create([
-                'branch_id' => $branch->id,
-                'customer_id' => rand(0, 1) ? $customers->random()->id : null,
-                'package_id' => $packages->random()->id,
-                'bay_id' => $branchBays->random()->id,
-                'status' => $status,
-                'started_at' => $startedAt,
-                'completed_at' => $completedAt,
-                'created_at' => $startedAt,
-                'updated_at' => $completedAt ?? $startedAt,
-            ]);
+            for ($i = 0; $i < $activeCount; $i++) {
+                $package = $packages->random();
+                $startedAt = now()->subMinutes(rand(5, 30));
+
+                Wash::create([
+                    'branch_id' => $branch->id,
+                    'customer_id' => $customers->random()->id,
+                    'package_id' => $package->id,
+                    'bay_id' => $branchBays->skip($i)->first()->id,
+                    'status' => 'active',
+                    'started_at' => $startedAt,
+                    'completed_at' => null,
+                    'created_at' => $startedAt,
+                    'updated_at' => $startedAt,
+                ]);
+            }
         }
     }
 }
