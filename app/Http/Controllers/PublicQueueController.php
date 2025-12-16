@@ -51,9 +51,19 @@ class PublicQueueController extends Controller
             ['phone' => $validated['phone']],
             [
                 'name' => $validated['name'],
+                'plate_number' => $validated['plate_number'],
+                'vehicle_type' => $validated['vehicle_type'] ?? 'sedan',
                 'status' => 'active',
             ]
         );
+
+        // Update plate_number if customer exists but plate changed
+        if (!$customer->wasRecentlyCreated && $customer->plate_number !== $validated['plate_number']) {
+            $customer->update([
+                'plate_number' => $validated['plate_number'],
+                'vehicle_type' => $validated['vehicle_type'] ?? $customer->vehicle_type,
+            ]);
+        }
 
         // Get next position in queue
         $maxPosition = QueueEntry::where('branch_id', $branch->id)
