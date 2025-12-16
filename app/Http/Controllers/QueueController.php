@@ -125,7 +125,8 @@ class QueueController extends Controller
         }
 
         // Create wash record
-        Wash::create([
+        $wash = Wash::create([
+            'queue_entry_id' => $queue->id,
             'branch_id' => $queue->branch_id,
             'customer_id' => $queue->customer_id,
             'package_id' => $queue->package_id,
@@ -165,16 +166,18 @@ class QueueController extends Controller
         ]);
 
         // Update related queue entry if exists
-        QueueEntry::where('customer_id', $wash->customer_id)
-            ->where('branch_id', $wash->branch_id)
-            ->where('status', 'in_progress')
-            ->update([
-                'status' => 'completed',
-                'completed_at' => now(),
-            ]);
+        if ($wash->queue_entry_id) {
+            QueueEntry::where('id', $wash->queue_entry_id)
+                ->update([
+                    'status' => 'completed',
+                    'completed_at' => now(),
+                ]);
+        }
 
         // Free up the bay
-        $wash->bay->update(['status' => 'idle']);
+        if ($wash->bay) {
+            $wash->bay->update(['status' => 'idle']);
+        }
 
         return back()->with('success', 'Wash completed successfully.');
     }
@@ -188,16 +191,18 @@ class QueueController extends Controller
         ]);
 
         // Update related queue entry if exists
-        QueueEntry::where('customer_id', $wash->customer_id)
-            ->where('branch_id', $wash->branch_id)
-            ->where('status', 'in_progress')
-            ->update([
-                'status' => 'cancelled',
-                'completed_at' => now(),
-            ]);
+        if ($wash->queue_entry_id) {
+            QueueEntry::where('id', $wash->queue_entry_id)
+                ->update([
+                    'status' => 'cancelled',
+                    'completed_at' => now(),
+                ]);
+        }
 
         // Free up the bay
-        $wash->bay->update(['status' => 'idle']);
+        if ($wash->bay) {
+            $wash->bay->update(['status' => 'idle']);
+        }
 
         return back()->with('success', 'Wash cancelled.');
     }

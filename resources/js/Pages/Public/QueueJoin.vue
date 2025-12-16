@@ -1,10 +1,6 @@
 <script setup lang="ts">
 import { Head, useForm } from '@inertiajs/vue3'
-import { Button } from '@/Components/ui/Button.vue'
-import { Input } from '@/Components/ui/Input.vue'
-import { Label } from '@/Components/ui/Label.vue'
-import { Textarea } from '@/Components/ui/Textarea.vue'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/Components/ui'
+import { Button, Input, Label, Textarea, Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/Components/ui'
 import ApplicationLogo from '@/Components/ApplicationLogo.vue'
 
 interface Branch {

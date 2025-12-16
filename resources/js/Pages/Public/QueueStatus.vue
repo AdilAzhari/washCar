@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/Components/ui'
-import { Badge } from '@/Components/ui/Badge.vue'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, Badge } from '@/Components/ui'
 import ApplicationLogo from '@/Components/ApplicationLogo.vue'
 import { ref, onMounted, onUnmounted } from 'vue'
 
