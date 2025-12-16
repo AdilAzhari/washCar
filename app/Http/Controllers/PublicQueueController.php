@@ -16,7 +16,16 @@ class PublicQueueController extends Controller
     public function join(string $branchCode): Response
     {
         $branch = Branch::where('code', $branchCode)->firstOrFail();
-        $packages = Package::where('is_active', true)->get();
+        $packages = Package::where('is_active', true)->get()->map(function ($package) {
+            return [
+                'id' => $package->id,
+                'name' => $package->name,
+                'description' => $package->description,
+                'price' => $package->price,
+                'duration' => $package->duration_minutes,
+                'color' => $package->color,
+            ];
+        });
 
         return Inertia::render('Public/QueueJoin', [
             'branch' => $branch,

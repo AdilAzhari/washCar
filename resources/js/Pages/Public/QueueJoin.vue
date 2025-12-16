@@ -38,14 +38,26 @@ const submit = () => {
 }
 
 const getPackageColor = (color: string) => {
-  const colors: Record<string, string> = {
+  // Map hex colors to Tailwind classes
+  const hexToClass: Record<string, string> = {
+    '#3b82f6': 'bg-blue-100 border-blue-300 hover:bg-blue-200',      // Blue
+    '#10b981': 'bg-green-100 border-green-300 hover:bg-green-200',    // Green
+    '#f59e0b': 'bg-orange-100 border-orange-300 hover:bg-orange-200', // Orange
+    '#a855f7': 'bg-purple-100 border-purple-300 hover:bg-purple-200', // Purple
+    '#ef4444': 'bg-red-100 border-red-300 hover:bg-red-200',          // Red
+  }
+
+  // Also support color names for backwards compatibility
+  const nameToClass: Record<string, string> = {
     blue: 'bg-blue-100 border-blue-300 hover:bg-blue-200',
     green: 'bg-green-100 border-green-300 hover:bg-green-200',
     purple: 'bg-purple-100 border-purple-300 hover:bg-purple-200',
     orange: 'bg-orange-100 border-orange-300 hover:bg-orange-200',
+    red: 'bg-red-100 border-red-300 hover:bg-red-200',
     pink: 'bg-pink-100 border-pink-300 hover:bg-pink-200'
   }
-  return colors[color] || 'bg-gray-100 border-gray-300 hover:bg-gray-200'
+
+  return hexToClass[color] || nameToClass[color] || 'bg-gray-100 border-gray-300 hover:bg-gray-200'
 }
 </script>
 
@@ -169,7 +181,7 @@ const getPackageColor = (color: string) => {
                   <div class="font-semibold text-gray-900">{{ pkg.name }}</div>
                   <div class="text-sm text-gray-600 mt-1">{{ pkg.description }}</div>
                   <div class="mt-2 flex items-center justify-between">
-                    <span class="text-lg font-bold text-blue-600">${{ pkg.price }}</span>
+                    <span class="text-lg font-bold text-blue-600">${{ Number(pkg.price).toFixed(2) }}</span>
                     <span class="text-xs text-gray-500">{{ pkg.duration }} min</span>
                   </div>
                 </button>
