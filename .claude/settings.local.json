@@ -17,7 +17,9 @@
       "Bash(./vendor/bin/pint:*)",
       "Bash(composer update:*)",
       "Bash(composer install --no-interaction)",
-      "Bash(npm install)"
+      "Bash(npm install)",
+      "Bash(npm run type-check:*)",
+      "Bash(./vendor/bin/phpstan:*)"
     ]
   }
 }

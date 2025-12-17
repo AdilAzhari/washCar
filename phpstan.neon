@@ -18,6 +18,3 @@ parameters:
         - storage
         - vendor
         - node_modules (?)
-
-    checkMissingIterableValueType: false
-    checkGenericClassInNonGenericObjectType: false
