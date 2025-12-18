@@ -21,7 +21,8 @@ const qrCodeUrl = ref('')
 const canvasRef = ref<HTMLCanvasElement | null>(null)
 
 const generateQRCode = async () => {
-  const joinUrl = `${props.appUrl}/queue/join/${props.branch.code}`
+  const baseUrl = props.appUrl.replace(/\/$/, '')
+  const joinUrl = `${baseUrl}/queue/join/${props.branch.code}`
 
   if (canvasRef.value) {
     try {
@@ -70,7 +71,7 @@ onMounted(() => {
           <!-- Header -->
           <div class="flex items-center justify-between print:hidden">
             <div class="flex items-center gap-4">
-              <Link :href="route('branches.show', branch.id)">
+              <Link :href="route('admin.branches.show', branch.id)">
                 <Button variant="outline" size="sm">
                   <ArrowLeft class="w-4 h-4 mr-2" />
                   Back
@@ -109,7 +110,7 @@ onMounted(() => {
 
               <div class="space-y-2">
                 <p class="text-xl font-semibold">Scan to Join the Queue</p>
-                <p class="text-sm text-muted-foreground">Join queue at: /queue/join/{{ branch.code }}</p>
+                <p class="text-sm text-muted-foreground break-all">{{ appUrl.replace(/\/$/, '') }}/queue/join/{{ branch.code }}</p>
               </div>
             </CardContent>
           </Card>
