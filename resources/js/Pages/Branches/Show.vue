@@ -73,7 +73,7 @@ const maxRevenue = Math.max(...props.revenueData.map(d => d.revenue), 1)
           <!-- Header -->
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-4">
-              <Link :href="route('branches.index')">
+              <Link :href="route('admin.branches.index')">
                 <Button variant="outline" size="sm">
                   <ArrowLeft class="w-4 h-4 mr-2" />
                   Back
@@ -90,7 +90,7 @@ const maxRevenue = Math.max(...props.revenueData.map(d => d.revenue), 1)
               </div>
             </div>
             <div class="flex gap-2">
-              <Link :href="route('branches.qrcode', branch.id)">
+              <Link :href="route('admin.branches.qrcode', branch.id)">
                 <Button variant="outline">
                   <QrCode class="w-4 h-4 mr-2" />
                   QR Code
