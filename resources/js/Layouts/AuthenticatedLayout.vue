@@ -23,16 +23,16 @@ import {
 const sidebarOpen = ref(false)
 
 const navigation = [
-  { name: 'Dashboard', href: 'dashboard', icon: LayoutDashboard },
-  { name: 'Branches', href: 'branches.index', icon: Building2 },
-  { name: 'Bays', href: 'bays.index', icon: Waves },
-  { name: 'Queue', href: 'queue.index', icon: ListOrdered },
-  { name: 'View Queue', href: 'queue.view', icon: Activity },
-  { name: 'Customers', href: 'customers.index', icon: Users },
-  { name: 'Packages', href: 'packages.index', icon: Package },
-  { name: 'Staff', href: 'staff.index', icon: UsersRound },
-  { name: 'Inventory', href: 'inventory.index', icon: PackageOpen },
-  { name: 'Transactions', href: 'transactions.index', icon: Receipt },
+  { name: 'Dashboard', href: 'admin.dashboard', icon: LayoutDashboard },
+  { name: 'Branches', href: 'admin.branches.index', icon: Building2 },
+  { name: 'Bays', href: 'admin.bays.index', icon: Waves },
+  { name: 'Queue', href: 'admin.queue.index', icon: ListOrdered },
+  { name: 'View Queue', href: 'admin.queue.view', icon: Activity },
+  { name: 'Customers', href: 'admin.customers.index', icon: Users },
+  { name: 'Packages', href: 'admin.packages.index', icon: Package },
+  { name: 'Staff', href: 'admin.staff.index', icon: UsersRound },
+  { name: 'Inventory', href: 'admin.inventory.index', icon: PackageOpen },
+  { name: 'Transactions', href: 'admin.transactions.index', icon: Receipt },
   { name: 'Notifications', href: 'notifications.index', icon: Bell },
 ]
 
@@ -60,7 +60,7 @@ const isActive = (routeName: string) => {
       <div class="flex flex-col h-full">
         <!-- Logo -->
         <div class="flex items-center gap-2 px-6 py-6 border-b">
-          <Link :href="route('dashboard')" class="flex items-center gap-2">
+          <Link :href="route('admin.dashboard')" class="flex items-center gap-2">
             <ApplicationLogo class="h-8 w-auto" />
             <span class="text-xl font-bold">WashyWashy</span>
           </Link>

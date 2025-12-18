@@ -15,6 +15,7 @@ class QueueEntry extends Model
         'plate_number',
         'position',
         'status',
+        'payment_status',
         'joined_at',
         'started_at',
         'completed_at',

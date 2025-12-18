@@ -62,7 +62,7 @@ const handleDelete = (id: number) => {
 const handleDeleteConfirm = () => {
   if (branchToDelete.value) {
     isDeleting.value = true
-    router.delete(route('branches.destroy', branchToDelete.value.id), {
+    router.delete(route('admin.branches.destroy', branchToDelete.value.id), {
       onSuccess: () => {
         deleteDialogOpen.value = false
         branchToDelete.value = null

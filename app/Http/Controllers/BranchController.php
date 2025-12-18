@@ -14,7 +14,7 @@ class BranchController extends Controller
 {
     public function index(): Response
     {
-        $branches = Branch::withCount(['bays', 'washes'])
+        $branches = Branch::query()->withCount(['bays', 'washes'])
             ->latest()
             ->get();
 
@@ -39,9 +39,9 @@ class BranchController extends Controller
             'is_active' => 'boolean',
         ]);
 
-        Branch::create($validated);
+        Branch::query()->create($validated);
 
-        return redirect()->route('branches.index')
+        return redirect()->route('admin.branches.index')
             ->with('success', 'Branch created successfully.');
     }
 
@@ -51,7 +51,7 @@ class BranchController extends Controller
 
         // Today's stats
         $today = now()->startOfDay();
-        $todayWashes = Wash::where('branch_id', $branch->id)
+        $todayWashes = Wash::query()->where('branch_id', $branch->id)
             ->whereDate('created_at', $today)
             ->get();
 
@@ -62,7 +62,7 @@ class BranchController extends Controller
                 }),
             'completed' => $todayWashes->where('status', 'completed')->count(),
             'in_progress' => $todayWashes->where('status', 'active')->count(),
-            'waiting' => QueueEntry::where('branch_id', $branch->id)
+            'waiting' => QueueEntry::query()->where('branch_id', $branch->id)
                 ->where('status', 'waiting')
                 ->whereDate('created_at', $today)
                 ->count(),
@@ -75,7 +75,7 @@ class BranchController extends Controller
             $monthStart = $month->copy()->startOfMonth();
             $monthEnd = $month->copy()->endOfMonth();
 
-            $monthWashes = Wash::where('branch_id', $branch->id)
+            $monthWashes = Wash::query()->where('branch_id', $branch->id)
                 ->whereBetween('created_at', [$monthStart, $monthEnd])
                 ->where('status', 'completed')
                 ->with('package')
@@ -118,7 +118,7 @@ class BranchController extends Controller
 
         $branch->update($validated);
 
-        return redirect()->route('branches.index')
+        return redirect()->route('admin.branches.index')
             ->with('success', 'Branch updated successfully.');
     }
 
@@ -126,7 +126,7 @@ class BranchController extends Controller
     {
         $branch->delete();
 
-        return redirect()->route('branches.index')
+        return redirect()->route('admin.branches.index')
             ->with('success', 'Branch deleted successfully.');
     }
 

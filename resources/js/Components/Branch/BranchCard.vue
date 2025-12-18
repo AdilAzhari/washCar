@@ -25,7 +25,7 @@ const emit = defineEmits<{
 }>()
 
 const viewBranch = () => {
-  router.visit(`/branches/${props.branch.id}`)
+  router.visit(route('admin.branches.show', props.branch.id))
 }
 </script>
 

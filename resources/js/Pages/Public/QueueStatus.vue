@@ -28,6 +28,7 @@ interface QueueEntry {
   id: number
   position: number
   status: string
+  payment_status: string
   plate_number: string
   joined_at: string
   customer: Customer
@@ -158,13 +159,25 @@ const getPositionAhead = () => {
           </CardContent>
         </Card>
 
-        <!-- Waiting Time -->
-        <Card class="bg-white">
+        <!-- Waiting Time (hidden when completed) -->
+        <Card v-if="queueEntry.status !== 'completed'" class="bg-white">
           <CardHeader class="pb-3">
             <CardDescription>Waiting Time</CardDescription>
           </CardHeader>
           <CardContent>
             <div class="text-4xl font-bold text-green-600">{{ getWaitingTime() }}<span class="text-2xl">m</span></div>
+          </CardContent>
+        </Card>
+
+        <!-- Payment Status (shown instead of waiting time when completed) -->
+        <Card v-else class="bg-white">
+          <CardHeader class="pb-3">
+            <CardDescription>Payment Status</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Badge :class="['text-lg px-4 py-2', queueEntry.payment_status === 'paid' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800']">
+              {{ queueEntry.payment_status === 'paid' ? 'Paid' : 'Pending' }}
+            </Badge>
           </CardContent>
         </Card>
       </div>
@@ -203,7 +216,12 @@ const getPositionAhead = () => {
                   <p class="font-semibold text-gray-900">{{ queueEntry.package.name }}</p>
                   <p class="text-sm text-gray-600">{{ queueEntry.package.duration }} minutes</p>
                 </div>
-                <p class="text-xl font-bold text-blue-600">${{ queueEntry.package.price }}</p>
+                <div class="text-right">
+                  <p class="text-xl font-bold text-blue-600">${{ queueEntry.package.price }}</p>
+                  <Badge :class="['mt-1', queueEntry.payment_status === 'paid' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800']">
+                    {{ queueEntry.payment_status === 'paid' ? 'Paid' : 'Payment Pending' }}
+                  </Badge>
+                </div>
               </div>
             </div>
           </div>
@@ -235,6 +253,9 @@ const getPositionAhead = () => {
             <div class="text-sm text-blue-800">
               <p class="font-semibold mb-2">Your Vehicle is Being Washed!</p>
               <p>Please proceed to the designated bay. Our team is currently servicing your vehicle.</p>
+              <p v-if="queueEntry.package && queueEntry.payment_status === 'pending'" class="mt-2 font-semibold">
+                💳 Please make your payment of ${{ queueEntry.package.price }} to the staff at the counter.
+              </p>
             </div>
           </div>
         </CardContent>
@@ -249,7 +270,13 @@ const getPositionAhead = () => {
             <div class="text-sm text-green-800">
               <p class="font-semibold mb-2">Service Completed!</p>
               <p>Thank you for choosing WashyWashy Pro. Your vehicle is ready for pickup.</p>
-              <p class="mt-2">We hope to see you again soon!</p>
+              <p v-if="queueEntry.package && queueEntry.payment_status === 'pending'" class="mt-2 font-semibold text-red-800">
+                ⚠️ Please complete your payment of ${{ queueEntry.package.price }} before leaving.
+              </p>
+              <p v-else-if="queueEntry.payment_status === 'paid'" class="mt-2 font-semibold">
+                ✅ Payment confirmed. We hope to see you again soon!
+              </p>
+              <p v-else class="mt-2">We hope to see you again soon!</p>
             </div>
           </div>
         </CardContent>

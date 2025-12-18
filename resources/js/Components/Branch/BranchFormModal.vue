@@ -47,18 +47,18 @@ watch([() => props.isOpen, () => props.branch], ([isOpen, branch]) => {
       form.is_active = true
     }
   }
-})
+}, { immediate: true })
 
 const handleSubmit = () => {
   if (props.branch) {
-    form.put(route('branches.update', props.branch.id), {
+    form.put(route('admin.branches.update', props.branch.id), {
       onSuccess: () => {
         toast.success('Branch updated successfully')
         emit('close')
       },
     })
   } else {
-    form.post(route('branches.store'), {
+    form.post(route('admin.branches.store'), {
       onSuccess: () => {
         toast.success('Branch created successfully')
         emit('close')

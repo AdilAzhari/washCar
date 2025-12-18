@@ -206,4 +206,57 @@ class QueueController extends Controller
 
         return back()->with('success', 'Wash cancelled.');
     }
+
+    public function confirmPayment(QueueEntry $queue): RedirectResponse
+    {
+        $queue->update([
+            'payment_status' => 'paid',
+        ]);
+
+        return back()->with('success', 'Payment confirmed.');
+    }
+
+    public function waitingQueue(): Response
+    {
+        $waitingQueue = QueueEntry::with(['branch', 'customer', 'package'])
+            ->where('status', 'waiting')
+            ->orderBy('position')
+            ->get();
+
+        $totalWaiting = $waitingQueue->count();
+        $availableBays = Bay::where('status', 'idle')->count();
+
+        // Calculate average wait time
+        $avgWaitTime = $waitingQueue->isEmpty() ? 0 :
+            $waitingQueue->avg(function ($entry) {
+                return $entry->joined_at ? now()->diffInMinutes($entry->joined_at) : 0;
+            });
+
+        return Inertia::render('Queue/WaitingQueue', [
+            'waitingQueue' => $waitingQueue,
+            'stats' => [
+                'totalWaiting' => $totalWaiting,
+                'averageWaitTime' => round($avgWaitTime),
+                'availableBays' => $availableBays,
+            ],
+        ]);
+    }
+
+    public function inProgress(): Response
+    {
+        $inProgressWashes = Wash::with(['branch', 'customer', 'package', 'bay', 'queueEntry'])
+            ->where('status', 'active')
+            ->get();
+
+        $inProgress = $inProgressWashes->count();
+        $activeBays = Bay::where('status', 'active')->count();
+
+        return Inertia::render('Queue/InProgress', [
+            'inProgressWashes' => $inProgressWashes,
+            'stats' => [
+                'inProgress' => $inProgress,
+                'activeBays' => $activeBays,
+            ],
+        ]);
+    }
 }

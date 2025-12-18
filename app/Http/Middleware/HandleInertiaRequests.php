@@ -33,7 +33,21 @@ class HandleInertiaRequests extends Middleware
         return [
             ...parent::share($request),
             'auth' => [
-                'user' => $request->user(),
+                'user' => $request->user() ? [
+                    'id' => $request->user()->id,
+                    'name' => $request->user()->name,
+                    'email' => $request->user()->email,
+                    'role' => $request->user()->role,
+                    'branch_id' => $request->user()->branch_id,
+                    'branch' => $request->user()->branch?->only(['id', 'name', 'code']),
+                    'is_customer' => $request->user()->is_customer,
+                    'loyalty_points' => $request->user()->isCustomer()
+                        ? $request->user()->loyaltyPoints?->points
+                        : null,
+                    'loyalty_tier' => $request->user()->isCustomer()
+                        ? $request->user()->loyaltyPoints?->tier
+                        : null,
+                ] : null,
             ],
             'ziggy' => fn () => [
                 ...(new Ziggy)->toArray(),

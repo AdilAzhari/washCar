@@ -9,10 +9,11 @@ interface QueueEntry {
   id: number
   branch: { id: number; name: string }
   customer?: { id: number; name: string }
-  package?: { id: number; name: string; duration_minutes: number }
+  package?: { id: number; name: string; duration_minutes: number; price: number }
   plate_number: string
   position: number
   status: string
+  payment_status: string
   joined_at: string
 }
 
@@ -20,11 +21,13 @@ interface Wash {
   id: number
   branch: { id: number; name: string }
   customer?: { id: number; name: string }
-  package?: { id: number; name: string; duration_minutes: number }
+  package?: { id: number; name: string; duration_minutes: number; price: number }
   bay: { id: number; name: string }
   plate_number?: string
   status: string
+  payment_status?: string
   started_at: string
+  queue_entry_id?: number
 }
 
 const props = defineProps<{
@@ -90,6 +93,12 @@ const getProgress = (wash: Wash) => {
   const diffMins = diffMs / 60000
   const progress = (diffMins / wash.package.duration_minutes) * 100
   return Math.min(Math.round(progress), 100)
+}
+
+const confirmPayment = (queueId: number) => {
+  router.post(route('queue.confirm-payment', queueId), {}, {
+    preserveScroll: true
+  })
 }
 </script>
 
@@ -183,18 +192,34 @@ const getProgress = (wash: Wash) => {
                             <Clock class="w-3 h-3 inline mr-1" />
                             Joined: {{ formatTime(entry.joined_at) }}
                           </p>
-                          <p v-if="entry.package" class="text-sm font-medium mt-1">
-                            {{ entry.package.name }} ({{ entry.package.duration_minutes }} min)
-                          </p>
+                          <div v-if="entry.package" class="flex items-center gap-2 mt-1">
+                            <p class="text-sm font-medium">
+                              {{ entry.package.name }} ({{ entry.package.duration_minutes }} min) - ${{ entry.package.price }}
+                            </p>
+                            <Badge :class="entry.payment_status === 'paid' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'">
+                              {{ entry.payment_status === 'paid' ? 'Paid' : 'Pending' }}
+                            </Badge>
+                          </div>
                         </div>
                       </div>
-                      <div class="flex gap-2">
-                        <Button size="sm" class="btn-primary" @click="startWash(entry.id)">
-                          <Play class="w-4 h-4 mr-1" />
-                          Start
-                        </Button>
-                        <Button size="sm" variant="outline" @click="cancelQueue(entry.id)">
-                          <X class="w-4 h-4" />
+                      <div class="flex flex-col gap-2">
+                        <div class="flex gap-2">
+                          <Button size="sm" class="btn-primary" @click="startWash(entry.id)">
+                            <Play class="w-4 h-4 mr-1" />
+                            Start
+                          </Button>
+                          <Button size="sm" variant="outline" @click="cancelQueue(entry.id)">
+                            <X class="w-4 h-4" />
+                          </Button>
+                        </div>
+                        <Button
+                          v-if="entry.package && entry.payment_status === 'pending'"
+                          size="sm"
+                          variant="outline"
+                          class="bg-green-50 hover:bg-green-100 border-green-300"
+                          @click="confirmPayment(entry.id)"
+                        >
+                          💳 Confirm Payment
                         </Button>
                       </div>
                     </div>
