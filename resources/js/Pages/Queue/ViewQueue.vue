@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { Head, router } from '@inertiajs/vue3'
+import { Head, router, usePage } from '@inertiajs/vue3'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Card, CardContent, CardHeader, CardTitle, Badge, Button } from '@/Components/ui'
 import { Play, X, Clock, Activity, CheckCircle } from 'lucide-vue-next'
@@ -41,8 +41,15 @@ const props = defineProps<{
   }
 }>()
 
+const page = usePage()
+const userRole = computed(() => (page.props.auth as any)?.user?.role || 'admin')
+
+const getRouteName = (routeName: string) => {
+  return `${userRole.value}.${routeName}`
+}
+
 const startWash = (queueId: number) => {
-  router.post(route('queue.start', queueId), {}, {
+  router.post(route(getRouteName('queue.start'), queueId), {}, {
     preserveScroll: true,
     onSuccess: () => {
       // Optionally refresh the page
@@ -52,21 +59,21 @@ const startWash = (queueId: number) => {
 
 const cancelQueue = (queueId: number) => {
   if (confirm('Cancel this queue entry?')) {
-    router.post(route('queue.cancel', queueId), {}, {
+    router.post(route(getRouteName('queue.cancel'), queueId), {}, {
       preserveScroll: true
     })
   }
 }
 
 const completeWash = (washId: number) => {
-  router.post(route('wash.complete', washId), {}, {
+  router.post(route(getRouteName('wash.complete'), washId), {}, {
     preserveScroll: true
   })
 }
 
 const cancelWash = (washId: number) => {
   if (confirm('Cancel this wash?')) {
-    router.post(route('wash.cancel', washId), {}, {
+    router.post(route(getRouteName('wash.cancel'), washId), {}, {
       preserveScroll: true
     })
   }
@@ -96,7 +103,7 @@ const getProgress = (wash: Wash) => {
 }
 
 const confirmPayment = (queueId: number) => {
-  router.post(route('queue.confirm-payment', queueId), {}, {
+  router.post(route(getRouteName('queue.confirm-payment'), queueId), {}, {
     preserveScroll: true
   })
 }

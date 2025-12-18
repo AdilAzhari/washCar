@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { Head, router, Link } from '@inertiajs/vue3'
+import { computed } from 'vue'
+import { Head, router, Link, usePage } from '@inertiajs/vue3'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Card, CardContent, CardHeader, CardTitle, Badge, Button } from '@/Components/ui'
 import { X, Activity, CheckCircle, ArrowLeft } from 'lucide-vue-next'
@@ -27,22 +28,29 @@ const props = defineProps<{
   }
 }>()
 
+const page = usePage()
+const userRole = computed(() => (page.props.auth as any)?.user?.role || 'admin')
+
+const getRouteName = (routeName: string) => {
+  return `${userRole.value}.${routeName}`
+}
+
 const completeWash = (washId: number) => {
-  router.post(route('wash.complete', washId), {}, {
+  router.post(route(getRouteName('wash.complete'), washId), {}, {
     preserveScroll: true
   })
 }
 
 const cancelWash = (washId: number) => {
   if (confirm('Cancel this wash?')) {
-    router.post(route('wash.cancel', washId), {}, {
+    router.post(route(getRouteName('wash.cancel'), washId), {}, {
       preserveScroll: true
     })
   }
 }
 
 const confirmPayment = (queueId: number) => {
-  router.post(route('queue.confirm-payment', queueId), {}, {
+  router.post(route(getRouteName('queue.confirm-payment'), queueId), {}, {
     preserveScroll: true
   })
 }
@@ -72,7 +80,7 @@ const getProgress = (wash: Wash) => {
     <template #header>
       <div class="flex items-center justify-between">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">In Progress</h2>
-        <Link :href="route('queue.waiting')">
+        <Link :href="route(getRouteName('queue.waiting'))">
           <Button variant="outline" size="sm">
             <ArrowLeft class="w-4 h-4 mr-2" />
             Waiting Queue
