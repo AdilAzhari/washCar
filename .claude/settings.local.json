@@ -22,7 +22,8 @@
       "Bash(./vendor/bin/phpstan:*)",
       "mcp__laravel-boost__list-routes",
       "Bash(git push)",
-      "mcp__laravel-boost__database-schema"
+      "mcp__laravel-boost__database-schema",
+      "Bash(chmod:*)"
     ]
   },
   "enableAllProjectMcpServers": true,

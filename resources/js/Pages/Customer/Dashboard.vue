@@ -224,7 +224,7 @@ const statusColors: Record<string, string> = {
                 </div>
               </div>
               <div class="text-right">
-                <div class="font-semibold">${{ wash.total_amount.toFixed(2) }}</div>
+                <div class="font-semibold">RM {{ wash.total_amount.toFixed(2) }}</div>
                 <div class="text-sm text-muted-foreground">
                   +{{ Math.floor(wash.total_amount) }} pts
                 </div>

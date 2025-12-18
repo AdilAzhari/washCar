@@ -7,9 +7,9 @@ import { Play, X, Clock, Activity, CheckCircle } from 'lucide-vue-next'
 
 interface QueueEntry {
   id: number
-  branch: { id: number; name: string }
-  customer?: { id: number; name: string }
-  package?: { id: number; name: string; duration_minutes: number; price: number }
+  branch: { id: number; name: string } | null
+  customer?: { id: number; name: string } | null
+  package?: { id: number; name: string; duration_minutes: number; price: number } | null
   plate_number: string
   position: number
   status: string
@@ -19,10 +19,10 @@ interface QueueEntry {
 
 interface Wash {
   id: number
-  branch: { id: number; name: string }
-  customer?: { id: number; name: string }
-  package?: { id: number; name: string; duration_minutes: number; price: number }
-  bay: { id: number; name: string }
+  branch: { id: number; name: string } | null
+  customer?: { id: number; name: string } | null
+  package?: { id: number; name: string; duration_minutes: number; price: number } | null
+  bay: { id: number; name: string } | null
   plate_number?: string
   status: string
   payment_status?: string
@@ -193,7 +193,7 @@ const confirmPayment = (queueId: number) => {
                         <div>
                           <p class="font-semibold text-lg">{{ entry.plate_number }}</p>
                           <p class="text-sm text-muted-foreground">
-                            {{ entry.customer?.name || 'Walk-in' }} • {{ entry.branch.name }}
+                            {{ entry.customer?.name || 'Walk-in' }} • {{ entry.branch?.name || 'Unknown Branch' }}
                           </p>
                           <p class="text-sm text-muted-foreground mt-1">
                             <Clock class="w-3 h-3 inline mr-1" />
@@ -201,7 +201,7 @@ const confirmPayment = (queueId: number) => {
                           </p>
                           <div v-if="entry.package" class="flex items-center gap-2 mt-1">
                             <p class="text-sm font-medium">
-                              {{ entry.package.name }} ({{ entry.package.duration_minutes }} min) - ${{ entry.package.price }}
+                              {{ entry.package.name }} ({{ entry.package.duration_minutes }} min) - RM {{ entry.package.price }}
                             </p>
                             <Badge :class="entry.payment_status === 'paid' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'">
                               {{ entry.payment_status === 'paid' ? 'Paid' : 'Pending' }}
@@ -257,9 +257,9 @@ const confirmPayment = (queueId: number) => {
                       <div class="flex items-start justify-between">
                         <div>
                           <p class="font-semibold text-lg">{{ wash.customer?.name || 'Walk-in' }}</p>
-                          <p class="text-sm text-muted-foreground">{{ wash.branch.name }}</p>
+                          <p class="text-sm text-muted-foreground">{{ wash.branch?.name || 'Unknown Branch' }}</p>
                           <Badge variant="outline" class="mt-2">
-                            Bay {{ wash.bay.name }}
+                            Bay {{ wash.bay?.name || 'N/A' }}
                           </Badge>
                         </div>
                         <div class="text-right">

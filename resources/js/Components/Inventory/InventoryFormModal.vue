@@ -23,18 +23,20 @@ const form = useForm({
   notes: '',
 })
 
-watch(() => props.isOpen, (isOpen) => {
-  if (isOpen && props.item) {
-    form.branch_id = props.item.branch.id
-    form.name = props.item.name
-    form.category = props.item.category
-    form.quantity = props.item.quantity
-    form.min_quantity = props.item.min_quantity
-    form.unit = props.item.unit
-    form.unit_price = props.item.unit_price
-    form.notes = props.item.notes || ''
-  } else if (isOpen) {
-    form.reset()
+watch([() => props.isOpen, () => props.item], ([isOpen, item]) => {
+  if (isOpen) {
+    if (item) {
+      form.branch_id = item.branch.id
+      form.name = item.name
+      form.category = item.category
+      form.quantity = item.quantity
+      form.min_quantity = item.min_quantity
+      form.unit = item.unit
+      form.unit_price = item.unit_price
+      form.notes = item.notes || ''
+    } else {
+      form.reset()
+    }
   }
 })
 

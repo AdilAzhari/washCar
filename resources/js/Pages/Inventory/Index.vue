@@ -115,7 +115,7 @@ const isLowStock = (item: InventoryItem) => item.quantity <= item.min_quantity
                 <div class="flex items-center justify-between">
                   <div>
                     <p class="text-sm text-muted-foreground">Total Value</p>
-                    <p class="text-3xl font-bold mt-1">${{ stats.totalValue.toFixed(2) }}</p>
+                    <p class="text-3xl font-bold mt-1">RM {{ stats.totalValue.toFixed(2) }}</p>
                   </div>
                   <Package class="w-8 h-8 text-success" />
                 </div>
@@ -139,7 +139,7 @@ const isLowStock = (item: InventoryItem) => item.quantity <= item.min_quantity
                   </div>
                   <div class="bg-muted/50 rounded-lg p-2">
                     <p class="text-xs text-muted-foreground">Unit Price</p>
-                    <p class="font-bold">${{ item.unit_price }}</p>
+                    <p class="font-bold">RM {{ item.unit_price }}</p>
                   </div>
                 </div>
                 <div class="flex gap-2 pt-2 border-t">

@@ -161,7 +161,7 @@ const getMinDateTime = () => {
             <h3 class="font-bold text-lg mb-2">{{ pkg.name }}</h3>
             <p class="text-sm text-muted-foreground mb-4">{{ pkg.description }}</p>
             <div class="flex items-center justify-between">
-              <div class="text-2xl font-bold text-primary">${{ pkg.price.toFixed(2) }}</div>
+              <div class="text-2xl font-bold text-primary">RM {{ pkg.price.toFixed(2) }}</div>
               <div class="text-sm text-yellow-600 font-medium">
                 +{{ pkg.loyalty_points }} pts bonus
               </div>
@@ -201,7 +201,7 @@ const getMinDateTime = () => {
             </div>
             <div>
               <div class="text-sm text-muted-foreground mb-1">Price</div>
-              <div class="font-bold text-primary">${{ selectedPackage?.price.toFixed(2) }}</div>
+              <div class="font-bold text-primary">RM {{ selectedPackage?.price.toFixed(2) }}</div>
             </div>
             <div>
               <div class="text-sm text-muted-foreground mb-1">Bonus Points</div>

@@ -144,7 +144,7 @@ const formatTime = (dateString: string) => {
                       </p>
                       <div v-if="entry.package" class="flex items-center gap-2 mt-1">
                         <p class="text-sm font-medium">
-                          {{ entry.package.name }} ({{ entry.package.duration_minutes }} min) - ${{ entry.package.price }}
+                          {{ entry.package.name }} ({{ entry.package.duration_minutes }} min) - RM {{ entry.package.price }}
                         </p>
                         <Badge :class="entry.payment_status === 'paid' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'">
                           {{ entry.payment_status === 'paid' ? 'Paid' : 'Pending' }}

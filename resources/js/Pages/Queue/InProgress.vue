@@ -149,7 +149,7 @@ const getProgress = (wash: Wash) => {
                   <div v-if="wash.package" class="space-y-1">
                     <div class="flex justify-between text-sm">
                       <div class="flex items-center gap-2">
-                        <span>{{ wash.package.name }} - ${{ wash.package.price }}</span>
+                        <span>{{ wash.package.name }} - RM {{ wash.package.price }}</span>
                         <Badge
                           v-if="wash.queue_entry"
                           :class="wash.queue_entry.payment_status === 'paid' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'"

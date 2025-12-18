@@ -66,7 +66,7 @@ const formatTime = (dateString: string) => {
             <DollarSign class="w-5 h-5 text-green-600" />
             <span class="text-sm font-medium text-muted-foreground">Total Spent</span>
           </div>
-          <div class="text-3xl font-bold">${{ totalSpent.toFixed(2) }}</div>
+          <div class="text-3xl font-bold">RM {{ totalSpent.toFixed(2) }}</div>
           <p class="text-xs text-muted-foreground mt-1">Lifetime</p>
         </div>
 
@@ -135,7 +135,7 @@ const formatTime = (dateString: string) => {
                 <div class="flex items-center gap-4">
                   <div class="flex items-center gap-2">
                     <DollarSign class="w-4 h-4 text-green-600" />
-                    <span class="font-bold text-green-600">${{ wash.total_amount.toFixed(2) }}</span>
+                    <span class="font-bold text-green-600">RM {{ wash.total_amount.toFixed(2) }}</span>
                   </div>
                   <div class="flex items-center gap-2">
                     <Star class="w-4 h-4 text-yellow-600" />

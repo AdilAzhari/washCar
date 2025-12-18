@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { Head, router } from '@inertiajs/vue3'
+import { Head, router, usePage } from '@inertiajs/vue3'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import PackageFormModal from '@/Components/Package/PackageFormModal.vue'
 import { Card, CardContent, CardHeader, CardTitle, Badge, Button, Input, DeleteConfirmDialog } from '@/Components/ui'
@@ -20,6 +20,13 @@ interface Package {
 const props = defineProps<{
   packages: Package[]
 }>()
+
+const page = usePage()
+const userRole = computed(() => (page.props.auth as any)?.user?.role || 'admin')
+
+const getRouteName = (routeName: string) => {
+  return `${userRole.value}.${routeName}`
+}
 
 const isFormOpen = ref(false)
 const selectedPackage = ref<Package | null>(null)
@@ -61,7 +68,7 @@ const handleDelete = (packageId: number) => {
 const handleDeleteConfirm = () => {
   if (packageToDelete.value) {
     isDeleting.value = true
-    router.delete(route('packages.destroy', packageToDelete.value.id), {
+    router.delete(route(getRouteName('packages.destroy'), packageToDelete.value.id), {
       onSuccess: () => {
         deleteDialogOpen.value = false
         packageToDelete.value = null

@@ -40,19 +40,19 @@ const form = useForm({
   status: 'active',
 })
 
-watch(() => props.isOpen, (isOpen) => {
+watch([() => props.isOpen, () => props.customer], ([isOpen, customer]) => {
   if (isOpen) {
-    if (props.customer) {
-      form.name = props.customer.name
-      form.phone = props.customer.phone
-      form.email = props.customer.email || ''
-      form.plate_number = props.customer.plate_number
-      form.vehicle_type = props.customer.vehicle_type
-      form.make = props.customer.make || ''
-      form.model = props.customer.model || ''
-      form.color = props.customer.color || ''
-      form.membership = props.customer.membership
-      form.status = props.customer.status
+    if (customer) {
+      form.name = customer.name
+      form.phone = customer.phone
+      form.email = customer.email || ''
+      form.plate_number = customer.plate_number
+      form.vehicle_type = customer.vehicle_type
+      form.make = customer.make || ''
+      form.model = customer.model || ''
+      form.color = customer.color || ''
+      form.membership = customer.membership
+      form.status = customer.status
     } else {
       form.reset()
       form.vehicle_type = 'sedan'

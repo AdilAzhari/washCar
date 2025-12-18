@@ -181,7 +181,7 @@ const getPackageColor = (color: string) => {
                   <div class="font-semibold text-gray-900">{{ pkg.name }}</div>
                   <div class="text-sm text-gray-600 mt-1">{{ pkg.description }}</div>
                   <div class="mt-2 flex items-center justify-between">
-                    <span class="text-lg font-bold text-blue-600">${{ Number(pkg.price).toFixed(2) }}</span>
+                    <span class="text-lg font-bold text-blue-600">RM {{ Number(pkg.price).toFixed(2) }}</span>
                     <span class="text-xs text-gray-500">{{ pkg.duration }} min</span>
                   </div>
                 </button>

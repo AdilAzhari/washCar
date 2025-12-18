@@ -217,7 +217,7 @@ const getPositionAhead = () => {
                   <p class="text-sm text-gray-600">{{ queueEntry.package.duration }} minutes</p>
                 </div>
                 <div class="text-right">
-                  <p class="text-xl font-bold text-blue-600">${{ queueEntry.package.price }}</p>
+                  <p class="text-xl font-bold text-blue-600">RM {{ queueEntry.package.price }}</p>
                   <Badge :class="['mt-1', queueEntry.payment_status === 'paid' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800']">
                     {{ queueEntry.payment_status === 'paid' ? 'Paid' : 'Payment Pending' }}
                   </Badge>
@@ -254,7 +254,7 @@ const getPositionAhead = () => {
               <p class="font-semibold mb-2">Your Vehicle is Being Washed!</p>
               <p>Please proceed to the designated bay. Our team is currently servicing your vehicle.</p>
               <p v-if="queueEntry.package && queueEntry.payment_status === 'pending'" class="mt-2 font-semibold">
-                💳 Please make your payment of ${{ queueEntry.package.price }} to the staff at the counter.
+                💳 Please make your payment of RM {{ queueEntry.package.price }} to the staff at the counter.
               </p>
             </div>
           </div>
@@ -271,7 +271,7 @@ const getPositionAhead = () => {
               <p class="font-semibold mb-2">Service Completed!</p>
               <p>Thank you for choosing WashyWashy Pro. Your vehicle is ready for pickup.</p>
               <p v-if="queueEntry.package && queueEntry.payment_status === 'pending'" class="mt-2 font-semibold text-red-800">
-                ⚠️ Please complete your payment of ${{ queueEntry.package.price }} before leaving.
+                ⚠️ Please complete your payment of RM {{ queueEntry.package.price }} before leaving.
               </p>
               <p v-else-if="queueEntry.payment_status === 'paid'" class="mt-2 font-semibold">
                 ✅ Payment confirmed. We hope to see you again soon!

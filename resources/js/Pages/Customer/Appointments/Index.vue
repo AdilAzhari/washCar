@@ -185,7 +185,7 @@ const cancelAppointment = (appointmentId: number) => {
                     <span>{{ appointment.vehicle_type }} • {{ appointment.plate_number }}</span>
                   </div>
                   <div class="flex items-center gap-2 text-muted-foreground">
-                    <span class="font-semibold text-foreground">${{ appointment.package.price.toFixed(2) }}</span>
+                    <span class="font-semibold text-foreground">RM {{ appointment.package.price.toFixed(2) }}</span>
                   </div>
                 </div>
 
