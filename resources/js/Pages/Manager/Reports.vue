@@ -34,9 +34,9 @@ const applyFilter = () => {
 }
 
 const formatCurrency = (amount: number) => {
-  return new Intl.NumberFormat('en-US', {
+  return new Intl.NumberFormat('ms-MY', {
     style: 'currency',
-    currency: 'USD',
+    currency: 'MYR',
   }).format(amount)
 }
 </script>

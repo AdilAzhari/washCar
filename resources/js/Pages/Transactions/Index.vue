@@ -28,7 +28,7 @@ const props = defineProps<{
 }>()
 
 const formatPrice = (price: number) => {
-  return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(price)
+  return new Intl.NumberFormat('ms-MY', { style: 'currency', currency: 'MYR' }).format(price)
 }
 
 const formatDate = (date: string) => {

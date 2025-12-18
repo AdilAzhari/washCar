@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
-import { useForm } from '@inertiajs/vue3'
+import { ref, watch, computed } from 'vue'
+import { useForm, usePage } from '@inertiajs/vue3'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, Input, Label, Button } from '@/Components/ui'
 import { toast } from 'vue-sonner'
 
@@ -26,6 +26,13 @@ const props = defineProps<{
 const emit = defineEmits<{
   close: []
 }>()
+
+const page = usePage()
+const userRole = computed(() => (page.props.auth as any)?.user?.role || 'admin')
+
+const getRouteName = (routeName: string) => {
+  return `${userRole.value}.${routeName}`
+}
 
 const form = useForm({
   name: '',
@@ -64,14 +71,14 @@ watch([() => props.isOpen, () => props.customer], ([isOpen, customer]) => {
 
 const handleSubmit = () => {
   if (props.customer) {
-    form.put(route('customers.update', props.customer.id), {
+    form.put(route(getRouteName('customers.update'), props.customer.id), {
       onSuccess: () => {
         toast.success('Customer updated successfully')
         emit('close')
       },
     })
   } else {
-    form.post(route('customers.store'), {
+    form.post(route(getRouteName('customers.store')), {
       onSuccess: () => {
         toast.success('Customer created successfully')
         emit('close')

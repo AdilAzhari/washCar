@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
-import { useForm } from '@inertiajs/vue3'
+import { ref, watch, computed } from 'vue'
+import { useForm, usePage } from '@inertiajs/vue3'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, Input, Label, Button, Textarea } from '@/Components/ui'
 import { toast } from 'vue-sonner'
 
@@ -22,6 +22,13 @@ const props = defineProps<{
 const emit = defineEmits<{
   close: []
 }>()
+
+const page = usePage()
+const userRole = computed(() => (page.props.auth as any)?.user?.role || 'admin')
+
+const getRouteName = (routeName: string) => {
+  return `${userRole.value}.${routeName}`
+}
 
 const form = useForm({
   name: '',
@@ -63,14 +70,14 @@ watch([() => props.isOpen, () => props.package], ([isOpen, pkg]) => {
 
 const handleSubmit = () => {
   if (props.package) {
-    form.put(route('packages.update', props.package.id), {
+    form.put(route(getRouteName('packages.update'), props.package.id), {
       onSuccess: () => {
         toast.success('Package updated successfully')
         emit('close')
       },
     })
   } else {
-    form.post(route('packages.store'), {
+    form.post(route(getRouteName('packages.store')), {
       onSuccess: () => {
         toast.success('Package created successfully')
         emit('close')

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { watch } from 'vue'
-import { useForm } from '@inertiajs/vue3'
+import { watch, computed } from 'vue'
+import { useForm, usePage } from '@inertiajs/vue3'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, Input, Label, Button, Textarea } from '@/Components/ui'
 import { toast } from 'vue-sonner'
 
@@ -11,6 +11,13 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{ close: [] }>()
+
+const page = usePage()
+const userRole = computed(() => (page.props.auth as any)?.user?.role || 'admin')
+
+const getRouteName = (routeName: string) => {
+  return `${userRole.value}.${routeName}`
+}
 
 const form = useForm({
   branch_id: null as number | null,
@@ -42,14 +49,14 @@ watch([() => props.isOpen, () => props.item], ([isOpen, item]) => {
 
 const handleSubmit = () => {
   if (props.item) {
-    form.put(route('inventory.update', props.item.id), {
+    form.put(route(getRouteName('inventory.update'), props.item.id), {
       onSuccess: () => {
         toast.success('Item updated successfully')
         emit('close')
       },
     })
   } else {
-    form.post(route('inventory.store'), {
+    form.post(route(getRouteName('inventory.store')), {
       onSuccess: () => {
         toast.success('Item created successfully')
         emit('close')
@@ -98,7 +105,7 @@ const handleSubmit = () => {
           </div>
         </div>
         <div class="space-y-2">
-          <Label for="unit_price">Unit Price ($) *</Label>
+          <Label for="unit_price">Unit Price (MYR) *</Label>
           <Input id="unit_price" v-model.number="form.unit_price" type="number" step="0.01" min="0" required />
         </div>
         <div class="space-y-2">

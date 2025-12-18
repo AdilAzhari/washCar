@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
-import { useForm } from '@inertiajs/vue3'
+import { ref, watch, computed } from 'vue'
+import { useForm, usePage } from '@inertiajs/vue3'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, Input, Label, Button } from '@/Components/ui'
 import { toast } from 'vue-sonner'
 
@@ -12,6 +12,13 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{ close: [] }>()
+
+const page = usePage()
+const userRole = computed(() => (page.props.auth as any)?.user?.role || 'admin')
+
+const getRouteName = (routeName: string) => {
+  return `${userRole.value}.${routeName}`
+}
 
 const form = useForm({
   branch_id: null as number | null,
@@ -27,7 +34,7 @@ watch(() => props.isOpen, (isOpen) => {
 })
 
 const handleSubmit = () => {
-  form.post(route('queue.store'), {
+  form.post(route(getRouteName('queue.store')), {
     onSuccess: () => {
       toast.success('Added to queue successfully')
       emit('close')

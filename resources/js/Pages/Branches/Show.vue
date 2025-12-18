@@ -44,7 +44,7 @@ const isStaffFormOpen = ref(false)
 const selectedStaff = ref(null)
 
 const formatPrice = (price: number) => {
-  return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(price)
+  return new Intl.NumberFormat('ms-MY', { style: 'currency', currency: 'MYR' }).format(price)
 }
 
 const handleEditStaff = (staff: any) => {

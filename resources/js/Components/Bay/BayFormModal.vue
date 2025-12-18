@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
-import { useForm } from '@inertiajs/vue3'
+import { ref, watch, computed } from 'vue'
+import { useForm, usePage } from '@inertiajs/vue3'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, Input, Label, Button } from '@/Components/ui'
 import { toast } from 'vue-sonner'
 
@@ -30,6 +30,13 @@ const emit = defineEmits<{
   close: []
 }>()
 
+const page = usePage()
+const userRole = computed(() => (page.props.auth as any)?.user?.role || 'admin')
+
+const getRouteName = (routeName: string) => {
+  return `${userRole.value}.${routeName}`
+}
+
 const form = useForm({
   name: '',
   branch_id: null as number | null,
@@ -51,14 +58,14 @@ watch([() => props.isOpen, () => props.bay], ([isOpen, bay]) => {
 
 const handleSubmit = () => {
   if (props.bay) {
-    form.put(route('bays.update', props.bay.id), {
+    form.put(route(getRouteName('bays.update'), props.bay.id), {
       onSuccess: () => {
         toast.success('Bay updated successfully')
         emit('close')
       },
     })
   } else {
-    form.post(route('bays.store'), {
+    form.post(route(getRouteName('bays.store')), {
       onSuccess: () => {
         toast.success('Bay created successfully')
         emit('close')
