@@ -135,7 +135,7 @@ class CustomerAppointmentController extends Controller
     {
         $this->authorize('delete', $appointment);
 
-        if (!$appointment->canBeCancelled()) {
+        if (! $appointment->canBeCancelled()) {
             return back()->withErrors(['appointment' => 'This appointment cannot be cancelled.']);
         }
 

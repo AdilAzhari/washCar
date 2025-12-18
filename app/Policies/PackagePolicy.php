@@ -37,6 +37,7 @@ class PackagePolicy
             if ($package->branch_id) {
                 return $user->branch_id === $package->branch_id;
             }
+
             // If package is global (no branch_id), only admin can update
             return false;
         }

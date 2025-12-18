@@ -10,7 +10,7 @@ class BayPolicy
     public function viewAny(User $user): bool
     {
         // Staff, Manager, and Admin can view bays
-        return !$user->isCustomer();
+        return ! $user->isCustomer();
     }
 
     public function view(User $user, Bay $bay): bool

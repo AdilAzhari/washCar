@@ -55,10 +55,11 @@ class AppointmentTest extends TestCase
             ->get(route('customer.appointments.create'));
 
         $response->assertStatus(200)
-            ->assertInertia(fn ($page) => $page
-                ->component('Customer/Appointments/Create')
-                ->has('branches')
-                ->has('packages')
+            ->assertInertia(
+                fn ($page) => $page
+                    ->component('Customer/Appointments/Create')
+                    ->has('branches')
+                    ->has('packages')
             );
     }
 

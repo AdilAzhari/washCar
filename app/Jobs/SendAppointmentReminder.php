@@ -26,7 +26,7 @@ class SendAppointmentReminder implements ShouldQueue
     public function handle(): void
     {
         // Check if appointment is still valid
-        if (!in_array($this->appointment->status, ['pending', 'confirmed'])) {
+        if (! in_array($this->appointment->status, ['pending', 'confirmed'])) {
             return;
         }
 

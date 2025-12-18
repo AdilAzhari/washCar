@@ -3,10 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Notifications\Notifiable;
 
 class Customer extends Model
 {
+    use Notifiable;
+
     protected $fillable = [
         'name',
         'phone',
@@ -18,7 +22,19 @@ class Customer extends Model
         'color',
         'membership',
         'status',
+        'user_id',
+        'preferred_branch_id',
     ];
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function preferredBranch(): BelongsTo
+    {
+        return $this->belongsTo(Branch::class, 'preferred_branch_id');
+    }
 
     public function washes(): HasMany
     {

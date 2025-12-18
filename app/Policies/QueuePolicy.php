@@ -10,7 +10,7 @@ class QueuePolicy
     public function viewAny(User $user): bool
     {
         // Staff, Manager, and Admin can view queue
-        return !$user->isCustomer();
+        return ! $user->isCustomer();
     }
 
     public function view(User $user, QueueEntry $queueEntry): bool

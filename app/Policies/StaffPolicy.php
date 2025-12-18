@@ -44,6 +44,7 @@ class StaffPolicy
             if ($staff->isAdmin() || ($staff->isManager() && $staff->id !== $user->id)) {
                 return false;
             }
+
             return true;
         }
 
@@ -62,6 +63,7 @@ class StaffPolicy
             if ($staff->isAdmin() || $staff->isManager()) {
                 return false;
             }
+
             return true;
         }
 

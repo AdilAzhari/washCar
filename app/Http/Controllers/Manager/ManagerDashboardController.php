@@ -8,7 +8,6 @@ use App\Models\Bay;
 use App\Models\Branch;
 use App\Models\InventoryItem;
 use App\Models\QueueEntry;
-use App\Models\User;
 use App\Models\Wash;
 use Illuminate\Http\Request;
 use Inertia\Inertia;

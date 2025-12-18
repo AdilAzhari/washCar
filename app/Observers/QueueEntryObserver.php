@@ -33,7 +33,7 @@ class QueueEntryObserver
         }
 
         // Only notify if customer exists
-        if (!$queueEntry->customer) {
+        if (! $queueEntry->customer) {
             return;
         }
 

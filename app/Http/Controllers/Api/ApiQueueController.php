@@ -25,7 +25,7 @@ class ApiQueueController extends Controller
             ->first();
 
         // Customer not in queue
-        if (!$activeQueue) {
+        if (! $activeQueue) {
             return response()->json([
                 'in_queue' => false,
                 'message' => 'You are not currently in any queue.',

@@ -21,7 +21,7 @@ class EnsureBranchAccess
         $user = $request->user();
 
         // If user is not authenticated, let auth middleware handle it
-        if (!$user) {
+        if (! $user) {
             return $next($request);
         }
 
@@ -36,7 +36,7 @@ class EnsureBranchAccess
         }
 
         // Staff and Managers must have a branch assigned
-        if (($user->isStaff() || $user->isManager()) && !$user->branch_id) {
+        if (($user->isStaff() || $user->isManager()) && ! $user->branch_id) {
             abort(403, 'You must be assigned to a branch to access this resource.');
         }
 

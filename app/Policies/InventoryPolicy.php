@@ -10,7 +10,7 @@ class InventoryPolicy
     public function viewAny(User $user): bool
     {
         // Staff, Manager, and Admin can view inventory
-        return !$user->isCustomer();
+        return ! $user->isCustomer();
     }
 
     public function view(User $user, InventoryItem $inventoryItem): bool

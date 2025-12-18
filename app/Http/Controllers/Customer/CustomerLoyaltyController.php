@@ -70,7 +70,7 @@ class CustomerLoyaltyController extends Controller
         $customer = $request->user();
         $loyaltyPoints = $customer->loyaltyPoints;
 
-        if (!$loyaltyPoints) {
+        if (! $loyaltyPoints) {
             return back()->withErrors(['points' => 'You do not have a loyalty points account.']);
         }
 
@@ -79,7 +79,7 @@ class CustomerLoyaltyController extends Controller
             $request->input('description')
         );
 
-        if (!$success) {
+        if (! $success) {
             return back()->withErrors(['points' => 'Insufficient points for redemption.']);
         }
 

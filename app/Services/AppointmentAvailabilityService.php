@@ -12,8 +12,6 @@ class AppointmentAvailabilityService
     /**
      * Get available appointment slots for a branch on a specific date.
      *
-     * @param Branch $branch
-     * @param Carbon $date
      * @return array Array of available time slots with bay availability
      */
     public function getAvailableSlots(Branch $branch, Carbon $date): array

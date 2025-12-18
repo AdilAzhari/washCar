@@ -106,7 +106,7 @@ class AppointmentController extends Controller
     {
         $this->authorize('start', $appointment);
 
-        if (!in_array($appointment->status, ['pending', 'confirmed'])) {
+        if (! in_array($appointment->status, ['pending', 'confirmed'])) {
             return back()->withErrors(['status' => 'This appointment cannot be started.']);
         }
 
@@ -199,7 +199,7 @@ class AppointmentController extends Controller
     {
         $this->authorize('markNoShow', $appointment);
 
-        if (!in_array($appointment->status, ['pending', 'confirmed'])) {
+        if (! in_array($appointment->status, ['pending', 'confirmed'])) {
             return back()->withErrors(['status' => 'Only pending or confirmed appointments can be marked as no-show.']);
         }
 
@@ -215,7 +215,7 @@ class AppointmentController extends Controller
     {
         $this->authorize('delete', $appointment);
 
-        if (!$appointment->canBeCancelled()) {
+        if (! $appointment->canBeCancelled()) {
             return back()->withErrors(['appointment' => 'This appointment cannot be cancelled.']);
         }
 

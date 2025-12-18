@@ -22,7 +22,7 @@ class CheckBranchResource
         $user = $request->user();
 
         // Admins and customers bypass this check
-        if (!$user || $user->isAdmin() || $user->isCustomer()) {
+        if (! $user || $user->isAdmin() || $user->isCustomer()) {
             return $next($request);
         }
 
@@ -30,12 +30,12 @@ class CheckBranchResource
         $model = $request->route($parameterName);
 
         // If model doesn't exist in route, skip check
-        if (!$model) {
+        if (! $model) {
             return $next($request);
         }
 
         // Check if model has branch_id attribute
-        if (!isset($model->branch_id)) {
+        if (! isset($model->branch_id)) {
             return $next($request);
         }
 

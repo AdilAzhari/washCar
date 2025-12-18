@@ -23,21 +23,27 @@ class WashObserver
     {
         // Check if status changed to completed
         if ($wash->isDirty('status') && $wash->status === 'completed') {
-            // Only award points if customer exists and has a customer ID
+            // Only process if customer exists
             if ($wash->customer_id && $wash->customer) {
-                // Calculate points earned
-                $pointsEarned = $this->loyaltyService->calculatePointsForWash(
-                    $wash->total_amount,
-                    $wash->customer->loyaltyPoints?->tier ?? 'bronze'
-                );
+                // Check if customer has an associated user account for loyalty points
+                if ($wash->customer->user_id && $wash->customer->user) {
+                    // Get the amount from the package price
+                    $amount = $wash->package?->price ?? 0.0;
 
-                // Award points
-                $this->loyaltyService->awardPoints($wash->customer, $wash);
+                    // Calculate points earned
+                    $pointsEarned = $this->loyaltyService->calculatePointsForWash(
+                        $amount,
+                        $wash->customer->user->loyaltyPoints?->tier ?? 'bronze'
+                    );
 
-                // Send wash completed notification
-                $wash->customer->notify(
-                    new \App\Notifications\WashCompleted($wash, $pointsEarned)
-                );
+                    // Award points to the user account
+                    $this->loyaltyService->awardPoints($wash->customer->user, $wash);
+
+                    // Send wash completed notification to the user
+                    $wash->customer->user->notify(
+                        new \App\Notifications\WashCompleted($wash, $pointsEarned)
+                    );
+                }
             }
         }
     }

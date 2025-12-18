@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use App\Jobs\SendAppointmentReminder;
 use App\Models\Appointment;
-use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 class SendAppointmentReminders extends Command
@@ -30,8 +29,9 @@ class SendAppointmentReminders extends Command
     {
         $type = $this->argument('type');
 
-        if (!in_array($type, ['24h', '1h'])) {
+        if (! in_array($type, ['24h', '1h'])) {
             $this->error('Invalid type. Use "24h" or "1h".');
+
             return Command::FAILURE;
         }
 

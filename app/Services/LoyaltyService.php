@@ -23,9 +23,12 @@ class LoyaltyService
             ]
         );
 
+        // Get the amount from the package price
+        $amount = $wash->package?->price ?? 0.0;
+
         // Calculate points based on wash amount and tier multiplier
         $points = $this->calculatePointsForWash(
-            $wash->total_amount,
+            $amount,
             $loyaltyPoints->tier
         );
 
@@ -62,15 +65,13 @@ class LoyaltyService
     /**
      * Redeem points for a discount code.
      *
-     * @param User $customer
-     * @param int $points
      * @return string Discount code
      */
     public function redeemPoints(User $customer, int $points): ?string
     {
         $loyaltyPoints = $customer->loyaltyPoints;
 
-        if (!$loyaltyPoints) {
+        if (! $loyaltyPoints) {
             return null;
         }
 
@@ -79,7 +80,7 @@ class LoyaltyService
             'Redeemed for discount code'
         );
 
-        if (!$success) {
+        if (! $success) {
             return null;
         }
 
@@ -97,7 +98,7 @@ class LoyaltyService
     {
         $loyaltyPoints = $customer->loyaltyPoints;
 
-        if (!$loyaltyPoints) {
+        if (! $loyaltyPoints) {
             return [
                 'currentTier' => 'bronze',
                 'lifetimePoints' => 0,

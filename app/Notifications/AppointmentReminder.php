@@ -44,7 +44,7 @@ class AppointmentReminder extends Notification implements ShouldQueue
         $timeUntil = $this->reminderType === '24h_before' ? '24 hours' : '1 hour';
 
         return (new MailMessage)
-            ->subject("Appointment Reminder - WashyWashy")
+            ->subject('Appointment Reminder - WashyWashy')
             ->greeting("Hello {$notifiable->name}!")
             ->line("This is a friendly reminder about your upcoming car wash appointment in {$timeUntil}.")
             ->line("**Location:** {$this->appointment->branch->name}")
