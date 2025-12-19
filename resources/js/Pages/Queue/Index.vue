@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { Head, router } from '@inertiajs/vue3'
+import { Head, router, usePage } from '@inertiajs/vue3'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
+import ManagerLayout from '@/Layouts/ManagerLayout.vue'
+import StaffLayout from '@/Layouts/StaffLayout.vue'
 import QueueFormModal from '@/Components/Queue/QueueFormModal.vue'
 import { Card, CardContent, CardHeader, CardTitle, Badge, Button } from '@/Components/ui'
 import { Plus, Clock, CheckCircle, XCircle } from 'lucide-vue-next'
@@ -25,6 +27,15 @@ const props = defineProps<{
 }>()
 
 const isFormOpen = ref(false)
+
+const page = usePage()
+const userRole = computed(() => (page.props.auth as any)?.user?.role || 'admin')
+
+const Layout = computed(() => {
+  if (userRole.value === 'manager') return ManagerLayout
+  if (userRole.value === 'staff') return StaffLayout
+  return AuthenticatedLayout
+})
 
 const stats = computed(() => ({
   total: props.queueEntries.length,
@@ -51,7 +62,7 @@ const getStatusVariant = (status: string) => {
 <template>
   <Head title="Queue Management" />
 
-  <AuthenticatedLayout>
+  <component :is="Layout">
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">Queue Management</h2>
     </template>
@@ -158,5 +169,5 @@ const getStatusVariant = (status: string) => {
         </div>
       </div>
     </div>
-  </AuthenticatedLayout>
+  </component>
 </template>

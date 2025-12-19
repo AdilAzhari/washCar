@@ -6,6 +6,7 @@ use App\Models\Appointment;
 use App\Models\QueueEntry;
 use App\Models\Wash;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -16,7 +17,7 @@ class AppointmentController extends Controller
      */
     public function index(Request $request): Response
     {
-        $this->authorize('viewAny', Appointment::class);
+        Gate::authorize('viewAny', Appointment::class);
 
         $user = $request->user();
 

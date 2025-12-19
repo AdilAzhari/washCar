@@ -2,6 +2,8 @@
 import { computed } from 'vue'
 import { Head, router, Link, usePage } from '@inertiajs/vue3'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
+import ManagerLayout from '@/Layouts/ManagerLayout.vue'
+import StaffLayout from '@/Layouts/StaffLayout.vue'
 import { Card, CardContent, CardHeader, CardTitle, Badge, Button } from '@/Components/ui'
 import { X, Activity, CheckCircle, ArrowLeft } from 'lucide-vue-next'
 
@@ -30,6 +32,12 @@ const props = defineProps<{
 
 const page = usePage()
 const userRole = computed(() => (page.props.auth as any)?.user?.role || 'admin')
+
+const Layout = computed(() => {
+  if (userRole.value === 'manager') return ManagerLayout
+  if (userRole.value === 'staff') return StaffLayout
+  return AuthenticatedLayout
+})
 
 const getRouteName = (routeName: string) => {
   return `${userRole.value}.${routeName}`
@@ -76,7 +84,7 @@ const getProgress = (wash: Wash) => {
 
 <template>
   <Head title="In Progress" />
-  <AuthenticatedLayout>
+  <component :is="Layout">
     <template #header>
       <div class="flex items-center justify-between">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">In Progress</h2>
@@ -200,5 +208,5 @@ const getProgress = (wash: Wash) => {
         </div>
       </div>
     </div>
-  </AuthenticatedLayout>
+  </component>
 </template>

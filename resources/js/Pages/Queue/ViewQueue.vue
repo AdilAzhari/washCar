@@ -2,6 +2,8 @@
 import { computed } from 'vue'
 import { Head, router, usePage } from '@inertiajs/vue3'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
+import ManagerLayout from '@/Layouts/ManagerLayout.vue'
+import StaffLayout from '@/Layouts/StaffLayout.vue'
 import { Card, CardContent, CardHeader, CardTitle, Badge, Button } from '@/Components/ui'
 import { Play, X, Clock, Activity, CheckCircle } from 'lucide-vue-next'
 
@@ -43,6 +45,12 @@ const props = defineProps<{
 
 const page = usePage()
 const userRole = computed(() => (page.props.auth as any)?.user?.role || 'admin')
+
+const Layout = computed(() => {
+  if (userRole.value === 'manager') return ManagerLayout
+  if (userRole.value === 'staff') return StaffLayout
+  return AuthenticatedLayout
+})
 
 const getRouteName = (routeName: string) => {
   return `${userRole.value}.${routeName}`
@@ -111,7 +119,7 @@ const confirmPayment = (queueId: number) => {
 
 <template>
   <Head title="View Queue" />
-  <AuthenticatedLayout>
+  <component :is="Layout">
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">View Queue</h2>
     </template>
@@ -307,5 +315,5 @@ const confirmPayment = (queueId: number) => {
         </div>
       </div>
     </div>
-  </AuthenticatedLayout>
+  </component>
 </template>
