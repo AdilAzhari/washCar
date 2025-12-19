@@ -37,7 +37,7 @@ watch([() => props.isOpen, () => props.staff], ([isOpen, staff]) => {
   } else if (isOpen) {
     form.reset()
   }
-})
+}, { immediate: true })
 
 const handleSubmit = () => {
   if (props.staff) {

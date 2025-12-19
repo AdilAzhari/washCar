@@ -8,14 +8,14 @@ import { Plus, Edit, Trash2, Users, User, Phone, Car } from 'lucide-vue-next'
 
 interface Customer {
   id: number
-  name: string
-  phone: string
-  email?: string
-  plate_number: string
-  vehicle_type: string
-  make?: string
-  model?: string
-  color?: string
+  name: string | null
+  phone: string | null
+  email?: string | null
+  plate_number: string | null
+  vehicle_type: string | null
+  make?: string | null
+  model?: string | null
+  color?: string | null
   membership: string
   status: string
   washes_count?: number
@@ -50,9 +50,9 @@ const filteredCustomers = computed(() => {
   if (!query) return props.customers.data
 
   return props.customers.data.filter(customer =>
-    customer.name.toLowerCase().includes(query) ||
-    customer.phone.toLowerCase().includes(query) ||
-    customer.plate_number.toLowerCase().includes(query)
+    customer.name?.toLowerCase().includes(query) ||
+    customer.phone?.toLowerCase().includes(query) ||
+    customer.plate_number?.toLowerCase().includes(query)
   )
 })
 
@@ -206,8 +206,8 @@ const getMembershipColor = (membership: string) => {
                 <TableRow v-for="customer in filteredCustomers" :key="customer.id" class="hover:bg-muted/50">
                   <TableCell>
                     <div>
-                      <p class="font-medium">{{ customer.name }}</p>
-                      <p class="text-sm text-muted-foreground">{{ customer.plate_number }}</p>
+                      <p class="font-medium">{{ customer.name || 'N/A' }}</p>
+                      <p class="text-sm text-muted-foreground">{{ customer.plate_number || 'N/A' }}</p>
                     </div>
                   </TableCell>
                   <TableCell>
@@ -279,7 +279,7 @@ const getMembershipColor = (membership: string) => {
           <!-- Delete Confirmation Dialog -->
           <DeleteConfirmDialog
             :is-open="deleteDialogOpen"
-            :item-name="customerToDelete?.name"
+            :item-name="customerToDelete?.name ?? undefined"
             :is-deleting="isDeleting"
             title="Delete Customer"
             message="Are you sure you want to delete this customer? This will also delete their wash history. This action cannot be undone."

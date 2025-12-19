@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { Head, router, Link, usePage } from '@inertiajs/vue3'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Card, CardContent, CardHeader, CardTitle, Badge, Button } from '@/Components/ui'
@@ -17,14 +17,24 @@ interface QueueEntry {
   joined_at: string
 }
 
+interface Package {
+  id: number
+  name: string
+  price: number
+  duration_minutes: number
+}
+
 const props = defineProps<{
   waitingQueue: QueueEntry[]
+  packages: Package[]
   stats: {
     totalWaiting: number
     averageWaitTime: number
     availableBays: number
   }
 }>()
+
+const selectedPackages = ref<Record<number, number>>({}) // queueId -> packageId
 
 const page = usePage()
 const userRole = computed(() => (page.props.auth as any)?.user?.role || 'admin')
@@ -56,6 +66,20 @@ const confirmPayment = (queueId: number) => {
 const formatTime = (dateString: string) => {
   const date = new Date(dateString)
   return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+}
+
+const updatePackage = (queueId: number) => {
+  const packageId = selectedPackages.value[queueId]
+  if (!packageId) return
+
+  router.post(route(getRouteName('queue.update-package'), queueId), {
+    package_id: packageId
+  }, {
+    preserveScroll: true,
+    onSuccess: () => {
+      delete selectedPackages.value[queueId]
+    }
+  })
 }
 </script>
 
@@ -149,6 +173,26 @@ const formatTime = (dateString: string) => {
                         <Badge :class="entry.payment_status === 'paid' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'">
                           {{ entry.payment_status === 'paid' ? 'Paid' : 'Pending' }}
                         </Badge>
+                      </div>
+                      <div v-else class="flex items-center gap-2 mt-2">
+                        <select
+                          v-model="selectedPackages[entry.id]"
+                          class="flex h-8 text-xs rounded-md border border-input bg-background px-2 py-1"
+                        >
+                          <option :value="undefined">Select package...</option>
+                          <option v-for="pkg in packages" :key="pkg.id" :value="pkg.id">
+                            {{ pkg.name }} - RM {{ pkg.price }} ({{ pkg.duration_minutes }} min)
+                          </option>
+                        </select>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          class="h-8 text-xs"
+                          :disabled="!selectedPackages[entry.id]"
+                          @click="updatePackage(entry.id)"
+                        >
+                          Set Package
+                        </Button>
                       </div>
                     </div>
                   </div>

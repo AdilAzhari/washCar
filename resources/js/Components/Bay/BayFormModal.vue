@@ -54,7 +54,7 @@ watch([() => props.isOpen, () => props.bay], ([isOpen, bay]) => {
       form.status = 'idle'
     }
   }
-})
+}, { immediate: true })
 
 const handleSubmit = () => {
   if (props.bay) {

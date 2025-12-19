@@ -6,14 +6,14 @@ import { toast } from 'vue-sonner'
 
 interface Customer {
   id: number
-  name: string
-  phone: string
-  email?: string
-  plate_number: string
-  vehicle_type: string
-  make?: string
-  model?: string
-  color?: string
+  name: string | null
+  phone: string | null
+  email?: string | null
+  plate_number: string | null
+  vehicle_type: string | null
+  make?: string | null
+  model?: string | null
+  color?: string | null
   membership: string
   status: string
 }
@@ -50,11 +50,11 @@ const form = useForm({
 watch([() => props.isOpen, () => props.customer], ([isOpen, customer]) => {
   if (isOpen) {
     if (customer) {
-      form.name = customer.name
-      form.phone = customer.phone
+      form.name = customer.name || ''
+      form.phone = customer.phone || ''
       form.email = customer.email || ''
-      form.plate_number = customer.plate_number
-      form.vehicle_type = customer.vehicle_type
+      form.plate_number = customer.plate_number || ''
+      form.vehicle_type = customer.vehicle_type || 'sedan'
       form.make = customer.make || ''
       form.model = customer.model || ''
       form.color = customer.color || ''
@@ -67,7 +67,7 @@ watch([() => props.isOpen, () => props.customer], ([isOpen, customer]) => {
       form.status = 'active'
     }
   }
-})
+}, { immediate: true })
 
 const handleSubmit = () => {
   if (props.customer) {

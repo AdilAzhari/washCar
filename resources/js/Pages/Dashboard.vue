@@ -4,7 +4,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import StatCard from '@/Components/Dashboard/StatCard.vue'
 import BayStatusCard from '@/Components/Dashboard/BayStatusCard.vue'
 import { Card, CardContent, CardHeader, CardTitle, Badge } from '@/Components/ui'
-import { Activity, Clock, CheckCircle, DollarSign, TrendingUp, Package as PackageIcon } from 'lucide-vue-next'
+import { Activity, Clock, CheckCircle, Banknote, TrendingUp, Package as PackageIcon } from 'lucide-vue-next'
 
 defineProps<{
   stats: {
@@ -88,7 +88,7 @@ defineProps<{
               title="Today's Revenue"
               :value="stats.todayRevenue"
               subtitle="Total earnings"
-              :icon="DollarSign"
+              :icon="Banknote"
               icon-class-name="bg-accent/10 text-accent"
             />
           </div>

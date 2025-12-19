@@ -101,9 +101,12 @@ class QueueController extends Controller
                 return $entry->joined_at ? now()->diffInMinutes($entry->joined_at) : 0;
             });
 
+        $packages = Package::where('is_active', true)->get();
+
         return Inertia::render('Queue/ViewQueue', [
             'waitingQueue' => $waitingQueue,
             'inProgressWashes' => $inProgressWashes,
+            'packages' => $packages,
             'stats' => [
                 'totalWaiting' => $totalWaiting,
                 'inProgress' => $inProgress,
@@ -216,6 +219,17 @@ class QueueController extends Controller
         return back()->with('success', 'Payment confirmed.');
     }
 
+    public function updatePackage(Request $request, QueueEntry $queue): RedirectResponse
+    {
+        $validated = $request->validate([
+            'package_id' => 'required|exists:packages,id',
+        ]);
+
+        $queue->update($validated);
+
+        return back()->with('success', 'Package updated successfully.');
+    }
+
     public function waitingQueue(): Response
     {
         $waitingQueue = QueueEntry::with(['branch', 'customer', 'package'])
@@ -232,8 +246,11 @@ class QueueController extends Controller
                 return $entry->joined_at ? now()->diffInMinutes($entry->joined_at) : 0;
             });
 
+        $packages = Package::where('is_active', true)->get();
+
         return Inertia::render('Queue/WaitingQueue', [
             'waitingQueue' => $waitingQueue,
+            'packages' => $packages,
             'stats' => [
                 'totalWaiting' => $totalWaiting,
                 'averageWaitTime' => round($avgWaitTime),

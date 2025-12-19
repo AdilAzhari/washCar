@@ -66,7 +66,7 @@ watch([() => props.isOpen, () => props.package], ([isOpen, pkg]) => {
       form.is_active = true
     }
   }
-})
+}, { immediate: true })
 
 const handleSubmit = () => {
   if (props.package) {

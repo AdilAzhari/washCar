@@ -64,6 +64,7 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('ad
     Route::post('/queue/{queue}/start', [QueueController::class, 'start'])->name('queue.start');
     Route::post('/queue/{queue}/cancel', [QueueController::class, 'cancel'])->name('queue.cancel');
     Route::post('/queue/{queue}/confirm-payment', [QueueController::class, 'confirmPayment'])->name('queue.confirm-payment');
+    Route::post('/queue/{queue}/update-package', [QueueController::class, 'updatePackage'])->name('queue.update-package');
     Route::post('/wash/{wash}/complete', [QueueController::class, 'completeWash'])->name('wash.complete');
     Route::post('/wash/{wash}/cancel', [QueueController::class, 'cancelWash'])->name('wash.cancel');
 
@@ -117,6 +118,7 @@ Route::middleware(['auth', 'verified', 'role:manager', 'branch'])->prefix('manag
     Route::post('/queue/{queue}/start', [QueueController::class, 'start'])->name('queue.start');
     Route::post('/queue/{queue}/cancel', [QueueController::class, 'cancel'])->name('queue.cancel');
     Route::post('/queue/{queue}/confirm-payment', [QueueController::class, 'confirmPayment'])->name('queue.confirm-payment');
+    Route::post('/queue/{queue}/update-package', [QueueController::class, 'updatePackage'])->name('queue.update-package');
     Route::post('/wash/{wash}/complete', [QueueController::class, 'completeWash'])->name('wash.complete');
     Route::post('/wash/{wash}/cancel', [QueueController::class, 'cancelWash'])->name('wash.cancel');
 

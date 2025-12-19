@@ -33,7 +33,7 @@ const form = useForm({
 watch([() => props.isOpen, () => props.item], ([isOpen, item]) => {
   if (isOpen) {
     if (item) {
-      form.branch_id = item.branch.id
+      form.branch_id = item.branch?.id || null
       form.name = item.name
       form.category = item.category
       form.quantity = item.quantity
@@ -45,7 +45,7 @@ watch([() => props.isOpen, () => props.item], ([isOpen, item]) => {
       form.reset()
     }
   }
-})
+}, { immediate: true })
 
 const handleSubmit = () => {
   if (props.item) {

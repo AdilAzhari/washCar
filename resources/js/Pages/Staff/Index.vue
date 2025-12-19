@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { Head, router } from '@inertiajs/vue3'
+import { ref, computed } from 'vue'
+import { Head, router, usePage } from '@inertiajs/vue3'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import StaffFormModal from '@/Components/Staff/StaffFormModal.vue'
 import { Card, CardContent, Badge, Button, Table, TableHeader, TableBody, TableRow, TableHead, TableCell, DeleteConfirmDialog } from '@/Components/ui'
@@ -18,6 +18,13 @@ const props = defineProps<{
   staff: Staff[]
   branches: any[]
 }>()
+
+const page = usePage()
+const userRole = computed(() => (page.props.auth as any)?.user?.role || 'admin')
+
+const getRouteName = (routeName: string) => {
+  return `${userRole.value}.${routeName}`
+}
 
 const isFormOpen = ref(false)
 const selectedStaff = ref<Staff | null>(null)
@@ -41,7 +48,7 @@ const handleDelete = (id: number) => {
 const handleDeleteConfirm = () => {
   if (staffToDelete.value) {
     isDeleting.value = true
-    router.delete(route('staff.destroy', staffToDelete.value.id), {
+    router.delete(route(getRouteName('staff.destroy'), staffToDelete.value.id), {
       onSuccess: () => {
         deleteDialogOpen.value = false
         staffToDelete.value = null
