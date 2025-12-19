@@ -37,7 +37,9 @@ class EnsureBranchAccess
 
         // Staff and Managers must have a branch assigned
         if (($user->isStaff() || $user->isManager()) && ! $user->branch_id) {
-            abort(403, 'You must be assigned to a branch to access this resource.');
+            // Redirect to profile page with error message instead of aborting
+            return redirect()->route('profile.edit')
+                ->with('error', 'You must be assigned to a branch to access the dashboard. Please contact your administrator.');
         }
 
         // Add user's branch_id to request for easy access in controllers
