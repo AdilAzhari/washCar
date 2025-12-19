@@ -102,7 +102,7 @@ class ManagerDashboardController extends Controller
 
         // Low stock alerts
         $lowStockItems = InventoryItem::where('branch_id', $branchId)
-            ->whereRaw('quantity <= low_stock_threshold')
+            ->whereRaw('quantity <= min_quantity')
             ->orderBy('quantity')
             ->limit(5)
             ->get();

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Bay extends Model
 {
@@ -27,5 +28,10 @@ class Bay extends Model
     public function washes(): HasMany
     {
         return $this->hasMany(Wash::class);
+    }
+
+    public function currentWash(): HasOne
+    {
+        return $this->hasOne(Wash::class)->where('status', 'active');
     }
 }
