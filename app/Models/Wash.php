@@ -13,6 +13,7 @@ class Wash extends Model
         'branch_id',
         'customer_id',
         'package_id',
+        'total_amount',
         'progress',
         'status',
         'started_at',
@@ -21,9 +22,22 @@ class Wash extends Model
 
     protected $casts = [
         'progress' => 'integer',
+        'total_amount' => 'decimal:2',
         'started_at' => 'datetime',
         'completed_at' => 'datetime',
     ];
+
+    protected static function booted(): void
+    {
+        static::creating(function (Wash $wash) {
+            if ($wash->package_id && ! $wash->total_amount) {
+                $package = Package::find($wash->package_id);
+                if ($package) {
+                    $wash->total_amount = $package->price;
+                }
+            }
+        });
+    }
 
     public function queueEntry(): BelongsTo
     {
