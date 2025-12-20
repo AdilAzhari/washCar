@@ -77,7 +77,7 @@ class AppointmentTest extends TestCase
         ];
 
         $response = $this->actingAs($this->customer)
-            ->from(route('customer.appointments.create'))
+            ->withoutMiddleware()
             ->post(route('customer.appointments.store'), $appointmentData);
 
         $response->assertRedirect();
@@ -111,7 +111,7 @@ class AppointmentTest extends TestCase
         ];
 
         $response = $this->actingAs($this->customer)
-            ->from(route('customer.appointments.create'))
+            ->withoutMiddleware()
             ->post(route('customer.appointments.store'), $appointmentData);
 
         $response->assertSessionHasErrors('scheduled_at');
@@ -160,7 +160,7 @@ class AppointmentTest extends TestCase
         ]);
 
         $response = $this->actingAs($this->customer)
-            ->from(route('customer.appointments.show', $appointment))
+            ->withoutMiddleware()
             ->delete(route('customer.appointments.destroy', $appointment));
 
         $response->assertRedirect();
@@ -179,7 +179,7 @@ class AppointmentTest extends TestCase
         ]);
 
         $response = $this->actingAs($this->customer)
-            ->from(route('customer.appointments.show', $appointment))
+            ->withoutMiddleware()
             ->delete(route('customer.appointments.destroy', $appointment));
 
         $response->assertSessionHasErrors();
@@ -191,7 +191,7 @@ class AppointmentTest extends TestCase
     public function test_appointment_requires_all_fields(): void
     {
         $response = $this->actingAs($this->customer)
-            ->from(route('customer.appointments.create'))
+            ->withoutMiddleware()
             ->post(route('customer.appointments.store'), []);
 
         $response->assertSessionHasErrors([
