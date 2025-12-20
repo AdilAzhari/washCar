@@ -69,7 +69,9 @@ class ProfileTest extends TestCase
 
         $response = $this
             ->actingAs($user)
-            ->withoutMiddleware()
+            ->withoutMiddleware([
+                \Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class,
+            ])
             ->delete('/profile', [
                 'password' => 'password',
             ]);
@@ -88,7 +90,9 @@ class ProfileTest extends TestCase
 
         $response = $this
             ->actingAs($user)
-            ->withoutMiddleware()
+            ->withoutMiddleware([
+                \Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class,
+            ])
             ->delete('/profile', [
                 'password' => 'wrong-password',
             ]);
