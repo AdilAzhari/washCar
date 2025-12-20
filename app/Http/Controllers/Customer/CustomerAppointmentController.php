@@ -38,7 +38,7 @@ class CustomerAppointmentController extends Controller
     public function create(Request $request): Response
     {
         // Get active branches
-        $branches = Branch::where('active', true)
+        $branches = Branch::where('is_active', true)
             ->orderBy('name')
             ->get();
 
