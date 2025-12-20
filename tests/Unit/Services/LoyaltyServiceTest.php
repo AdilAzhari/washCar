@@ -3,6 +3,7 @@
 namespace Tests\Unit\Services;
 
 use App\Models\LoyaltyPoint;
+use App\Models\Package;
 use App\Models\User;
 use App\Models\Wash;
 use App\Services\LoyaltyService;
@@ -69,8 +70,13 @@ class LoyaltyServiceTest extends TestCase
 
     public function test_awards_points_for_wash(): void
     {
+        $package = Package::factory()->create([
+            'price' => 50.00,
+        ]);
+
         $wash = Wash::factory()->create([
             'customer_id' => $this->customer->id,
+            'package_id' => $package->id,
             'total_amount' => 50.00,
         ]);
 

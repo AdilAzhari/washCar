@@ -30,28 +30,23 @@ class WashObserverTest extends TestCase
         ]);
 
         // Create a branch
-        $branch = Branch::create([
-            'name' => 'Test Branch',
+        $branch = Branch::factory()->create([
             'code' => 'TEST001',
-            'address' => '123 Test St',
-            'phone' => '555-0100',
-            'is_active' => true,
         ]);
 
         // Create a bay
-        $bay = Bay::create([
+        $bay = Bay::factory()->create([
             'branch_id' => $branch->id,
             'name' => 'Bay 1',
-            'status' => 'available',
+            'status' => 'idle',
         ]);
 
         // Create a package
-        $package = Package::create([
+        $package = Package::factory()->create([
             'name' => 'Premium Wash',
             'description' => 'Premium car wash',
             'duration_minutes' => 45,
             'price' => 50.00,
-            'status' => 'active',
         ]);
 
         // Create a customer linked to the user
@@ -70,7 +65,7 @@ class WashObserverTest extends TestCase
             'bay_id' => $bay->id,
             'customer_id' => $customer->id,
             'package_id' => $package->id,
-            'status' => 'in_progress',
+            'status' => 'active',
             'started_at' => now(),
         ]);
 
@@ -95,28 +90,23 @@ class WashObserverTest extends TestCase
     public function test_anonymous_customer_wash_completion_does_not_crash(): void
     {
         // Create a branch
-        $branch = Branch::create([
-            'name' => 'Test Branch',
+        $branch = Branch::factory()->create([
             'code' => 'TEST002',
-            'address' => '123 Test St',
-            'phone' => '555-0100',
-            'is_active' => true,
         ]);
 
         // Create a bay
-        $bay = Bay::create([
+        $bay = Bay::factory()->create([
             'branch_id' => $branch->id,
             'name' => 'Bay 1',
-            'status' => 'available',
+            'status' => 'idle',
         ]);
 
         // Create a package
-        $package = Package::create([
+        $package = Package::factory()->create([
             'name' => 'Basic Wash',
             'description' => 'Basic car wash',
             'duration_minutes' => 30,
             'price' => 25.00,
-            'status' => 'active',
         ]);
 
         // Create a customer without a user account (walk-in)
@@ -134,7 +124,7 @@ class WashObserverTest extends TestCase
             'bay_id' => $bay->id,
             'customer_id' => $customer->id,
             'package_id' => $package->id,
-            'status' => 'in_progress',
+            'status' => 'active',
             'started_at' => now(),
         ]);
 

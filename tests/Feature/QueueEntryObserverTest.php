@@ -20,21 +20,16 @@ class QueueEntryObserverTest extends TestCase
         Notification::fake();
 
         // Create a branch
-        $branch = Branch::create([
-            'name' => 'Test Branch',
+        $branch = Branch::factory()->create([
             'code' => 'TEST001',
-            'address' => '123 Test St',
-            'phone' => '555-0100',
-            'is_active' => true,
         ]);
 
         // Create a package
-        $package = Package::create([
+        $package = Package::factory()->create([
             'name' => 'Basic Wash',
             'description' => 'Basic car wash',
             'duration_minutes' => 30,
             'price' => 25.00,
-            'status' => 'active',
         ]);
 
         // Create a customer with Notifiable trait
@@ -70,12 +65,8 @@ class QueueEntryObserverTest extends TestCase
     public function test_anonymous_customer_does_not_crash_when_notifying(): void
     {
         // Create a branch
-        $branch = Branch::create([
-            'name' => 'Test Branch',
+        $branch = Branch::factory()->create([
             'code' => 'TEST002',
-            'address' => '123 Test St',
-            'phone' => '555-0100',
-            'is_active' => true,
         ]);
 
         // Create a queue entry without a customer (walk-in)

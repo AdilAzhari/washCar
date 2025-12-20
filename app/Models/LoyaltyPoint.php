@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class LoyaltyPoint extends Model
 {
+    use HasFactory;
     protected $fillable = [
         'customer_id',
         'points',
@@ -93,10 +95,23 @@ class LoyaltyPoint extends Model
     {
         $newTier = $this->calculateTier($this->lifetime_points);
 
-        if ($newTier !== $this->tier) {
+        // Only upgrade tiers, never downgrade
+        if ($newTier !== $this->tier && $this->isTierUpgrade($this->tier, $newTier)) {
             $this->tier = $newTier;
             $this->save();
         }
+    }
+
+    protected function isTierUpgrade(string $currentTier, string $newTier): bool
+    {
+        $tierOrder = [
+            self::TIER_BRONZE => 0,
+            self::TIER_SILVER => 1,
+            self::TIER_GOLD => 2,
+            self::TIER_PLATINUM => 3,
+        ];
+
+        return $tierOrder[$newTier] > $tierOrder[$currentTier];
     }
 
     protected function calculateTier(int $lifetimePoints): string

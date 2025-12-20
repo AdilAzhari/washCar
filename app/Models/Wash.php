@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Wash extends Model
 {
+    use HasFactory;
     protected $fillable = [
         'queue_entry_id',
         'bay_id',
