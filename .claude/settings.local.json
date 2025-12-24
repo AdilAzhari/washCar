@@ -29,7 +29,8 @@
       "mcp__laravel-boost__last-error",
       "mcp__laravel-boost__get-config",
       "mcp__laravel-boost__tinker",
-      "Bash(vendor/bin/pint:*)"
+      "Bash(vendor/bin/pint:*)",
+      "Bash(git stash clear:*)"
     ]
   },
   "enableAllProjectMcpServers": true,
