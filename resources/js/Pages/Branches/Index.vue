@@ -4,8 +4,9 @@ import { Head, router } from '@inertiajs/vue3'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import BranchCard from '@/Components/Branch/BranchCard.vue'
 import BranchFormModal from '@/Components/Branch/BranchFormModal.vue'
-import { Button, Input, DeleteConfirmDialog } from '@/Components/ui'
-import { Building2, Plus, TrendingUp, MapPin, GitCompare } from 'lucide-vue-next'
+import { EmptyState, Button, Input, DeleteConfirmDialog } from '@/Components/ui'
+import StatCard from '@/Components/Dashboard/StatCard.vue'
+import { Building2, Plus, TrendingUp, MapPin, GitCompare, Droplet } from 'lucide-vue-next'
 
 interface Branch {
   id: number
@@ -113,45 +114,34 @@ const openCreateModal = () => {
 
           <!-- Stats Cards -->
           <div class="grid gap-4 md:grid-cols-4">
-            <div class="stat-card">
-              <div class="flex items-center justify-between">
-                <div>
-                  <p class="text-sm text-muted-foreground">Total Branches</p>
-                  <p class="text-3xl font-bold mt-1">{{ stats.total }}</p>
-                </div>
-                <Building2 class="w-8 h-8 text-primary" />
-              </div>
-            </div>
-
-            <div class="stat-card">
-              <div class="flex items-center justify-between">
-                <div>
-                  <p class="text-sm text-muted-foreground">Active Branches</p>
-                  <p class="text-3xl font-bold mt-1 text-success">{{ stats.active }}</p>
-                </div>
-                <MapPin class="w-8 h-8 text-success" />
-              </div>
-            </div>
-
-            <div class="stat-card">
-              <div class="flex items-center justify-between">
-                <div>
-                  <p class="text-sm text-muted-foreground">Total Bays</p>
-                  <p class="text-3xl font-bold mt-1">{{ stats.totalBays }}</p>
-                </div>
-                <Building2 class="w-8 h-8 text-accent" />
-              </div>
-            </div>
-
-            <div class="stat-card">
-              <div class="flex items-center justify-between">
-                <div>
-                  <p class="text-sm text-muted-foreground">Total Washes</p>
-                  <p class="text-3xl font-bold mt-1">{{ stats.totalWashes }}</p>
-                </div>
-                <TrendingUp class="w-8 h-8 text-primary" />
-              </div>
-            </div>
+            <StatCard
+              title="Total Branches"
+              :value="stats.total"
+              subtitle="All locations"
+              :icon="Building2"
+              accent-color="primary"
+            />
+            <StatCard
+              title="Active Branches"
+              :value="stats.active"
+              subtitle="Currently operating"
+              :icon="MapPin"
+              accent-color="success"
+            />
+            <StatCard
+              title="Total Bays"
+              :value="stats.totalBays"
+              subtitle="Across all branches"
+              :icon="Droplet"
+              accent-color="bay-active"
+            />
+            <StatCard
+              title="Total Washes"
+              :value="stats.totalWashes"
+              subtitle="Lifetime count"
+              :icon="TrendingUp"
+              accent-color="primary"
+            />
           </div>
 
           <!-- Search -->
@@ -175,11 +165,22 @@ const openCreateModal = () => {
           </div>
 
           <!-- Empty State -->
-          <div v-if="filteredBranches.length === 0" class="text-center py-12">
-            <Building2 class="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-            <h3 class="text-lg font-semibold mb-2">No branches found</h3>
-            <p class="text-muted-foreground">Try adjusting your search query</p>
-          </div>
+          <EmptyState
+            v-if="filteredBranches.length === 0 && searchQuery"
+            :icon="Building2"
+            title="No branches found"
+            message="Try adjusting your search query to find what you're looking for."
+          />
+
+          <EmptyState
+            v-if="filteredBranches.length === 0 && !searchQuery"
+            :icon="Building2"
+            title="No branches yet"
+            message="Create your first branch location to start managing car wash operations. Each branch can have multiple bays and staff members."
+            action-label="Add Branch"
+            help-text="Branches help organize your operations across multiple locations."
+            @action="openCreateModal"
+          />
 
           <!-- Branch Form Modal -->
           <BranchFormModal

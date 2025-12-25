@@ -68,28 +68,28 @@ defineProps<{
               :value="stats.ongoingWashes"
               subtitle="Currently in progress"
               :icon="Activity"
-              icon-class-name="bg-primary/10 text-primary"
+              accent-color="bay-active"
             />
             <StatCard
               title="In Queue"
               :value="stats.inQueue"
               subtitle="Waiting customers"
               :icon="Clock"
-              icon-class-name="bg-warning/10 text-warning"
+              accent-color="warning"
             />
             <StatCard
               title="Completed Today"
               :value="stats.completedToday"
               subtitle="Total washes"
               :icon="CheckCircle"
-              icon-class-name="bg-success/10 text-success"
+              accent-color="success"
             />
             <StatCard
               title="Today's Revenue"
               :value="stats.todayRevenue"
               subtitle="Total earnings"
               :icon="Banknote"
-              icon-class-name="bg-accent/10 text-accent"
+              accent-color="primary"
             />
           </div>
 
@@ -100,9 +100,16 @@ defineProps<{
               <BayStatusCard
                 v-for="bay in bays"
                 :key="bay.id"
-                :bay-name="bay.bayName"
-                :is-operational="bay.isOperational"
-                :current-wash="bay.currentWash"
+                :bay-number="bay.bayName"
+                :status="bay.status.toLowerCase() as 'idle' | 'active' | 'maintenance' | 'completed'"
+                :current-wash="bay.currentWash ? {
+                  customerName: bay.currentWash.customerName,
+                  vehiclePlate: bay.currentWash.vehiclePlate,
+                  packageName: bay.currentWash.packageName,
+                  progress: bay.currentWash.progress,
+                  elapsedTime: bay.currentWash.startedAt,
+                  estimatedTime: bay.currentWash.estimatedCompletion,
+                } : undefined"
                 :queue-count="bay.queueCount"
               />
             </div>

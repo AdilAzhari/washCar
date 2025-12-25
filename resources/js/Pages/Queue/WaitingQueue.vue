@@ -206,7 +206,13 @@ const updatePackage = (queueId: number) => {
                   </div>
                   <div class="flex flex-col gap-2">
                     <div class="flex gap-2">
-                      <Button size="sm" class="btn-primary" @click="startWash(entry.id)">
+                      <Button 
+                        size="sm" 
+                        class="btn-primary" 
+                        @click="startWash(entry.id)"
+                        :disabled="entry.payment_status !== 'paid' || !entry.package"
+                        :title="entry.payment_status !== 'paid' ? 'Payment must be confirmed first' : (!entry.package ? 'Package must be assigned first' : '')"
+                      >
                         <Play class="w-4 h-4 mr-1" />
                         Start
                       </Button>

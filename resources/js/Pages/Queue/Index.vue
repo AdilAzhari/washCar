@@ -5,18 +5,22 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import ManagerLayout from '@/Layouts/ManagerLayout.vue'
 import StaffLayout from '@/Layouts/StaffLayout.vue'
 import QueueFormModal from '@/Components/Queue/QueueFormModal.vue'
-import { Card, CardContent, CardHeader, CardTitle, Badge, Button } from '@/Components/ui'
-import { Plus, Clock, CheckCircle, XCircle } from 'lucide-vue-next'
+import QueueItemCard from '@/Components/Queue/QueueItemCard.vue'
+import StatCard from '@/Components/Dashboard/StatCard.vue'
+import { EmptyState, Button } from '@/Components/ui'
+import { Plus, Clock, Activity, Users } from 'lucide-vue-next'
 
 interface QueueEntry {
   id: number
   branch: { id: number; name: string }
   customer?: { id: number; name: string }
-  package?: { id: number; name: string; price: number }
+  package?: { id: number; name: string; price: number; duration_minutes: number }
   plate_number: string
   position: number
   status: string
+  payment_status: string
   joined_at: string
+  wash: { id: number; status: string } | null
 }
 
 const props = defineProps<{
@@ -37,25 +41,44 @@ const Layout = computed(() => {
   return AuthenticatedLayout
 })
 
-const stats = computed(() => ({
-  total: props.queueEntries.length,
-  waiting: props.queueEntries.filter(q => q.status === 'waiting').length,
-  inProgress: props.queueEntries.filter(q => q.status === 'in_progress').length,
-  completed: props.queueEntries.filter(q => q.status === 'completed').length,
-}))
-
-const updateStatus = (id: number, status: string) => {
-  router.patch(route('queue.update', id), { status }, { preserveScroll: true })
+const getRouteName = (routeName: string) => {
+  return `${userRole.value}.${routeName}`
 }
 
-const getStatusVariant = (status: string) => {
-  switch (status) {
-    case 'waiting': return 'default'
-    case 'in_progress': return 'secondary'
-    case 'completed': return 'default'
-    case 'cancelled': return 'destructive'
-    default: return 'default'
+const waitingQueue = computed(() =>
+  props.queueEntries.filter(q => q.status === 'waiting')
+)
+
+const inProgressQueue = computed(() =>
+  props.queueEntries.filter(q => q.status === 'in_progress')
+)
+
+const stats = computed(() => ({
+  total: props.queueEntries.length,
+  waiting: waitingQueue.value.length,
+  inProgress: inProgressQueue.value.length,
+}))
+
+const startWash = (id: number) => {
+  router.post(route(getRouteName('queue.start'), id), {}, { preserveScroll: true })
+}
+
+const completeWash = (washId: number) => {
+  router.post(route(getRouteName('wash.complete'), washId), {}, { preserveScroll: true })
+}
+
+const removeFromQueue = (id: number) => {
+  if (confirm('Remove this customer from the queue?')) {
+    router.post(route(getRouteName('queue.cancel'), id), {}, { preserveScroll: true })
   }
+}
+
+const getWaitTime = (joinedAt: string) => {
+  const joined = new Date(joinedAt)
+  const now = new Date()
+  const diffMs = now.getTime() - joined.getTime()
+  const diffMins = Math.floor(diffMs / 60000)
+  return diffMins
 }
 </script>
 
@@ -64,100 +87,125 @@ const getStatusVariant = (status: string) => {
 
   <component :is="Layout">
     <template #header>
-      <h2 class="font-semibold text-xl text-gray-800 leading-tight">Queue Management</h2>
+      <div class="flex items-center justify-between">
+        <h2 class="font-semibold text-xl leading-tight">Queue Management</h2>
+        <Button variant="primary-action" @click="isFormOpen = true">
+          <Plus class="w-4 h-4" />
+          Add to Queue
+        </Button>
+      </div>
     </template>
 
-    <div class="py-12">
-      <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="space-y-6 animate-fade-in">
-          <!-- Header -->
-          <div class="flex items-center justify-between">
-            <div>
-              <h1 class="text-2xl font-bold mb-2">Queue Management</h1>
-              <p class="text-muted-foreground">Track and manage customer queue</p>
-            </div>
-            <Button class="btn-primary" @click="isFormOpen = true">
-              <Plus class="w-4 h-4 mr-2" />
-              Add to Queue
-            </Button>
-          </div>
-
+    <div class="py-8">
+      <div class="max-w-[1800px] mx-auto sm:px-6 lg:px-8">
+        <div class="space-y-6 animate-fade-in-fast">
           <!-- Stats Grid -->
-          <div class="grid gap-4 md:grid-cols-4">
-            <Card class="stat-card">
-              <CardContent class="p-6">
-                <div class="flex items-center justify-between">
-                  <div>
-                    <p class="text-sm text-muted-foreground">Total</p>
-                    <p class="text-3xl font-bold mt-1">{{ stats.total }}</p>
-                  </div>
-                  <Clock class="w-8 h-8 text-primary" />
-                </div>
-              </CardContent>
-            </Card>
-            <Card class="stat-card">
-              <CardContent class="p-6">
-                <div class="flex items-center justify-between">
-                  <div>
-                    <p class="text-sm text-muted-foreground">Waiting</p>
-                    <p class="text-3xl font-bold mt-1">{{ stats.waiting }}</p>
-                  </div>
-                  <Clock class="w-8 h-8 text-warning" />
-                </div>
-              </CardContent>
-            </Card>
-            <Card class="stat-card">
-              <CardContent class="p-6">
-                <div class="flex items-center justify-between">
-                  <div>
-                    <p class="text-sm text-muted-foreground">In Progress</p>
-                    <p class="text-3xl font-bold mt-1">{{ stats.inProgress }}</p>
-                  </div>
-                  <Clock class="w-8 h-8 text-accent" />
-                </div>
-              </CardContent>
-            </Card>
-            <Card class="stat-card">
-              <CardContent class="p-6">
-                <div class="flex items-center justify-between">
-                  <div>
-                    <p class="text-sm text-muted-foreground">Completed</p>
-                    <p class="text-3xl font-bold mt-1">{{ stats.completed }}</p>
-                  </div>
-                  <CheckCircle class="w-8 h-8 text-success" />
-                </div>
-              </CardContent>
-            </Card>
+          <div class="grid gap-4 md:grid-cols-3">
+            <StatCard
+              title="Total in Queue"
+              :value="stats.total"
+              subtitle="Active customers"
+              :icon="Users"
+              accent-color="primary"
+            />
+            <StatCard
+              title="Waiting"
+              :value="stats.waiting"
+              subtitle="Ready to start"
+              :icon="Clock"
+              accent-color="warning"
+            />
+            <StatCard
+              title="In Progress"
+              :value="stats.inProgress"
+              subtitle="Being served"
+              :icon="Activity"
+              accent-color="bay-active"
+            />
           </div>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Queue Entries</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div class="space-y-4">
-                <div v-for="entry in queueEntries" :key="entry.id" class="flex items-center justify-between p-4 border rounded-lg">
-                  <div class="flex-1">
-                    <div class="flex items-center gap-4">
-                      <div class="text-2xl font-bold text-muted-foreground">#{{ entry.position }}</div>
-                      <div>
-                        <p class="font-medium">{{ entry.plate_number }}</p>
-                        <p class="text-sm text-muted-foreground">
-                          {{ entry.customer?.name || 'Walk-in' }} • {{ entry.branch.name }}
-                        </p>
-                        <p v-if="entry.package" class="text-sm text-muted-foreground">{{ entry.package.name }}</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="flex items-center gap-2">
-                    <Badge :variant="getStatusVariant(entry.status)" class="capitalize">{{ entry.status.replace('_', ' ') }}</Badge>
-                    <Button v-if="entry.status === 'waiting'" size="sm" @click="updateStatus(entry.id, 'in_progress')">Start</Button>
-                    <Button v-if="entry.status === 'in_progress'" size="sm" @click="updateStatus(entry.id, 'completed')">Complete</Button>
-                  </div>
-                </div>
+          <!-- Two-Column Queue Layout -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Waiting Queue -->
+            <div class="space-y-4">
+              <div class="flex items-center justify-between">
+                <h2 class="text-xl font-semibold flex items-center gap-2">
+                  <div class="w-1 h-6 bg-queue-waiting rounded-full"></div>
+                  Waiting Queue
+                  <span class="text-sm font-normal text-muted-foreground ml-1">({{ stats.waiting }})</span>
+                </h2>
               </div>
-            </CardContent>
-          </Card>
+
+              <div class="space-y-3">
+                <QueueItemCard
+                  v-for="entry in waitingQueue"
+                  :key="entry.id"
+                  :position="entry.position"
+                  :customer-name="entry.customer?.name || 'Walk-in'"
+                  :vehicle-info="{
+                    make: '',
+                    model: '',
+                    plate: entry.plate_number
+                  }"
+                  :package-name="entry.package?.name || 'No package'"
+                  :duration-estimate="entry.package?.duration_minutes || 0"
+                  :wait-time="getWaitTime(entry.joined_at)"
+                  status="waiting"
+                  :payment-status="entry.payment_status"
+                  :has-package="!!entry.package"
+                  @start="startWash(entry.id)"
+                  @remove="removeFromQueue(entry.id)"
+                />
+
+                <EmptyState
+                  v-if="waitingQueue.length === 0"
+                  :icon="Clock"
+                  title="No customers waiting"
+                  message="The waiting queue is empty. Customers can join via QR code or be added manually."
+                  action-label="Add Customer"
+                  @action="isFormOpen = true"
+                />
+              </div>
+            </div>
+
+            <!-- In Progress Queue -->
+            <div class="space-y-4">
+              <div class="flex items-center justify-between">
+                <h2 class="text-xl font-semibold flex items-center gap-2">
+                  <div class="w-1 h-6 bg-queue-in-progress rounded-full"></div>
+                  In Progress
+                  <span class="text-sm font-normal text-muted-foreground ml-1">({{ stats.inProgress }})</span>
+                </h2>
+              </div>
+
+              <div class="space-y-3">
+                <QueueItemCard
+                  v-for="entry in inProgressQueue"
+                  :key="entry.id"
+                  :position="entry.position"
+                  :customer-name="entry.customer?.name || 'Walk-in'"
+                  :vehicle-info="{
+                    make: '',
+                    model: '',
+                    plate: entry.plate_number
+                  }"
+                  :package-name="entry.package?.name || 'No package'"
+                  :duration-estimate="entry.package?.duration_minutes || 0"
+                  :wait-time="getWaitTime(entry.joined_at)"
+                  status="in-progress"
+                  @complete="entry.wash && completeWash(entry.wash.id)"
+                  @remove="removeFromQueue(entry.id)"
+                />
+
+                <EmptyState
+                  v-if="inProgressQueue.length === 0"
+                  :icon="Activity"
+                  title="No active washes"
+                  message="All bays are currently idle. Start a wash from the waiting queue."
+                />
+              </div>
+            </div>
+          </div>
 
           <QueueFormModal
             :is-open="isFormOpen"

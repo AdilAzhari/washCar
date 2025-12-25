@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/Components/ui'
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter } from '@/Components/ui'
 import { Button } from '@/Components/ui'
 import { AlertTriangle } from 'lucide-vue-next'
 
@@ -25,6 +25,9 @@ const emit = defineEmits<{
           <AlertTriangle class="w-5 h-5 text-destructive" />
           {{ title || 'Confirm Delete' }}
         </DialogTitle>
+        <DialogDescription class="sr-only">
+          {{ message || 'Confirm if you want to permanently delete this item.' }}
+        </DialogDescription>
       </DialogHeader>
       <div class="py-4">
         <p class="text-muted-foreground">

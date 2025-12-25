@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
-import { useForm } from '@inertiajs/vue3'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, Input, Label, Textarea, Button } from '@/Components/ui'
+import { ref, watch, computed } from 'vue'
+import { useForm, usePage } from '@inertiajs/vue3'
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Input, Label, Textarea, Button } from '@/Components/ui'
 import { toast } from 'vue-sonner'
 
 interface Branch {
@@ -23,6 +23,13 @@ const emit = defineEmits<{
   close: []
 }>()
 
+const page = usePage()
+const userRole = computed(() => (page.props.auth as any)?.user?.role || 'admin')
+
+const getRouteName = (routeName: string) => {
+  return `${userRole.value}.${routeName}`
+}
+
 const form = useForm({
   name: '',
   code: '',
@@ -32,35 +39,51 @@ const form = useForm({
   is_active: true,
 })
 
-watch([() => props.isOpen, () => props.branch], ([isOpen, branch]) => {
-  if (isOpen) {
-    if (branch) {
-      form.name = branch.name
-      form.code = branch.code
-      form.address = branch.address || ''
-      form.phone = branch.phone || ''
-      form.operating_hours = branch.operating_hours || ''
-      form.is_active = branch.is_active
+const resetToDefaults = () => {
+  form.code = `BR-${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}`
+  form.is_active = true
+}
+
+// Watch for both modal state and data changes to sync the form
+watch(
+  [() => props.isOpen, () => props.branch],
+  ([isOpen, branch]) => {
+    if (isOpen) {
+      if (branch) {
+        form.name = branch.name
+        form.code = branch.code
+        form.address = branch.address || ''
+        form.phone = branch.phone || ''
+        form.operating_hours = branch.operating_hours || ''
+        form.is_active = branch.is_active
+      } else {
+        form.reset()
+        resetToDefaults()
+      }
     } else {
       form.reset()
-      form.code = `BR-${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}`
-      form.is_active = true
+      resetToDefaults()
     }
-  }
-}, { immediate: true })
+  },
+  { immediate: true, deep: true }
+)
 
 const handleSubmit = () => {
   if (props.branch) {
-    form.put(route('admin.branches.update', props.branch.id), {
+    form.put(route(getRouteName('branches.update'), props.branch.id), {
       onSuccess: () => {
         toast.success('Branch updated successfully')
+        form.reset()
+        resetToDefaults()
         emit('close')
       },
     })
   } else {
-    form.post(route('admin.branches.store'), {
+    form.post(route(getRouteName('branches.store')), {
       onSuccess: () => {
         toast.success('Branch created successfully')
+        form.reset()
+        resetToDefaults()
         emit('close')
       },
     })
@@ -73,6 +96,9 @@ const handleSubmit = () => {
     <DialogContent class="sm:max-w-[600px]">
       <DialogHeader>
         <DialogTitle>{{ branch ? 'Edit Branch' : 'Add New Branch' }}</DialogTitle>
+        <DialogDescription class="sr-only">
+          {{ branch ? 'Update the details and settings for this branch location.' : 'Create a new branch location for your car wash business.' }}
+        </DialogDescription>
       </DialogHeader>
 
       <form @submit.prevent="handleSubmit" class="space-y-4 mt-4">

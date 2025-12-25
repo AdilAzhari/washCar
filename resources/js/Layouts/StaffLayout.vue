@@ -16,6 +16,7 @@ import {
   LogOut,
   User,
 } from 'lucide-vue-next'
+import UserDropdown from '@/Components/UserDropdown.vue'
 
 const sidebarOpen = ref(false)
 const page = usePage()
@@ -93,34 +94,6 @@ const isActive = (routeName: string) => {
           </Link>
         </nav>
 
-        <!-- User Section -->
-        <div class="p-4 border-t">
-          <div class="flex items-center gap-3 px-3 py-2 rounded-lg mb-2">
-            <div class="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10">
-              <User class="w-4 h-4 text-primary" />
-            </div>
-            <div class="flex-1 min-w-0">
-              <p class="text-sm font-medium truncate">{{ user?.name }}</p>
-              <p class="text-xs text-muted-foreground truncate">Staff</p>
-            </div>
-          </div>
-          <Link
-            :href="route('profile.edit')"
-            class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground transition-colors mb-1"
-          >
-            <User class="w-5 h-5" />
-            Profile
-          </Link>
-          <Link
-            :href="route('logout')"
-            method="post"
-            as="button"
-            class="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-colors"
-          >
-            <LogOut class="w-5 h-5" />
-            Log Out
-          </Link>
-        </div>
       </div>
     </aside>
 
@@ -139,6 +112,10 @@ const isActive = (routeName: string) => {
 
           <div v-if="$slots.header" class="flex-1">
             <slot name="header" />
+          </div>
+
+          <div class="flex items-center gap-4">
+            <UserDropdown />
           </div>
         </div>
       </header>

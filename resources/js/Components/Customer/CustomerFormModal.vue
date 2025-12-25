@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, watch, computed } from 'vue'
 import { useForm, usePage } from '@inertiajs/vue3'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, Input, Label, Button } from '@/Components/ui'
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Input, Label, Button } from '@/Components/ui'
 import { toast } from 'vue-sonner'
 
 interface Customer {
@@ -47,33 +47,47 @@ const form = useForm({
   status: 'active',
 })
 
-watch([() => props.isOpen, () => props.customer], ([isOpen, customer]) => {
-  if (isOpen) {
-    if (customer) {
-      form.name = customer.name || ''
-      form.phone = customer.phone || ''
-      form.email = customer.email || ''
-      form.plate_number = customer.plate_number || ''
-      form.vehicle_type = customer.vehicle_type || 'sedan'
-      form.make = customer.make || ''
-      form.model = customer.model || ''
-      form.color = customer.color || ''
-      form.membership = customer.membership
-      form.status = customer.status
+const resetToDefaults = () => {
+  form.vehicle_type = 'sedan'
+  form.membership = 'Regular'
+  form.status = 'active'
+}
+
+// Watch for both modal state and data changes to sync the form
+watch(
+  [() => props.isOpen, () => props.customer],
+  ([isOpen, customer]) => {
+    if (isOpen) {
+      if (customer) {
+        form.name = customer.name || ''
+        form.phone = customer.phone || ''
+        form.email = customer.email || ''
+        form.plate_number = customer.plate_number || ''
+        form.vehicle_type = customer.vehicle_type || 'sedan'
+        form.make = customer.make || ''
+        form.model = customer.model || ''
+        form.color = customer.color || ''
+        form.membership = customer.membership
+        form.status = customer.status
+      } else {
+        form.reset()
+        resetToDefaults()
+      }
     } else {
       form.reset()
-      form.vehicle_type = 'sedan'
-      form.membership = 'Regular'
-      form.status = 'active'
+      resetToDefaults()
     }
-  }
-}, { immediate: true })
+  },
+  { immediate: true, deep: true }
+)
 
 const handleSubmit = () => {
   if (props.customer) {
     form.put(route(getRouteName('customers.update'), props.customer.id), {
       onSuccess: () => {
         toast.success('Customer updated successfully')
+        form.reset()
+        resetToDefaults()
         emit('close')
       },
     })
@@ -81,6 +95,8 @@ const handleSubmit = () => {
     form.post(route(getRouteName('customers.store')), {
       onSuccess: () => {
         toast.success('Customer created successfully')
+        form.reset()
+        resetToDefaults()
         emit('close')
       },
     })
@@ -93,6 +109,9 @@ const handleSubmit = () => {
     <DialogContent class="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
       <DialogHeader>
         <DialogTitle>{{ customer ? 'Edit Customer' : 'Add New Customer' }}</DialogTitle>
+        <DialogDescription class="sr-only">
+          {{ customer ? 'Update customer contact information and vehicle details.' : 'Register a new customer to the system.' }}
+        </DialogDescription>
       </DialogHeader>
 
       <form @submit.prevent="handleSubmit" class="space-y-4 mt-4">
@@ -124,7 +143,7 @@ const handleSubmit = () => {
             <select
               id="vehicle_type"
               v-model="form.vehicle_type"
-              class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+              class="flex h-11 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:border-primary"
               required
             >
               <option value="sedan">Sedan</option>
@@ -159,7 +178,7 @@ const handleSubmit = () => {
             <select
               id="membership"
               v-model="form.membership"
-              class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+              class="flex h-11 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:border-primary"
             >
               <option value="Regular">Regular</option>
               <option value="Silver">Silver</option>
@@ -173,7 +192,7 @@ const handleSubmit = () => {
             <select
               id="status"
               v-model="form.status"
-              class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+              class="flex h-11 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:border-primary"
             >
               <option value="active">Active</option>
               <option value="inactive">Inactive</option>

@@ -3,9 +3,10 @@ import { ref, computed } from 'vue'
 import { Head, router } from '@inertiajs/vue3'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import BayFormModal from '@/Components/Bay/BayFormModal.vue'
+import BayStatusCard from '@/Components/Dashboard/BayStatusCard.vue'
 import StatCard from '@/Components/Dashboard/StatCard.vue'
-import { Card, CardContent, CardHeader, CardTitle, Badge, Button, DeleteConfirmDialog } from '@/Components/ui'
-import { Plus, Edit, Trash2, Waves, Activity } from 'lucide-vue-next'
+import { EmptyState, Button, DeleteConfirmDialog } from '@/Components/ui'
+import { Plus, Waves, Activity, Wrench, ListX } from 'lucide-vue-next'
 
 interface Bay {
   id: number
@@ -33,6 +34,7 @@ const selectedBay = ref<Bay | null>(null)
 const deleteDialogOpen = ref(false)
 const bayToDelete = ref<Bay | null>(null)
 const isDeleting = ref(false)
+const filterStatus = ref<string>('all')
 
 const stats = computed(() => ({
   totalBays: props.bays.length,
@@ -40,6 +42,11 @@ const stats = computed(() => ({
   active: props.bays.filter(b => b.status === 'active').length,
   maintenance: props.bays.filter(b => b.status === 'maintenance').length,
 }))
+
+const filteredBays = computed(() => {
+  if (filterStatus.value === 'all') return props.bays
+  return props.bays.filter(b => b.status === filterStatus.value)
+})
 
 const handleEdit = (bay: Bay) => {
   selectedBay.value = bay
@@ -74,19 +81,6 @@ const openCreateModal = () => {
   isFormOpen.value = true
 }
 
-const getStatusVariant = (status: string) => {
-  switch (status) {
-    case 'idle':
-      return 'default'
-    case 'active':
-      return 'secondary'
-    case 'maintenance':
-      return 'destructive'
-    default:
-      return 'default'
-  }
-}
-
 const updateStatus = (bayId: number, status: string) => {
   router.patch(route('bays.update-status', bayId), { status }, {
     preserveScroll: true,
@@ -99,129 +93,113 @@ const updateStatus = (bayId: number, status: string) => {
 
   <AuthenticatedLayout>
     <template #header>
-      <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Bay Management
-      </h2>
+      <div class="flex items-center justify-between">
+        <h2 class="font-semibold text-xl leading-tight">Bay Management</h2>
+        <Button variant="primary-action" @click="openCreateModal">
+          <Plus class="w-4 h-4" />
+          Add Bay
+        </Button>
+      </div>
     </template>
 
-    <div class="py-12">
-      <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="space-y-6 animate-fade-in">
-          <!-- Header -->
-          <div class="flex items-center justify-between">
-            <div>
-              <h1 class="text-2xl font-bold mb-2">Bay Management</h1>
-              <p class="text-muted-foreground">Manage washing stations and monitor performance</p>
-            </div>
-            <Button class="btn-primary" @click="openCreateModal">
-              <Plus class="w-4 h-4 mr-2" />
-              Add Bay
-            </Button>
-          </div>
-
+    <div class="py-8">
+      <div class="max-w-[1800px] mx-auto sm:px-6 lg:px-8">
+        <div class="space-y-6 animate-fade-in-fast">
           <!-- Stats Grid -->
           <div class="grid gap-4 md:grid-cols-4">
             <StatCard
               title="Total Bays"
               :value="stats.totalBays"
+              subtitle="All washing stations"
               :icon="Waves"
-              icon-class-name="bg-primary/10 text-primary"
+              accent-color="primary"
             />
             <StatCard
               title="Idle"
               :value="stats.idle"
-              :icon="Activity"
-              icon-class-name="bg-muted/10 text-muted-foreground"
+              subtitle="Ready for service"
+              :icon="ListX"
+              accent-color="bay-idle"
             />
             <StatCard
               title="Active"
               :value="stats.active"
+              subtitle="Currently washing"
               :icon="Activity"
-              icon-class-name="bg-success/10 text-success"
+              accent-color="bay-active"
             />
             <StatCard
               title="Maintenance"
               :value="stats.maintenance"
-              :icon="Activity"
-              icon-class-name="bg-destructive/10 text-destructive"
+              subtitle="Under maintenance"
+              :icon="Wrench"
+              accent-color="bay-maintenance"
             />
           </div>
 
+          <!-- Filter Buttons -->
+          <div class="flex items-center gap-2">
+            <Button
+              size="sm"
+              :variant="filterStatus === 'all' ? 'default' : 'outline'"
+              @click="filterStatus = 'all'"
+            >
+              All ({{ stats.totalBays }})
+            </Button>
+            <Button
+              size="sm"
+              :variant="filterStatus === 'idle' ? 'default' : 'outline'"
+              @click="filterStatus = 'idle'"
+            >
+              Idle ({{ stats.idle }})
+            </Button>
+            <Button
+              size="sm"
+              :variant="filterStatus === 'active' ? 'default' : 'outline'"
+              @click="filterStatus = 'active'"
+            >
+              Active ({{ stats.active }})
+            </Button>
+            <Button
+              size="sm"
+              :variant="filterStatus === 'maintenance' ? 'default' : 'outline'"
+              @click="filterStatus = 'maintenance'"
+            >
+              Maintenance ({{ stats.maintenance }})
+            </Button>
+          </div>
+
           <!-- Bays Grid -->
-          <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            <Card v-for="bay in bays" :key="bay.id" class="hover-lift">
-              <CardHeader>
-                <div class="flex items-center justify-between">
-                  <CardTitle class="text-lg">{{ bay.name }}</CardTitle>
-                  <Badge :variant="getStatusVariant(bay.status)" class="capitalize">
-                    {{ bay.status }}
-                  </Badge>
-                </div>
-                <p class="text-sm text-muted-foreground">{{ bay.branch.name }}</p>
-              </CardHeader>
-              <CardContent class="space-y-3">
-                <div v-if="bay.currentWash" class="bg-muted/50 rounded-lg p-3 space-y-2">
-                  <p class="text-sm font-medium">Current Wash</p>
-                  <div class="text-xs text-muted-foreground">
-                    Active wash in progress
-                  </div>
-                </div>
-                <div v-else class="bg-muted/50 rounded-lg p-3">
-                  <p class="text-sm text-center text-muted-foreground">No active wash</p>
-                </div>
-
-                <!-- Status Change Buttons -->
-                <div class="flex flex-wrap gap-1">
-                  <Button
-                    v-if="bay.status !== 'idle'"
-                    size="sm"
-                    variant="outline"
-                    @click="updateStatus(bay.id, 'idle')"
-                  >
-                    Set Idle
-                  </Button>
-                  <Button
-                    v-if="bay.status !== 'active'"
-                    size="sm"
-                    variant="outline"
-                    @click="updateStatus(bay.id, 'active')"
-                  >
-                    Set Active
-                  </Button>
-                  <Button
-                    v-if="bay.status !== 'maintenance'"
-                    size="sm"
-                    variant="outline"
-                    @click="updateStatus(bay.id, 'maintenance')"
-                  >
-                    Maintenance
-                  </Button>
-                </div>
-
-                <!-- Action Buttons -->
-                <div class="flex gap-2 pt-2 border-t">
-                  <Button size="sm" variant="outline" class="flex-1" @click="handleEdit(bay)">
-                    <Edit class="w-4 h-4 mr-1" />
-                    Edit
-                  </Button>
-                  <Button size="sm" variant="outline" @click="handleDelete(bay.id)">
-                    <Trash2 class="w-4 h-4" />
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+          <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <BayStatusCard
+              v-for="bay in filteredBays"
+              :key="bay.id"
+              :bay-number="bay.name"
+              :status="bay.status.toLowerCase() as 'idle' | 'active' | 'maintenance' | 'completed'"
+              :current-wash="bay.currentWash"
+              @edit="handleEdit(bay)"
+              @delete="handleDelete(bay.id)"
+              @status-change="(newStatus: string) => updateStatus(bay.id, newStatus)"
+            />
           </div>
 
           <!-- Empty State -->
-          <div v-if="bays.length === 0" class="text-center py-12">
-            <Waves class="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-            <h3 class="text-lg font-semibold mb-2">No bays found</h3>
-            <p class="text-muted-foreground mb-4">Get started by adding your first bay</p>
-            <Button @click="openCreateModal">
-              <Plus class="w-4 h-4 mr-2" />
-              Add Bay
-            </Button>
-          </div>
+          <EmptyState
+            v-if="filteredBays.length === 0 && bays.length > 0"
+            :icon="Waves"
+            :title="`No ${filterStatus} bays`"
+            :message="`There are no bays with ${filterStatus} status.`"
+          />
+
+          <EmptyState
+            v-if="bays.length === 0"
+            :icon="Waves"
+            title="No bays found"
+            message="Get started by adding your first washing bay to begin managing your car wash operations."
+            action-label="Add Bay"
+            help-text="Bays are the washing stations where vehicles are serviced."
+            @action="openCreateModal"
+          />
 
           <!-- Bay Form Modal -->
           <BayFormModal

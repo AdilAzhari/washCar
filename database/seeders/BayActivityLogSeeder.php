@@ -18,7 +18,7 @@ class BayActivityLogSeeder extends Seeder
             return;
         }
 
-        $statuses = ['idle', 'active', 'maintenance'];
+        $statuses = ['active', 'maintenance'];
 
         // Create activity logs for the past 30 days
         for ($day = 30; $day >= 1; $day--) {
@@ -90,20 +90,10 @@ class BayActivityLogSeeder extends Seeder
     private function getReasonForChange(string $from, string $to): ?string
     {
         $reasons = [
-            'idle_to_active' => [
-                'Customer service started',
-                'Wash initiated',
-                'Bay assigned to queue customer',
-            ],
             'active_to_idle' => [
                 'Service completed',
                 'Wash finished',
                 'Customer departed',
-            ],
-            'idle_to_maintenance' => [
-                'Scheduled maintenance',
-                'Equipment malfunction detected',
-                'Routine inspection required',
             ],
             'active_to_maintenance' => [
                 'Emergency maintenance required',

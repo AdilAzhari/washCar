@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -50,6 +50,38 @@
     --sidebar-accent-foreground: 210 20% 98%;
     --sidebar-border: 215 25% 23%;
     --sidebar-ring: 199 89% 48%;
+
+    /* Bay Status Colors */
+    --bay-idle: 215 16% 47%;
+    --bay-idle-foreground: 0 0% 100%;
+    --bay-active: 199 89% 48%;
+    --bay-active-foreground: 0 0% 100%;
+    --bay-maintenance: 38 92% 50%;
+    --bay-maintenance-foreground: 0 0% 100%;
+    --bay-completed: 160 84% 39%;
+    --bay-completed-foreground: 0 0% 100%;
+
+    /* Queue Status Colors */
+    --queue-waiting: 38 92% 50%;
+    --queue-waiting-foreground: 0 0% 100%;
+    --queue-in-progress: 199 89% 48%;
+    --queue-in-progress-foreground: 0 0% 100%;
+    --queue-completed: 160 84% 39%;
+    --queue-completed-foreground: 0 0% 100%;
+
+    /* Membership Tier Colors */
+    --tier-regular: 215 16% 47%;
+    --tier-regular-foreground: 0 0% 100%;
+    --tier-silver: 0 0% 75%;
+    --tier-silver-foreground: 215 25% 15%;
+    --tier-gold: 45 100% 51%;
+    --tier-gold-foreground: 215 25% 15%;
+    --tier-platinum: 270 50% 60%;
+    --tier-platinum-foreground: 0 0% 100%;
+
+    /* Active Cyan (Wash in Progress) */
+    --active-cyan: 187 85% 53%;
+    --active-cyan-foreground: 0 0% 100%;
   }
 
   .dark {
@@ -89,6 +121,38 @@
     --sidebar-accent-foreground: 210 20% 98%;
     --sidebar-border: 215 25% 20%;
     --sidebar-ring: 199 89% 48%;
+
+    /* Bay Status Colors (Dark Mode) */
+    --bay-idle: 215 16% 47%;
+    --bay-idle-foreground: 0 0% 100%;
+    --bay-active: 199 89% 48%;
+    --bay-active-foreground: 0 0% 100%;
+    --bay-maintenance: 38 92% 50%;
+    --bay-maintenance-foreground: 0 0% 100%;
+    --bay-completed: 160 84% 39%;
+    --bay-completed-foreground: 0 0% 100%;
+
+    /* Queue Status Colors (Dark Mode) */
+    --queue-waiting: 38 92% 50%;
+    --queue-waiting-foreground: 0 0% 100%;
+    --queue-in-progress: 199 89% 48%;
+    --queue-in-progress-foreground: 0 0% 100%;
+    --queue-completed: 160 84% 39%;
+    --queue-completed-foreground: 0 0% 100%;
+
+    /* Membership Tier Colors (Dark Mode) */
+    --tier-regular: 215 16% 47%;
+    --tier-regular-foreground: 0 0% 100%;
+    --tier-silver: 0 0% 75%;
+    --tier-silver-foreground: 215 25% 15%;
+    --tier-gold: 45 100% 51%;
+    --tier-gold-foreground: 215 25% 15%;
+    --tier-platinum: 270 50% 60%;
+    --tier-platinum-foreground: 0 0% 100%;
+
+    /* Active Cyan (Wash in Progress - Dark Mode) */
+    --active-cyan: 187 85% 53%;
+    --active-cyan-foreground: 0 0% 100%;
   }
 }
 

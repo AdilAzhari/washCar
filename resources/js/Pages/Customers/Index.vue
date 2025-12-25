@@ -3,7 +3,8 @@ import { ref, computed } from 'vue'
 import { Head, router } from '@inertiajs/vue3'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import CustomerFormModal from '@/Components/Customer/CustomerFormModal.vue'
-import { Card, CardContent, Badge, Button, Input, Table, TableHeader, TableBody, TableRow, TableHead, TableCell, DeleteConfirmDialog } from '@/Components/ui'
+import { EmptyState, Card, CardContent, Badge, Button, Input, Table, TableHeader, TableBody, TableRow, TableHead, TableCell, DeleteConfirmDialog } from '@/Components/ui'
+import StatCard from '@/Components/Dashboard/StatCard.vue'
 import { Plus, Edit, Trash2, Users, User, Phone, Car } from 'lucide-vue-next'
 
 interface Customer {
@@ -130,53 +131,34 @@ const getMembershipColor = (membership: string) => {
 
           <!-- Stats Grid -->
           <div class="grid gap-4 md:grid-cols-4">
-            <Card class="stat-card">
-              <CardContent class="p-6">
-                <div class="flex items-center justify-between">
-                  <div>
-                    <p class="text-sm text-muted-foreground">Total Customers</p>
-                    <p class="text-3xl font-bold mt-1">{{ stats.total }}</p>
-                  </div>
-                  <Users class="w-8 h-8 text-primary" />
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card class="stat-card">
-              <CardContent class="p-6">
-                <div class="flex items-center justify-between">
-                  <div>
-                    <p class="text-sm text-muted-foreground">Active</p>
-                    <p class="text-3xl font-bold mt-1 text-success">{{ stats.active }}</p>
-                  </div>
-                  <User class="w-8 h-8 text-success" />
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card class="stat-card">
-              <CardContent class="p-6">
-                <div class="flex items-center justify-between">
-                  <div>
-                    <p class="text-sm text-muted-foreground">Regular Members</p>
-                    <p class="text-3xl font-bold mt-1">{{ stats.regular }}</p>
-                  </div>
-                  <User class="w-8 h-8 text-muted-foreground" />
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card class="stat-card">
-              <CardContent class="p-6">
-                <div class="flex items-center justify-between">
-                  <div>
-                    <p class="text-sm text-muted-foreground">Premium</p>
-                    <p class="text-3xl font-bold mt-1 text-accent">{{ stats.premium }}</p>
-                  </div>
-                  <User class="w-8 h-8 text-accent" />
-                </div>
-              </CardContent>
-            </Card>
+            <StatCard
+              title="Total Customers"
+              :value="stats.total"
+              subtitle="All registered"
+              :icon="Users"
+              accent-color="primary"
+            />
+            <StatCard
+              title="Active"
+              :value="stats.active"
+              subtitle="Current customers"
+              :icon="User"
+              accent-color="success"
+            />
+            <StatCard
+              title="Regular Members"
+              :value="stats.regular"
+              subtitle="Standard tier"
+              :icon="User"
+              accent-color="tier-regular"
+            />
+            <StatCard
+              title="Premium"
+              :value="stats.premium"
+              subtitle="Gold & Platinum"
+              :icon="User"
+              accent-color="tier-gold"
+            />
           </div>
 
           <!-- Search -->
@@ -257,17 +239,22 @@ const getMembershipColor = (membership: string) => {
           </Card>
 
           <!-- Empty State -->
-          <div v-if="filteredCustomers.length === 0" class="text-center py-12">
-            <Users class="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-            <h3 class="text-lg font-semibold mb-2">No customers found</h3>
-            <p class="text-muted-foreground mb-4">
-              {{ searchQuery ? 'Try adjusting your search query' : 'Get started by adding your first customer' }}
-            </p>
-            <Button v-if="!searchQuery" @click="openCreateModal">
-              <Plus class="w-4 h-4 mr-2" />
-              Add Customer
-            </Button>
-          </div>
+          <EmptyState
+            v-if="filteredCustomers.length === 0 && searchQuery"
+            :icon="Users"
+            title="No customers found"
+            message="Try adjusting your search query to find what you're looking for."
+          />
+
+          <EmptyState
+            v-if="filteredCustomers.length === 0 && !searchQuery"
+            :icon="Users"
+            title="No customers yet"
+            message="Start building your customer base by adding your first customer. Track their wash history and membership tiers."
+            action-label="Add Customer"
+            help-text="Customers can also join the queue by scanning QR codes at your branches."
+            @action="openCreateModal"
+          />
 
           <!-- Customer Form Modal -->
           <CustomerFormModal

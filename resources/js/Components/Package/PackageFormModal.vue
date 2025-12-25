@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, watch, computed } from 'vue'
 import { useForm, usePage } from '@inertiajs/vue3'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, Input, Label, Button, Textarea } from '@/Components/ui'
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Input, Label, Button, Textarea } from '@/Components/ui'
 import { toast } from 'vue-sonner'
 
 interface Package {
@@ -50,29 +50,43 @@ const predefinedColors = [
   { name: 'Yellow', value: '#eab308' },
 ]
 
-watch([() => props.isOpen, () => props.package], ([isOpen, pkg]) => {
-  if (isOpen) {
-    if (pkg) {
-      form.name = pkg.name
-      form.description = pkg.description || ''
-      form.price = pkg.price
-      form.duration_minutes = pkg.duration_minutes
-      form.color = pkg.color
-      form.is_active = pkg.is_active
+const resetToDefaults = () => {
+  form.duration_minutes = 15
+  form.color = '#3b82f6'
+  form.is_active = true
+}
+
+// Watch for both modal state and data changes to sync the form
+watch(
+  [() => props.isOpen, () => props.package],
+  ([isOpen, pkg]) => {
+    if (isOpen) {
+      if (pkg) {
+        form.name = pkg.name
+        form.description = pkg.description || ''
+        form.price = pkg.price
+        form.duration_minutes = pkg.duration_minutes
+        form.color = pkg.color
+        form.is_active = pkg.is_active
+      } else {
+        form.reset()
+        resetToDefaults()
+      }
     } else {
       form.reset()
-      form.duration_minutes = 15
-      form.color = '#3b82f6'
-      form.is_active = true
+      resetToDefaults()
     }
-  }
-}, { immediate: true })
+  },
+  { immediate: true, deep: true }
+)
 
 const handleSubmit = () => {
   if (props.package) {
     form.put(route(getRouteName('packages.update'), props.package.id), {
       onSuccess: () => {
         toast.success('Package updated successfully')
+        form.reset()
+        resetToDefaults()
         emit('close')
       },
     })
@@ -80,6 +94,8 @@ const handleSubmit = () => {
     form.post(route(getRouteName('packages.store')), {
       onSuccess: () => {
         toast.success('Package created successfully')
+        form.reset()
+        resetToDefaults()
         emit('close')
       },
     })
@@ -92,6 +108,9 @@ const handleSubmit = () => {
     <DialogContent class="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
       <DialogHeader>
         <DialogTitle>{{ package ? 'Edit Package' : 'Add New Package' }}</DialogTitle>
+        <DialogDescription class="sr-only">
+          {{ package ? 'Customize wash package details, pricing, and duration.' : 'Create a new service package for your customers.' }}
+        </DialogDescription>
       </DialogHeader>
 
       <form @submit.prevent="handleSubmit" class="space-y-4 mt-4">
@@ -176,7 +195,7 @@ const handleSubmit = () => {
           <select
             id="is_active"
             v-model="form.is_active"
-            class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+            class="flex h-11 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:border-primary"
           >
             <option :value="true">Active</option>
             <option :value="false">Inactive</option>

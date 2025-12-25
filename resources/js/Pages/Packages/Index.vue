@@ -3,7 +3,8 @@ import { ref, computed } from 'vue'
 import { Head, router, usePage } from '@inertiajs/vue3'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import PackageFormModal from '@/Components/Package/PackageFormModal.vue'
-import { Card, CardContent, CardHeader, CardTitle, Badge, Button, Input, DeleteConfirmDialog } from '@/Components/ui'
+import { EmptyState, Card, CardContent, CardHeader, CardTitle, Badge, Button, Input, DeleteConfirmDialog } from '@/Components/ui'
+import StatCard from '@/Components/Dashboard/StatCard.vue'
 import { Plus, Edit, Trash2, Package as PackageIcon, DollarSign, Clock } from 'lucide-vue-next'
 
 interface Package {
@@ -127,53 +128,34 @@ const formatDuration = (minutes: number) => {
 
           <!-- Stats Grid -->
           <div class="grid gap-4 md:grid-cols-4">
-            <Card class="stat-card">
-              <CardContent class="p-6">
-                <div class="flex items-center justify-between">
-                  <div>
-                    <p class="text-sm text-muted-foreground">Total Packages</p>
-                    <p class="text-3xl font-bold mt-1">{{ stats.total }}</p>
-                  </div>
-                  <PackageIcon class="w-8 h-8 text-primary" />
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card class="stat-card">
-              <CardContent class="p-6">
-                <div class="flex items-center justify-between">
-                  <div>
-                    <p class="text-sm text-muted-foreground">Active</p>
-                    <p class="text-3xl font-bold mt-1 text-success">{{ stats.active }}</p>
-                  </div>
-                  <PackageIcon class="w-8 h-8 text-success" />
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card class="stat-card">
-              <CardContent class="p-6">
-                <div class="flex items-center justify-between">
-                  <div>
-                    <p class="text-sm text-muted-foreground">Total Washes</p>
-                    <p class="text-3xl font-bold mt-1">{{ stats.totalWashes }}</p>
-                  </div>
-                  <Clock class="w-8 h-8 text-accent" />
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card class="stat-card">
-              <CardContent class="p-6">
-                <div class="flex items-center justify-between">
-                  <div>
-                    <p class="text-sm text-muted-foreground">Total Revenue</p>
-                    <p class="text-3xl font-bold mt-1">{{ formatPrice(stats.totalRevenue) }}</p>
-                  </div>
-                  <DollarSign class="w-8 h-8 text-primary" />
-                </div>
-              </CardContent>
-            </Card>
+            <StatCard
+              title="Total Packages"
+              :value="stats.total"
+              subtitle="All service packages"
+              :icon="PackageIcon"
+              accent-color="primary"
+            />
+            <StatCard
+              title="Active"
+              :value="stats.active"
+              subtitle="Available for sale"
+              :icon="PackageIcon"
+              accent-color="success"
+            />
+            <StatCard
+              title="Total Washes"
+              :value="stats.totalWashes"
+              subtitle="Across all packages"
+              :icon="Clock"
+              accent-color="bay-active"
+            />
+            <StatCard
+              title="Total Revenue"
+              :value="formatPrice(stats.totalRevenue)"
+              subtitle="Lifetime earnings"
+              :icon="DollarSign"
+              accent-color="primary"
+            />
           </div>
 
           <!-- Search -->
@@ -237,17 +219,22 @@ const formatDuration = (minutes: number) => {
           </div>
 
           <!-- Empty State -->
-          <div v-if="filteredPackages.length === 0" class="text-center py-12">
-            <PackageIcon class="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-            <h3 class="text-lg font-semibold mb-2">No packages found</h3>
-            <p class="text-muted-foreground mb-4">
-              {{ searchQuery ? 'Try adjusting your search query' : 'Get started by adding your first package' }}
-            </p>
-            <Button v-if="!searchQuery" @click="openCreateModal">
-              <Plus class="w-4 h-4 mr-2" />
-              Add Package
-            </Button>
-          </div>
+          <EmptyState
+            v-if="filteredPackages.length === 0 && searchQuery"
+            :icon="PackageIcon"
+            title="No packages found"
+            message="Try adjusting your search query to find what you're looking for."
+          />
+
+          <EmptyState
+            v-if="filteredPackages.length === 0 && !searchQuery"
+            :icon="PackageIcon"
+            title="No packages yet"
+            message="Create your first wash package to start offering services. Define pricing, duration, and service details for your customers."
+            action-label="Add Package"
+            help-text="Packages define the services you offer and help organize your pricing structure."
+            @action="openCreateModal"
+          />
 
           <!-- Package Form Modal -->
           <PackageFormModal

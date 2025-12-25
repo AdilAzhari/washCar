@@ -17,7 +17,7 @@ class QueueController extends Controller
 {
     public function index(): Response
     {
-        $queueEntries = QueueEntry::with(['branch', 'customer', 'package'])
+        $queueEntries = QueueEntry::with(['branch', 'customer', 'package', 'wash'])
             ->orderBy('position')
             ->get();
 
@@ -60,8 +60,16 @@ class QueueController extends Controller
             'status' => 'required|in:waiting,in_progress,completed,cancelled',
         ]);
 
-        if ($validated['status'] === 'in_progress' && ! $queue->started_at) {
-            $validated['started_at'] = now();
+        if ($validated['status'] === 'in_progress') {
+            if ($queue->payment_status !== 'paid') {
+                return back()->with('error', 'Cannot start wash. Payment must be confirmed first.');
+            }
+            if (!$queue->package_id) {
+                return back()->with('error', 'Cannot start wash. A package must be assigned first.');
+            }
+            if (!$queue->started_at) {
+                $validated['started_at'] = now();
+            }
         }
 
         if (in_array($validated['status'], ['completed', 'cancelled'])) {
@@ -118,6 +126,15 @@ class QueueController extends Controller
 
     public function start(QueueEntry $queue): RedirectResponse
     {
+        // Check payment status and package
+        if ($queue->payment_status !== 'paid') {
+            return back()->with('error', 'Cannot start wash. Payment must be confirmed first.');
+        }
+
+        if (!$queue->package_id) {
+            return back()->with('error', 'Cannot start wash. A package must be assigned first.');
+        }
+
         // Find an available bay in the same branch
         $bay = Bay::where('branch_id', $queue->branch_id)
             ->where('status', 'idle')

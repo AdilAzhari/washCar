@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { watch, computed } from 'vue'
 import { useForm, usePage } from '@inertiajs/vue3'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, Input, Label, Button, Textarea } from '@/Components/ui'
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Input, Label, Button, Textarea } from '@/Components/ui'
 import { toast } from 'vue-sonner'
 
 const props = defineProps<{
@@ -30,28 +30,44 @@ const form = useForm({
   notes: '',
 })
 
-watch([() => props.isOpen, () => props.item], ([isOpen, item]) => {
-  if (isOpen) {
-    if (item) {
-      form.branch_id = item.branch?.id || null
-      form.name = item.name
-      form.category = item.category
-      form.quantity = item.quantity
-      form.min_quantity = item.min_quantity
-      form.unit = item.unit
-      form.unit_price = item.unit_price
-      form.notes = item.notes || ''
+const resetToDefaults = () => {
+  form.min_quantity = 10
+  form.branch_id = null
+}
+
+// Watch for both modal state and data changes to sync the form
+watch(
+  [() => props.isOpen, () => props.item],
+  ([isOpen, item]) => {
+    if (isOpen) {
+      if (item) {
+        form.branch_id = item.branch?.id || null
+        form.name = item.name
+        form.category = item.category
+        form.quantity = item.quantity
+        form.min_quantity = item.min_quantity
+        form.unit = item.unit
+        form.unit_price = item.unit_price
+        form.notes = item.notes || ''
+      } else {
+        form.reset()
+        resetToDefaults()
+      }
     } else {
       form.reset()
+      resetToDefaults()
     }
-  }
-}, { immediate: true })
+  },
+  { immediate: true, deep: true }
+)
 
 const handleSubmit = () => {
   if (props.item) {
     form.put(route(getRouteName('inventory.update'), props.item.id), {
       onSuccess: () => {
         toast.success('Item updated successfully')
+        form.reset()
+        resetToDefaults()
         emit('close')
       },
     })
@@ -59,6 +75,8 @@ const handleSubmit = () => {
     form.post(route(getRouteName('inventory.store')), {
       onSuccess: () => {
         toast.success('Item created successfully')
+        form.reset()
+        resetToDefaults()
         emit('close')
       },
     })
@@ -71,11 +89,14 @@ const handleSubmit = () => {
     <DialogContent class="sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
       <DialogHeader>
         <DialogTitle>{{ item ? 'Edit Item' : 'Add Item' }}</DialogTitle>
+        <DialogDescription class="sr-only">
+          {{ item ? 'Update inventory item details and stock levels.' : 'Add a new item to your inventory.' }}
+        </DialogDescription>
       </DialogHeader>
       <form @submit.prevent="handleSubmit" class="space-y-4 mt-4">
         <div class="space-y-2">
           <Label for="branch_id">Branch *</Label>
-          <select id="branch_id" v-model="form.branch_id" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm" required>
+          <select id="branch_id" v-model="form.branch_id" class="flex h-11 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:border-primary" required>
             <option :value="null">Select Branch</option>
             <option v-for="branch in branches" :key="branch.id" :value="branch.id">{{ branch.name }}</option>
           </select>

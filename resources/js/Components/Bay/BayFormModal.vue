@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, watch, computed } from 'vue'
 import { useForm, usePage } from '@inertiajs/vue3'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, Input, Label, Button } from '@/Components/ui'
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Input, Label, Button } from '@/Components/ui'
 import { toast } from 'vue-sonner'
 
 interface Bay {
@@ -43,24 +43,39 @@ const form = useForm({
   status: 'idle' as 'idle' | 'active' | 'maintenance',
 })
 
-watch([() => props.isOpen, () => props.bay], ([isOpen, bay]) => {
-  if (isOpen) {
-    if (bay) {
-      form.name = bay.name
-      form.branch_id = bay.branch_id || bay.branch?.id || null
-      form.status = bay.status as any
+const resetToDefaults = () => {
+  form.status = 'idle'
+  form.branch_id = null
+}
+
+// Watch for both modal state and data changes to sync the form
+watch(
+  [() => props.isOpen, () => props.bay],
+  ([isOpen, bay]) => {
+    if (isOpen) {
+      if (bay) {
+        form.name = bay.name
+        form.branch_id = bay.branch_id || bay.branch?.id || null
+        form.status = bay.status as any
+      } else {
+        form.reset()
+        resetToDefaults()
+      }
     } else {
       form.reset()
-      form.status = 'idle'
+      resetToDefaults()
     }
-  }
-}, { immediate: true })
+  },
+  { immediate: true, deep: true }
+)
 
 const handleSubmit = () => {
   if (props.bay) {
     form.put(route(getRouteName('bays.update'), props.bay.id), {
       onSuccess: () => {
         toast.success('Bay updated successfully')
+        form.reset()
+        resetToDefaults()
         emit('close')
       },
     })
@@ -68,6 +83,8 @@ const handleSubmit = () => {
     form.post(route(getRouteName('bays.store')), {
       onSuccess: () => {
         toast.success('Bay created successfully')
+        form.reset()
+        resetToDefaults()
         emit('close')
       },
     })
@@ -80,6 +97,9 @@ const handleSubmit = () => {
     <DialogContent class="sm:max-w-[500px]">
       <DialogHeader>
         <DialogTitle>{{ bay ? 'Edit Bay' : 'Add New Bay' }}</DialogTitle>
+        <DialogDescription class="sr-only">
+          {{ bay ? 'Edit the details of the selected bay.' : 'Fill in the information to add a new washing bay.' }}
+        </DialogDescription>
       </DialogHeader>
 
       <form @submit.prevent="handleSubmit" class="space-y-4 mt-4">
@@ -93,7 +113,7 @@ const handleSubmit = () => {
           <select
             id="branch_id"
             v-model="form.branch_id"
-            class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background"
+            class="flex h-11 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:border-primary"
             required
           >
             <option :value="null" disabled>Select a branch</option>
@@ -108,7 +128,7 @@ const handleSubmit = () => {
           <select
             id="status"
             v-model="form.status"
-            class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background"
+            class="flex h-11 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:border-primary"
             required
           >
             <option value="idle">Idle</option>
