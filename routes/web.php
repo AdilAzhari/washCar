@@ -25,8 +25,17 @@ use App\Http\Controllers\WashController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
+    if (auth()->check()) {
+        return redirect()->route('dashboard');
+    }
+
     return redirect()->route('login');
 });
+
+// Dashboard hub - redirects based on role
+Route::middleware(['auth', 'role.redirect'])->get('/dashboard', function () {
+    return redirect('/');
+})->name('dashboard');
 
 // Public queue routes (no authentication required)
 Route::get('/queue/join/{branchCode}', [PublicQueueController::class, 'join'])->name('queue.join');

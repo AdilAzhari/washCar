@@ -73,7 +73,7 @@ final class DashboardController extends Controller
                 'id' => 'TXN-'.mb_str_pad((string) $wash->id, 3, '0', STR_PAD_LEFT),
                 'customer' => $wash->customer->name ?? 'N/A',
                 'plate' => $wash->customer->plate_number ?? 'N/A',
-                'amount' => '$'.number_format($wash->package->price ?? 0, 0),
+                'amount' => '$'.number_format((float) ($wash->package->price ?? 0), 0),
                 'method' => 'Card', // You can add payment method field later
                 'status' => 'completed',
                 'completedAt' => $wash->completed_at,
@@ -93,7 +93,7 @@ final class DashboardController extends Controller
             'ongoingWashes' => $ongoingWashes,
             'inQueue' => $inQueue,
             'completedToday' => $completedToday,
-            'todayRevenue' => '$'.number_format($todayRevenue, 0),
+            'todayRevenue' => '$'.number_format((float) $todayRevenue, 0),
         ];
 
         return Inertia::render('Dashboard', [
