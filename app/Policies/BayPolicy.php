@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Policies;
 
 use App\Models\Bay;
 use App\Models\User;
 
-class BayPolicy
+final class BayPolicy
 {
     public function viewAny(User $user): bool
     {
@@ -20,17 +22,17 @@ class BayPolicy
         }
 
         // Manager and Staff can view bays in their branch
-        if (($user->isManager() || $user->isStaff()) && $user->branch_id === $bay->branch_id) {
-            return true;
-        }
-
-        return false;
+        return ($user->isManager() || $user->isStaff()) && $user->branch_id === $bay->branch_id;
     }
 
     public function create(User $user): bool
     {
         // Admin and Manager can create bays
-        return $user->isAdmin() || $user->isManager();
+        if ($user->isAdmin()) {
+            return true;
+        }
+
+        return $user->isManager();
     }
 
     public function update(User $user, Bay $bay): bool
@@ -40,11 +42,7 @@ class BayPolicy
         }
 
         // Manager and Staff can update bays in their branch
-        if (($user->isManager() || $user->isStaff()) && $user->branch_id === $bay->branch_id) {
-            return true;
-        }
-
-        return false;
+        return ($user->isManager() || $user->isStaff()) && $user->branch_id === $bay->branch_id;
     }
 
     public function delete(User $user, Bay $bay): bool
@@ -54,11 +52,7 @@ class BayPolicy
         }
 
         // Only Manager can delete bays in their branch
-        if ($user->isManager() && $user->branch_id === $bay->branch_id) {
-            return true;
-        }
-
-        return false;
+        return $user->isManager() && $user->branch_id === $bay->branch_id;
     }
 
     public function updateStatus(User $user, Bay $bay): bool

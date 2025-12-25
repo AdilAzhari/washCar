@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Unit\Services;
 
 use App\Models\LoyaltyPoint;
@@ -10,11 +12,12 @@ use App\Services\LoyaltyService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class LoyaltyServiceTest extends TestCase
+final class LoyaltyServiceTest extends TestCase
 {
     use RefreshDatabase;
 
     protected LoyaltyService $loyaltyService;
+
     protected User $customer;
 
     protected function setUp(): void

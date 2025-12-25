@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature;
 
 use App\Models\Branch;
@@ -11,7 +13,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
-class QueueEntryObserverTest extends TestCase
+final class QueueEntryObserverTest extends TestCase
 {
     use RefreshDatabase;
 

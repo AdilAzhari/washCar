@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Unit\Policies;
 
 use App\Models\Appointment;
@@ -10,11 +12,12 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class BranchScopingTest extends TestCase
+final class BranchScopingTest extends TestCase
 {
     use RefreshDatabase;
 
     protected Branch $branchA;
+
     protected Branch $branchB;
 
     protected function setUp(): void

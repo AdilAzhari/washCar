@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Notifications;
 
 use App\Models\QueueEntry;
@@ -8,7 +10,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class QueuePositionUpdate extends Notification implements ShouldQueue
+final class QueuePositionUpdate extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -21,14 +23,12 @@ class QueuePositionUpdate extends Notification implements ShouldQueue
      */
     public function via(object $notifiable): array
     {
-        $channels = ['database'];
-
         // SMS is ideal for queue notifications
         // if ($notifiable->phone && config('services.vonage.key')) {
         //     $channels[] = 'vonage';
         // }
 
-        return $channels;
+        return ['database'];
     }
 
     /**

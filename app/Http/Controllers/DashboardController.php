@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\Bay;
@@ -11,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class DashboardController extends Controller
+final class DashboardController extends Controller
 {
     public function index(): Response
     {
@@ -31,12 +33,12 @@ class DashboardController extends Controller
         // Get bays with their current washes and queue
         $bays = Bay::with([
             'branch',
-            'washes' => function ($query) {
+            'washes' => function ($query): void {
                 $query->where('status', 'active')
                     ->with(['customer', 'package'])
                     ->latest();
             },
-        ])->get()->map(function ($bay) {
+        ])->get()->map(function ($bay): array {
             $currentWash = $bay->washes->first();
             $queueCount = QueueEntry::where('status', 'waiting')->count();
 
@@ -67,20 +69,18 @@ class DashboardController extends Controller
             ->latest('completed_at')
             ->limit(5)
             ->get()
-            ->map(function ($wash) {
-                return [
-                    'id' => 'TXN-' . str_pad($wash->id, 3, '0', STR_PAD_LEFT),
-                    'customer' => $wash->customer->name ?? 'N/A',
-                    'plate' => $wash->customer->plate_number ?? 'N/A',
-                    'amount' => '$' . number_format($wash->package->price ?? 0, 0),
-                    'method' => 'Card', // You can add payment method field later
-                    'status' => 'completed',
-                    'completedAt' => $wash->completed_at,
-                ];
-            });
+            ->map(fn ($wash): array => [
+                'id' => 'TXN-'.mb_str_pad((string) $wash->id, 3, '0', STR_PAD_LEFT),
+                'customer' => $wash->customer->name ?? 'N/A',
+                'plate' => $wash->customer->plate_number ?? 'N/A',
+                'amount' => '$'.number_format($wash->package->price ?? 0, 0),
+                'method' => 'Card', // You can add payment method field later
+                'status' => 'completed',
+                'completedAt' => $wash->completed_at,
+            ]);
 
         // Get package sales for today
-        $packageSales = Package::leftJoin('washes', function ($join) {
+        $packageSales = Package::leftJoin('washes', function ($join): void {
             $join->on('packages.id', '=', 'washes.package_id')
                 ->where('washes.status', 'completed')
                 ->whereDate('washes.completed_at', Carbon::today());
@@ -93,7 +93,7 @@ class DashboardController extends Controller
             'ongoingWashes' => $ongoingWashes,
             'inQueue' => $inQueue,
             'completedToday' => $completedToday,
-            'todayRevenue' => '$' . number_format($todayRevenue, 0),
+            'todayRevenue' => '$'.number_format($todayRevenue, 0),
         ];
 
         return Inertia::render('Dashboard', [

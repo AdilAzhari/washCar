@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use App\Jobs\SendAppointmentReminder;
 use App\Models\Appointment;
 use Illuminate\Console\Command;
 
-class SendAppointmentReminders extends Command
+final class SendAppointmentReminders extends Command
 {
     /**
      * The name and signature of the console command.

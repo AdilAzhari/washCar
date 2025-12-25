@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Policies;
 
 use App\Models\Appointment;
 use App\Models\User;
 
-class AppointmentPolicy
+final class AppointmentPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -32,11 +34,7 @@ class AppointmentPolicy
         }
 
         // Staff and Manager can view appointments for their branch
-        if (($user->isStaff() || $user->isManager()) && $user->branch_id === $appointment->branch_id) {
-            return true;
-        }
-
-        return false;
+        return ($user->isStaff() || $user->isManager()) && $user->branch_id === $appointment->branch_id;
     }
 
     /**
@@ -60,11 +58,7 @@ class AppointmentPolicy
         }
 
         // Staff and Manager can update appointments for their branch
-        if (($user->isStaff() || $user->isManager()) && $user->branch_id === $appointment->branch_id) {
-            return true;
-        }
-
-        return false;
+        return ($user->isStaff() || $user->isManager()) && $user->branch_id === $appointment->branch_id;
     }
 
     /**
@@ -83,11 +77,7 @@ class AppointmentPolicy
         }
 
         // Staff and Manager can cancel appointments for their branch
-        if (($user->isStaff() || $user->isManager()) && $user->branch_id === $appointment->branch_id) {
-            return true;
-        }
-
-        return false;
+        return ($user->isStaff() || $user->isManager()) && $user->branch_id === $appointment->branch_id;
     }
 
     /**
@@ -116,11 +106,7 @@ class AppointmentPolicy
             return true;
         }
 
-        if (($user->isStaff() || $user->isManager()) && $user->branch_id === $appointment->branch_id) {
-            return true;
-        }
-
-        return false;
+        return ($user->isStaff() || $user->isManager()) && $user->branch_id === $appointment->branch_id;
     }
 
     /**

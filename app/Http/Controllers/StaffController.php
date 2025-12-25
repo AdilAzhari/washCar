@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\Branch;
@@ -10,7 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class StaffController extends Controller
+final class StaffController extends Controller
 {
     public function index(): Response
     {
@@ -44,7 +46,7 @@ class StaffController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $staff->id,
+            'email' => 'required|string|email|max:255|unique:users,email,'.$staff->id,
             'role' => 'required|string|in:admin,manager,staff',
             'branch_id' => 'nullable|exists:branches,id',
         ]);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -7,9 +9,33 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class LoyaltyPoint extends Model
+final class LoyaltyPoint extends Model
 {
     use HasFactory;
+
+    // Tier thresholds
+    public const TIER_BRONZE = 'bronze';
+
+    public const TIER_SILVER = 'silver';
+
+    public const TIER_GOLD = 'gold';
+
+    public const TIER_PLATINUM = 'platinum';
+
+    public const TIER_THRESHOLDS = [
+        self::TIER_BRONZE => 0,
+        self::TIER_SILVER => 500,
+        self::TIER_GOLD => 1500,
+        self::TIER_PLATINUM => 3000,
+    ];
+
+    public const TIER_MULTIPLIERS = [
+        self::TIER_BRONZE => 1.0,
+        self::TIER_SILVER => 1.25,
+        self::TIER_GOLD => 1.5,
+        self::TIER_PLATINUM => 2.0,
+    ];
+
     protected $fillable = [
         'customer_id',
         'points',
@@ -20,26 +46,6 @@ class LoyaltyPoint extends Model
     protected $casts = [
         'points' => 'integer',
         'lifetime_points' => 'integer',
-    ];
-
-    // Tier thresholds
-    const TIER_BRONZE = 'bronze';
-    const TIER_SILVER = 'silver';
-    const TIER_GOLD = 'gold';
-    const TIER_PLATINUM = 'platinum';
-
-    const TIER_THRESHOLDS = [
-        self::TIER_BRONZE => 0,
-        self::TIER_SILVER => 500,
-        self::TIER_GOLD => 1500,
-        self::TIER_PLATINUM => 3000,
-    ];
-
-    const TIER_MULTIPLIERS = [
-        self::TIER_BRONZE => 1.0,
-        self::TIER_SILVER => 1.25,
-        self::TIER_GOLD => 1.5,
-        self::TIER_PLATINUM => 2.0,
     ];
 
     // Relationships
@@ -102,6 +108,11 @@ class LoyaltyPoint extends Model
         }
     }
 
+    public function getTierMultiplier(): float
+    {
+        return self::TIER_MULTIPLIERS[$this->tier] ?? 1.0;
+    }
+
     protected function isTierUpgrade(string $currentTier, string $newTier): bool
     {
         $tierOrder = [
@@ -118,17 +129,14 @@ class LoyaltyPoint extends Model
     {
         if ($lifetimePoints >= self::TIER_THRESHOLDS[self::TIER_PLATINUM]) {
             return self::TIER_PLATINUM;
-        } elseif ($lifetimePoints >= self::TIER_THRESHOLDS[self::TIER_GOLD]) {
+        }
+        if ($lifetimePoints >= self::TIER_THRESHOLDS[self::TIER_GOLD]) {
             return self::TIER_GOLD;
-        } elseif ($lifetimePoints >= self::TIER_THRESHOLDS[self::TIER_SILVER]) {
+        }
+        if ($lifetimePoints >= self::TIER_THRESHOLDS[self::TIER_SILVER]) {
             return self::TIER_SILVER;
         }
 
         return self::TIER_BRONZE;
-    }
-
-    public function getTierMultiplier(): float
-    {
-        return self::TIER_MULTIPLIERS[$this->tier] ?? 1.0;
     }
 }

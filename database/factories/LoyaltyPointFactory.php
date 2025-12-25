@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\Customer;
@@ -9,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\LoyaltyPoint>
  */
-class LoyaltyPointFactory extends Factory
+final class LoyaltyPointFactory extends Factory
 {
     protected $model = LoyaltyPoint::class;
 
@@ -29,7 +31,7 @@ class LoyaltyPointFactory extends Factory
 
     public function bronze(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'points' => $this->faker->numberBetween(0, 499),
             'tier' => 'bronze',
         ]);
@@ -37,7 +39,7 @@ class LoyaltyPointFactory extends Factory
 
     public function silver(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'points' => $this->faker->numberBetween(500, 1499),
             'tier' => 'silver',
         ]);
@@ -45,7 +47,7 @@ class LoyaltyPointFactory extends Factory
 
     public function gold(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'points' => $this->faker->numberBetween(1500, 2999),
             'tier' => 'gold',
         ]);
@@ -53,7 +55,7 @@ class LoyaltyPointFactory extends Factory
 
     public function platinum(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'points' => $this->faker->numberBetween(3000, 10000),
             'tier' => 'platinum',
         ]);

@@ -1,17 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs;
 
 use App\Models\Appointment;
 use App\Models\AppointmentReminder;
 use App\Notifications\AppointmentReminder as AppointmentReminderNotification;
+use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class SendAppointmentReminder implements ShouldQueue
+final class SendAppointmentReminder implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -54,7 +57,7 @@ class SendAppointmentReminder implements ShouldQueue
                 'sent_at' => now(),
                 'delivered' => true,
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Log error
             AppointmentReminder::create([
                 'appointment_id' => $this->appointment->id,

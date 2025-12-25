@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\Branch;
@@ -11,7 +13,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\QueueEntry>
  */
-class QueueEntryFactory extends Factory
+final class QueueEntryFactory extends Factory
 {
     protected $model = QueueEntry::class;
 
@@ -26,7 +28,7 @@ class QueueEntryFactory extends Factory
             'branch_id' => Branch::factory(),
             'customer_id' => Customer::factory(),
             'package_id' => Package::factory(),
-            'plate_number' => strtoupper($this->faker->bothify('???###')),
+            'plate_number' => mb_strtoupper($this->faker->bothify('???###')),
             'position' => $this->faker->numberBetween(1, 20),
             'status' => $this->faker->randomElement(['waiting', 'in_progress', 'completed', 'cancelled']),
             'payment_status' => $this->faker->randomElement(['pending', 'paid']),
@@ -36,7 +38,7 @@ class QueueEntryFactory extends Factory
 
     public function waiting(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'status' => 'waiting',
             'started_at' => null,
             'completed_at' => null,
@@ -45,7 +47,7 @@ class QueueEntryFactory extends Factory
 
     public function inProgress(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'status' => 'in_progress',
             'started_at' => now()->subHours(1),
             'completed_at' => null,
@@ -54,7 +56,7 @@ class QueueEntryFactory extends Factory
 
     public function completed(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'status' => 'completed',
             'started_at' => now()->subHours(2),
             'completed_at' => now(),
@@ -63,7 +65,7 @@ class QueueEntryFactory extends Factory
 
     public function cancelled(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'status' => 'cancelled',
         ]);
     }

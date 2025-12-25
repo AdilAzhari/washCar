@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Policies;
 
 use App\Models\QueueEntry;
 use App\Models\User;
 
-class QueuePolicy
+final class QueuePolicy
 {
     public function viewAny(User $user): bool
     {
@@ -20,11 +22,7 @@ class QueuePolicy
         }
 
         // Manager and Staff can view queue entries in their branch
-        if (($user->isManager() || $user->isStaff()) && $user->branch_id === $queueEntry->branch_id) {
-            return true;
-        }
-
-        return false;
+        return ($user->isManager() || $user->isStaff()) && $user->branch_id === $queueEntry->branch_id;
     }
 
     public function create(User $user): bool
@@ -40,11 +38,7 @@ class QueuePolicy
         }
 
         // Manager and Staff can update queue entries in their branch
-        if (($user->isManager() || $user->isStaff()) && $user->branch_id === $queueEntry->branch_id) {
-            return true;
-        }
-
-        return false;
+        return ($user->isManager() || $user->isStaff()) && $user->branch_id === $queueEntry->branch_id;
     }
 
     public function delete(User $user, QueueEntry $queueEntry): bool
@@ -59,11 +53,7 @@ class QueuePolicy
             return true;
         }
 
-        if (($user->isManager() || $user->isStaff()) && $user->branch_id === $queueEntry->branch_id) {
-            return true;
-        }
-
-        return false;
+        return ($user->isManager() || $user->isStaff()) && $user->branch_id === $queueEntry->branch_id;
     }
 
     public function complete(User $user, QueueEntry $queueEntry): bool

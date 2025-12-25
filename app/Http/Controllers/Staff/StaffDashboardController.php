@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
@@ -11,7 +13,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class StaffDashboardController extends Controller
+final class StaffDashboardController extends Controller
 {
     /**
      * Display staff dashboard with queue and bay status.

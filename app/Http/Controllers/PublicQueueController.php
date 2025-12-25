@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\Branch;
@@ -11,21 +13,19 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class PublicQueueController extends Controller
+final class PublicQueueController extends Controller
 {
     public function join(string $branchCode): Response
     {
         $branch = Branch::where('code', $branchCode)->firstOrFail();
-        $packages = Package::where('is_active', true)->get()->map(function ($package) {
-            return [
-                'id' => $package->id,
-                'name' => $package->name,
-                'description' => $package->description,
-                'price' => $package->price,
-                'duration' => $package->duration_minutes,
-                'color' => $package->color,
-            ];
-        });
+        $packages = Package::where('is_active', true)->get()->map(fn ($package): array => [
+            'id' => $package->id,
+            'name' => $package->name,
+            'description' => $package->description,
+            'price' => $package->price,
+            'duration' => $package->duration_minutes,
+            'color' => $package->color,
+        ]);
 
         return Inertia::render('Public/QueueJoin', [
             'branch' => $branch,

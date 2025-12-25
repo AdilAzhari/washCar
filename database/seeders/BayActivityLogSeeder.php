@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
 use App\Models\Bay;
@@ -7,7 +9,7 @@ use App\Models\BayActivityLog;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
-class BayActivityLogSeeder extends Seeder
+final class BayActivityLogSeeder extends Seeder
 {
     public function run(): void
     {
@@ -26,7 +28,7 @@ class BayActivityLogSeeder extends Seeder
 
             foreach ($bays as $bay) {
                 // Create 2-5 status changes per day per bay
-                $changeCount = rand(2, 5);
+                $changeCount = random_int(2, 5);
 
                 for ($i = 0; $i < $changeCount; $i++) {
                     $previousStatus = $i === 0 ? 'idle' : $statuses[array_rand($statuses)];
@@ -37,7 +39,7 @@ class BayActivityLogSeeder extends Seeder
                         $newStatus = $statuses[array_rand($statuses)];
                     }
 
-                    $changedAt = $date->copy()->addHours(rand(7, 20))->addMinutes(rand(0, 59));
+                    $changedAt = $date->copy()->addHours(random_int(7, 20))->addMinutes(random_int(0, 59));
 
                     $branchUsers = $users->where('branch_id', $bay->branch_id);
                     $changedBy = $branchUsers->isNotEmpty() ? $branchUsers->random()->id : $users->random()->id;
@@ -58,7 +60,7 @@ class BayActivityLogSeeder extends Seeder
 
         // Add some recent activity logs for today
         foreach ($bays->take(10) as $bay) {
-            $changeCount = rand(1, 3);
+            $changeCount = random_int(1, 3);
 
             for ($i = 0; $i < $changeCount; $i++) {
                 $previousStatus = $bay->status;
@@ -68,7 +70,7 @@ class BayActivityLogSeeder extends Seeder
                     $newStatus = $statuses[array_rand($statuses)];
                 }
 
-                $changedAt = now()->subHours(rand(1, 8))->subMinutes(rand(0, 59));
+                $changedAt = now()->subHours(random_int(1, 8))->subMinutes(random_int(0, 59));
 
                 $branchUsers = $users->where('branch_id', $bay->branch_id);
                 $changedBy = $branchUsers->isNotEmpty() ? $branchUsers->random()->id : $users->random()->id;
@@ -87,7 +89,7 @@ class BayActivityLogSeeder extends Seeder
         }
     }
 
-    private function getReasonForChange(string $from, string $to): ?string
+    private function getReasonForChange(string $from, string $to): string
     {
         $reasons = [
             'active_to_idle' => [

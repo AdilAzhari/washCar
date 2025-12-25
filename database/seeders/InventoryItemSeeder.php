@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
 use App\Models\Branch;
 use App\Models\InventoryItem;
 use Illuminate\Database\Seeder;
 
-class InventoryItemSeeder extends Seeder
+final class InventoryItemSeeder extends Seeder
 {
     public function run(): void
     {
@@ -35,11 +37,11 @@ class InventoryItemSeeder extends Seeder
                     'branch_id' => $branch->id,
                     'name' => $item['name'],
                     'category' => $item['category'],
-                    'quantity' => $item['quantity'] + rand(-5, 10),
+                    'quantity' => $item['quantity'] + random_int(-5, 10),
                     'min_quantity' => $item['min_quantity'],
                     'unit' => $item['unit'],
                     'unit_price' => $item['unit_price'],
-                    'notes' => rand(0, 1) ? 'Regular stock item' : null,
+                    'notes' => random_int(0, 1) !== 0 ? 'Regular stock item' : null,
                 ]);
             }
         }

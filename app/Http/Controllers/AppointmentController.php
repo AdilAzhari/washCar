@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\Appointment;
@@ -10,7 +12,7 @@ use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class AppointmentController extends Controller
+final class AppointmentController extends Controller
 {
     /**
      * Display a listing of appointments.
@@ -127,7 +129,7 @@ class AppointmentController extends Controller
         ]);
 
         // Create wash record
-        $wash = Wash::create([
+        Wash::create([
             'branch_id' => $appointment->branch_id,
             'customer_id' => $appointment->customer_id,
             'package_id' => $appointment->package_id,

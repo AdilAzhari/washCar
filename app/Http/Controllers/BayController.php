@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\Bay;
@@ -11,26 +13,24 @@ use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class BayController extends Controller
+final class BayController extends Controller
 {
     public function index(): Response
     {
-        $bays = Bay::with(['branch', 'washes' => function ($query) {
+        $bays = Bay::with(['branch', 'washes' => function ($query): void {
             $query->where('status', 'active')->latest();
         }])
             ->latest()
             ->get()
-            ->map(function ($bay) {
-                return [
-                    'id' => $bay->id,
-                    'name' => $bay->name,
-                    'status' => $bay->status,
-                    'branch' => $bay->branch,
-                    'currentWash' => $bay->washes->first(),
-                    'created_at' => $bay->created_at,
-                    'updated_at' => $bay->updated_at,
-                ];
-            });
+            ->map(fn ($bay): array => [
+                'id' => $bay->id,
+                'name' => $bay->name,
+                'status' => $bay->status,
+                'branch' => $bay->branch,
+                'currentWash' => $bay->washes->first(),
+                'created_at' => $bay->created_at,
+                'updated_at' => $bay->updated_at,
+            ]);
 
         $branches = Branch::where('is_active', true)->get();
 

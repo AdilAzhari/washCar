@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature;
 
 use App\Models\Branch;
@@ -7,7 +9,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class RoleBasedNavigationTest extends TestCase
+final class RoleBasedNavigationTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -21,7 +23,7 @@ class RoleBasedNavigationTest extends TestCase
             'code' => 'TB001',
             'address' => '123 Test St',
             'phone' => '1234567890',
-            'active' => true,
+            'is_active' => true,
         ]);
     }
 

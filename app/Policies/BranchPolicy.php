@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Policies;
 
 use App\Models\Branch;
 use App\Models\User;
 
-class BranchPolicy
+final class BranchPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -13,7 +15,14 @@ class BranchPolicy
     public function viewAny(User $user): bool
     {
         // Admin can view all, Manager and Staff can view their own branch
-        return $user->isAdmin() || $user->isManager() || $user->isStaff();
+        if ($user->isAdmin()) {
+            return true;
+        }
+        if ($user->isManager()) {
+            return true;
+        }
+
+        return $user->isStaff();
     }
 
     /**
@@ -110,6 +119,10 @@ class BranchPolicy
     public function viewAllAnalytics(User $user): bool
     {
         // Admin and Manager can view all branches analytics (read-only for managers)
-        return $user->isAdmin() || $user->isManager();
+        if ($user->isAdmin()) {
+            return true;
+        }
+
+        return $user->isManager();
     }
 }

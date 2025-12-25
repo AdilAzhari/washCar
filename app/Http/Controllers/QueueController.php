@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\Bay;
@@ -13,7 +15,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class QueueController extends Controller
+final class QueueController extends Controller
 {
     public function index(): Response
     {
@@ -105,9 +107,7 @@ class QueueController extends Controller
 
         // Calculate average wait time
         $avgWaitTime = $waitingQueue->isEmpty() ? 0 :
-            $waitingQueue->avg(function ($entry) {
-                return $entry->joined_at ? now()->diffInMinutes($entry->joined_at) : 0;
-            });
+            $waitingQueue->avg(fn ($entry): float|int => $entry->joined_at ? now()->diffInMinutes($entry->joined_at) : 0);
 
         $packages = Package::where('is_active', true)->get();
 
@@ -145,7 +145,7 @@ class QueueController extends Controller
         }
 
         // Create wash record
-        $wash = Wash::create([
+        Wash::create([
             'queue_entry_id' => $queue->id,
             'branch_id' => $queue->branch_id,
             'customer_id' => $queue->customer_id,
@@ -259,9 +259,7 @@ class QueueController extends Controller
 
         // Calculate average wait time
         $avgWaitTime = $waitingQueue->isEmpty() ? 0 :
-            $waitingQueue->avg(function ($entry) {
-                return $entry->joined_at ? now()->diffInMinutes($entry->joined_at) : 0;
-            });
+            $waitingQueue->avg(fn ($entry): float|int => $entry->joined_at ? now()->diffInMinutes($entry->joined_at) : 0);
 
         $packages = Package::where('is_active', true)->get();
 

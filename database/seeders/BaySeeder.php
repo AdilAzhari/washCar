@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class BaySeeder extends Seeder
+final class BaySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,7 +19,7 @@ class BaySeeder extends Seeder
 
         foreach ($branches as $branch) {
             // Create 3-5 bays per branch
-            $bayCount = rand(3, 5);
+            $bayCount = random_int(3, 5);
 
             for ($i = 1; $i <= $bayCount; $i++) {
                 \App\Models\Bay::create([

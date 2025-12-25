@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class EnsureUserHasRole
+final class EnsureUserHasRole
 {
     /**
      * Handle an incoming request.
@@ -14,7 +16,7 @@ class EnsureUserHasRole
      * Check if user's role matches one of the allowed roles.
      * Usage: ->middleware('role:admin,manager')
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param  Closure(Request): (Response)  $next
      */
     public function handle(Request $request, Closure $next, string ...$roles): Response
     {

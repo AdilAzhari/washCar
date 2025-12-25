@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
 use App\Models\Notification;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
-class NotificationSeeder extends Seeder
+final class NotificationSeeder extends Seeder
 {
     public function run(): void
     {
@@ -82,7 +84,7 @@ class NotificationSeeder extends Seeder
                 'title' => $notification['title'],
                 'message' => $notification['message'],
                 'is_read' => $notification['is_read'],
-                'read_at' => $notification['is_read'] ? $notification['created_at']->addMinutes(rand(10, 60)) : null,
+                'read_at' => $notification['is_read'] ? $notification['created_at']->addMinutes(random_int(10, 60)) : null,
                 'created_at' => $notification['created_at'],
                 'updated_at' => $notification['created_at'],
             ]);

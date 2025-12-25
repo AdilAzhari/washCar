@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\Bay;
@@ -12,7 +14,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Wash>
  */
-class WashFactory extends Factory
+final class WashFactory extends Factory
 {
     protected $model = Wash::class;
 
@@ -40,7 +42,7 @@ class WashFactory extends Factory
 
     public function active(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'status' => 'active',
             'started_at' => now()->subHours($this->faker->numberBetween(1, 3)),
             'completed_at' => null,
@@ -49,7 +51,7 @@ class WashFactory extends Factory
 
     public function completed(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'status' => 'completed',
             'progress' => 100,
             'started_at' => now()->subHours(2),
@@ -59,7 +61,7 @@ class WashFactory extends Factory
 
     public function cancelled(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'status' => 'cancelled',
             'completed_at' => null,
         ]);

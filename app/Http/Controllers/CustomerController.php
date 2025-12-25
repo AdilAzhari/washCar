@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
@@ -8,7 +10,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class CustomerController extends Controller
+final class CustomerController extends Controller
 {
     public function index(): Response
     {
@@ -45,7 +47,7 @@ class CustomerController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'phone' => 'required|string|max:255|unique:customers,phone,' . $customer->id,
+            'phone' => 'required|string|max:255|unique:customers,phone,'.$customer->id,
             'email' => 'nullable|email|max:255',
             'plate_number' => 'required|string|max:255',
             'vehicle_type' => 'required|string|max:255',

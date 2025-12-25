@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\Appointment;
@@ -11,7 +13,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Appointment>
  */
-class AppointmentFactory extends Factory
+final class AppointmentFactory extends Factory
 {
     protected $model = Appointment::class;
 
@@ -26,7 +28,7 @@ class AppointmentFactory extends Factory
             'branch_id' => Branch::factory(),
             'customer_id' => User::factory()->create(['role' => 'customer']),
             'package_id' => Package::factory(),
-            'plate_number' => strtoupper($this->faker->bothify('???###')),
+            'plate_number' => mb_strtoupper($this->faker->bothify('???###')),
             'vehicle_type' => $this->faker->randomElement(['Sedan', 'SUV', 'Truck', 'Van']),
             'scheduled_at' => $this->faker->dateTimeBetween('now', '+30 days'),
             'status' => $this->faker->randomElement(['pending', 'confirmed', 'completed', 'cancelled', 'no_show']),
@@ -35,7 +37,7 @@ class AppointmentFactory extends Factory
 
     public function pending(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'status' => 'pending',
             'actual_start_at' => null,
             'completed_at' => null,
@@ -44,7 +46,7 @@ class AppointmentFactory extends Factory
 
     public function confirmed(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'status' => 'confirmed',
             'actual_start_at' => null,
             'completed_at' => null,
@@ -53,7 +55,7 @@ class AppointmentFactory extends Factory
 
     public function completed(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'status' => 'completed',
             'actual_start_at' => now()->subHours(2),
             'completed_at' => now(),
@@ -62,14 +64,14 @@ class AppointmentFactory extends Factory
 
     public function cancelled(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'status' => 'cancelled',
         ]);
     }
 
     public function noShow(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'status' => 'no_show',
         ]);
     }

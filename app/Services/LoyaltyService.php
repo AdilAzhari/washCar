@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
 use App\Models\LoyaltyPoint;
 use App\Models\User;
 use App\Models\Wash;
 
-class LoyaltyService
+final class LoyaltyService
 {
     /**
      * Award loyalty points to a customer for a completed wash.
@@ -86,7 +88,7 @@ class LoyaltyService
 
         // Generate a simple discount code
         // In a real app, you'd create a DiscountCode model and track usage
-        $discountCode = 'LOYALTY' . strtoupper(substr(md5($customer->id . time()), 0, 8));
+        $discountCode = 'LOYALTY'.mb_strtoupper(mb_substr(md5($customer->id.time()), 0, 8));
 
         return $discountCode;
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Customer;
 
 use App\Models\Appointment;
@@ -12,12 +14,14 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
-class AppointmentTest extends TestCase
+final class AppointmentTest extends TestCase
 {
     use RefreshDatabase;
 
     protected User $customer;
+
     protected Branch $branch;
+
     protected Package $package;
 
     protected function setUp(): void

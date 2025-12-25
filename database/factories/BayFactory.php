@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\Bay;
@@ -9,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Bay>
  */
-class BayFactory extends Factory
+final class BayFactory extends Factory
 {
     protected $model = Bay::class;
 
@@ -22,28 +24,28 @@ class BayFactory extends Factory
     {
         return [
             'branch_id' => Branch::factory(),
-            'name' => 'Bay ' . $this->faker->numberBetween(1, 20),
+            'name' => 'Bay '.$this->faker->numberBetween(1, 20),
             'status' => $this->faker->randomElement(['idle', 'active', 'maintenance']),
         ];
     }
 
     public function idle(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'status' => 'idle',
         ]);
     }
 
     public function active(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'status' => 'active',
         ]);
     }
 
     public function maintenance(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'status' => 'maintenance',
         ]);
     }

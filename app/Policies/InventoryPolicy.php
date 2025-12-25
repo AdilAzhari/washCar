@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Policies;
 
 use App\Models\InventoryItem;
 use App\Models\User;
 
-class InventoryPolicy
+final class InventoryPolicy
 {
     public function viewAny(User $user): bool
     {
@@ -20,17 +22,17 @@ class InventoryPolicy
         }
 
         // Manager and Staff can view inventory in their branch
-        if (($user->isManager() || $user->isStaff()) && $user->branch_id === $inventoryItem->branch_id) {
-            return true;
-        }
-
-        return false;
+        return ($user->isManager() || $user->isStaff()) && $user->branch_id === $inventoryItem->branch_id;
     }
 
     public function create(User $user): bool
     {
         // Admin and Manager can create inventory items
-        return $user->isAdmin() || $user->isManager();
+        if ($user->isAdmin()) {
+            return true;
+        }
+
+        return $user->isManager();
     }
 
     public function update(User $user, InventoryItem $inventoryItem): bool
@@ -40,11 +42,7 @@ class InventoryPolicy
         }
 
         // Manager can update inventory in their branch
-        if ($user->isManager() && $user->branch_id === $inventoryItem->branch_id) {
-            return true;
-        }
-
-        return false;
+        return $user->isManager() && $user->branch_id === $inventoryItem->branch_id;
     }
 
     public function delete(User $user, InventoryItem $inventoryItem): bool

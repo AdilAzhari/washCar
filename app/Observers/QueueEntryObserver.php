@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Observers;
 
 use App\Models\QueueEntry;
 use App\Notifications\QueuePositionUpdate;
 use Illuminate\Support\Facades\Cache;
 
-class QueueEntryObserver
+final class QueueEntryObserver
 {
     /**
      * Handle the QueueEntry "updated" event.

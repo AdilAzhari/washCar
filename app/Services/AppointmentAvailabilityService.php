@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
 use App\Models\Appointment;
@@ -7,7 +9,7 @@ use App\Models\Branch;
 use App\Models\Wash;
 use Carbon\Carbon;
 
-class AppointmentAvailabilityService
+final class AppointmentAvailabilityService
 {
     /**
      * Get available appointment slots for a branch on a specific date.

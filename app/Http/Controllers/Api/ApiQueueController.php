@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
@@ -7,7 +9,7 @@ use App\Models\QueueEntry;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class ApiQueueController extends Controller
+final class ApiQueueController extends Controller
 {
     /**
      * Get customer's current queue position and status.

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\Branch;
@@ -10,7 +12,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class BranchController extends Controller
+final class BranchController extends Controller
 {
     public function index(): Response
     {
@@ -57,9 +59,7 @@ class BranchController extends Controller
 
         $todayStats = [
             'revenue' => $todayWashes->where('status', 'completed')
-                ->sum(function ($wash) {
-                    return $wash->package?->price ?? 0;
-                }),
+                ->sum(fn ($wash) => $wash->package?->price ?? 0),
             'completed' => $todayWashes->where('status', 'completed')->count(),
             'in_progress' => $todayWashes->where('status', 'active')->count(),
             'waiting' => QueueEntry::query()->where('branch_id', $branch->id)
@@ -83,9 +83,7 @@ class BranchController extends Controller
 
             $revenueData[] = [
                 'month' => $month->format('M'),
-                'revenue' => round($monthWashes->sum(function ($wash) {
-                    return $wash->package?->price ?? 0;
-                })),
+                'revenue' => round($monthWashes->sum(fn ($wash) => $wash->package?->price ?? 0)),
                 'washes' => $monthWashes->count(),
             ];
         }
@@ -109,7 +107,7 @@ class BranchController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'code' => 'required|string|max:255|unique:branches,code,' . $branch->id,
+            'code' => 'required|string|max:255|unique:branches,code,'.$branch->id,
             'address' => 'nullable|string',
             'phone' => 'nullable|string|max:255',
             'operating_hours' => 'nullable|string',

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\BayController;
 use App\Http\Controllers\BranchController;
@@ -34,7 +36,7 @@ Route::get('/queue/status/{branchCode}/{queueId}', [PublicQueueController::class
 // ============================================================================
 // ADMIN ROUTES - Full system access, all branches
 // ============================================================================
-Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('admin.')->group(function (): void {
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -88,7 +90,7 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('ad
 // ============================================================================
 // MANAGER ROUTES - Branch-scoped management (own branch + read-only all)
 // ============================================================================
-Route::middleware(['auth', 'verified', 'role:manager', 'branch'])->prefix('manager')->name('manager.')->group(function () {
+Route::middleware(['auth', 'verified', 'role:manager', 'branch'])->prefix('manager')->name('manager.')->group(function (): void {
     // Dashboard
     Route::get('/dashboard', [ManagerDashboardController::class, 'index'])->name('dashboard');
     Route::get('/reports', [ManagerDashboardController::class, 'reports'])->name('reports');
@@ -140,7 +142,7 @@ Route::middleware(['auth', 'verified', 'role:manager', 'branch'])->prefix('manag
 // ============================================================================
 // STAFF ROUTES - Branch-scoped operations (own branch only)
 // ============================================================================
-Route::middleware(['auth', 'verified', 'role:staff', 'branch'])->prefix('staff')->name('staff.')->group(function () {
+Route::middleware(['auth', 'verified', 'role:staff', 'branch'])->prefix('staff')->name('staff.')->group(function (): void {
     // Dashboard
     Route::get('/dashboard', [StaffDashboardController::class, 'index'])->name('dashboard');
 
@@ -173,7 +175,7 @@ Route::middleware(['auth', 'verified', 'role:staff', 'branch'])->prefix('staff')
 // ============================================================================
 // CUSTOMER ROUTES - Customer portal
 // ============================================================================
-Route::middleware(['auth', 'verified', 'role:customer'])->prefix('customer')->name('customer.')->group(function () {
+Route::middleware(['auth', 'verified', 'role:customer'])->prefix('customer')->name('customer.')->group(function (): void {
     // Dashboard
     Route::get('/dashboard', [CustomerDashboardController::class, 'index'])->name('dashboard');
 
@@ -191,7 +193,7 @@ Route::middleware(['auth', 'verified', 'role:customer'])->prefix('customer')->na
 // ============================================================================
 // SHARED ROUTES - Available to all authenticated users
 // ============================================================================
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function (): void {
     // Profile management
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -204,4 +206,4 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/notifications/{notification}', [NotificationController::class, 'destroy'])->name('notifications.destroy');
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';

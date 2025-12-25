@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Manager;
 
 use App\Http\Controllers\Controller;
@@ -9,11 +11,12 @@ use App\Models\Branch;
 use App\Models\InventoryItem;
 use App\Models\QueueEntry;
 use App\Models\Wash;
+use DB;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class ManagerDashboardController extends Controller
+final class ManagerDashboardController extends Controller
 {
     /**
      * Display manager dashboard with branch KPIs.
@@ -84,7 +87,7 @@ class ManagerDashboardController extends Controller
         $topPackages = Wash::where('branch_id', $branchId)
             ->whereMonth('completed_at', now()->month)
             ->where('status', 'completed')
-            ->select('package_id', \DB::raw('count(*) as count'), \DB::raw('sum(total_amount) as revenue'))
+            ->select('package_id', DB::raw('count(*) as count'), DB::raw('sum(total_amount) as revenue'))
             ->groupBy('package_id')
             ->with('package')
             ->orderByDesc('count')
@@ -92,12 +95,12 @@ class ManagerDashboardController extends Controller
             ->get();
 
         // Staff performance this month
-        $staffPerformance = Wash::where('branch_id', $branchId)
+        Wash::where('branch_id', $branchId)
             ->whereMonth('completed_at', now()->month)
             ->where('status', 'completed')
             ->whereNotNull('bay_id')
-            ->select(\DB::raw('count(*) as washes_completed'))
-            ->addSelect(\DB::raw('sum(total_amount) as revenue_generated'))
+            ->select(DB::raw('count(*) as washes_completed'))
+            ->addSelect(DB::raw('sum(total_amount) as revenue_generated'))
             ->get();
 
         // Low stock alerts
@@ -154,7 +157,7 @@ class ManagerDashboardController extends Controller
         $packageBreakdown = Wash::where('branch_id', $branchId)
             ->whereBetween('completed_at', [$startDate, $endDate])
             ->where('status', 'completed')
-            ->select('package_id', \DB::raw('count(*) as count'), \DB::raw('sum(total_amount) as revenue'))
+            ->select('package_id', DB::raw('count(*) as count'), DB::raw('sum(total_amount) as revenue'))
             ->groupBy('package_id')
             ->with('package')
             ->get();
@@ -183,7 +186,7 @@ class ManagerDashboardController extends Controller
         // Get all branches with their stats
         $branches = Branch::where('active', true)
             ->get()
-            ->map(function ($branch) {
+            ->map(function ($branch): array {
                 $todayRevenue = Wash::where('branch_id', $branch->id)
                     ->whereDate('completed_at', today())
                     ->where('status', 'completed')

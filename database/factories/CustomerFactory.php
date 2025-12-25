@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\Customer;
@@ -9,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Customer>
  */
-class CustomerFactory extends Factory
+final class CustomerFactory extends Factory
 {
     protected $model = Customer::class;
 
@@ -26,7 +28,7 @@ class CustomerFactory extends Factory
             'phone' => $this->faker->phoneNumber(),
             'email' => $this->faker->unique()->safeEmail(),
             'vehicle_type' => $this->faker->randomElement(['Sedan', 'SUV', 'Truck', 'Van']),
-            'plate_number' => strtoupper($this->faker->bothify('???###')),
+            'plate_number' => mb_strtoupper($this->faker->bothify('???###')),
             'color' => $this->faker->safeColorName(),
             'membership' => 'Regular',
             'status' => 'active',
@@ -35,7 +37,7 @@ class CustomerFactory extends Factory
 
     public function inactive(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'status' => 'inactive',
         ]);
     }

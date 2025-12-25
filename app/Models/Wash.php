@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Observers\WashObserver;
@@ -9,9 +11,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 #[ObservedBy([WashObserver::class])]
-class Wash extends Model
+final class Wash extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'queue_entry_id',
         'bay_id',
@@ -31,18 +34,6 @@ class Wash extends Model
         'started_at' => 'datetime',
         'completed_at' => 'datetime',
     ];
-
-    protected static function booted(): void
-    {
-        static::creating(function (Wash $wash) {
-            if ($wash->package_id && ! $wash->total_amount) {
-                $package = Package::find($wash->package_id);
-                if ($package) {
-                    $wash->total_amount = $package->price;
-                }
-            }
-        });
-    }
 
     public function queueEntry(): BelongsTo
     {
@@ -67,5 +58,17 @@ class Wash extends Model
     public function package(): BelongsTo
     {
         return $this->belongsTo(Package::class);
+    }
+
+    protected static function booted(): void
+    {
+        self::creating(function (Wash $wash): void {
+            if ($wash->package_id && ! $wash->total_amount) {
+                $package = Package::find($wash->package_id);
+                if ($package) {
+                    $wash->total_amount = $package->price;
+                }
+            }
+        });
     }
 }

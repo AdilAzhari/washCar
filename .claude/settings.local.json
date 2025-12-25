@@ -30,7 +30,11 @@
       "mcp__laravel-boost__get-config",
       "mcp__laravel-boost__tinker",
       "Bash(vendor/bin/pint:*)",
-      "Bash(git stash clear:*)"
+      "Bash(git stash clear:*)",
+      "Bash(find:*)",
+      "Bash(test:*)",
+      "Bash(xargs:*)",
+      "mcp__laravel-boost__search-docs"
     ]
   },
   "enableAllProjectMcpServers": true,

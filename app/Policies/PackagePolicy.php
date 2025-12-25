@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Policies;
 
 use App\Models\Package;
 use App\Models\User;
 
-class PackagePolicy
+final class PackagePolicy
 {
     public function viewAny(User $user): bool
     {
@@ -22,7 +24,11 @@ class PackagePolicy
     public function create(User $user): bool
     {
         // Admin and Manager can create packages
-        return $user->isAdmin() || $user->isManager();
+        if ($user->isAdmin()) {
+            return true;
+        }
+
+        return $user->isManager();
     }
 
     public function update(User $user, Package $package): bool

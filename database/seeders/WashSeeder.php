@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
 use App\Models\Bay;
@@ -9,7 +11,7 @@ use App\Models\Package;
 use App\Models\Wash;
 use Illuminate\Database\Seeder;
 
-class WashSeeder extends Seeder
+final class WashSeeder extends Seeder
 {
     public function run(): void
     {
@@ -31,7 +33,7 @@ class WashSeeder extends Seeder
             // Skip if it's the inactive branch
             foreach ($branches as $branch) {
                 // Create 5-15 washes per day per branch
-                $washCount = rand(5, 15);
+                $washCount = random_int(5, 15);
 
                 for ($i = 0; $i < $washCount; $i++) {
                     $branchBays = $bays->where('branch_id', $branch->id);
@@ -41,22 +43,22 @@ class WashSeeder extends Seeder
                     }
 
                     $package = $packages->random();
-                    $startedAt = $date->copy()->addHours(rand(7, 20))->addMinutes(rand(0, 59));
+                    $startedAt = $date->copy()->addHours(random_int(7, 20))->addMinutes(random_int(0, 59));
 
                     // Historical washes are all completed
                     if ($day > 0) {
                         $status = 'completed';
-                        $completedAt = $startedAt->copy()->addMinutes($package->duration_minutes + rand(-5, 10));
+                        $completedAt = $startedAt->copy()->addMinutes($package->duration_minutes + random_int(-5, 10));
                     } else {
                         // Today's washes can be active or completed
                         $status = $statuses[array_rand($statuses)];
                         $completedAt = $status === 'completed' ?
-                            $startedAt->copy()->addMinutes($package->duration_minutes + rand(-5, 10)) : null;
+                            $startedAt->copy()->addMinutes($package->duration_minutes + random_int(-5, 10)) : null;
                     }
 
                     Wash::create([
                         'branch_id' => $branch->id,
-                        'customer_id' => rand(0, 4) === 0 ? null : $customers->random()->id, // 20% walk-in without customer record
+                        'customer_id' => random_int(0, 4) === 0 ? null : $customers->random()->id, // 20% walk-in without customer record
                         'package_id' => $package->id,
                         'bay_id' => $branchBays->random()->id,
                         'status' => $status,
@@ -77,11 +79,11 @@ class WashSeeder extends Seeder
                 continue;
             }
 
-            $activeCount = rand(1, min(3, $branchBays->count()));
+            $activeCount = random_int(1, min(3, $branchBays->count()));
 
             for ($i = 0; $i < $activeCount; $i++) {
                 $package = $packages->random();
-                $startedAt = now()->subMinutes(rand(5, 30));
+                $startedAt = now()->subMinutes(random_int(5, 30));
 
                 Wash::create([
                     'branch_id' => $branch->id,
