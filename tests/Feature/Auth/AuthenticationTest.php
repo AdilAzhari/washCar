@@ -19,15 +19,20 @@ class AuthenticationTest extends TestCase
 
     public function test_users_can_authenticate_using_the_login_screen(): void
     {
-        $user = User::factory()->create();
-
-        $response = $this->from('/login')->post('/login', [
-            'email' => $user->email,
-            'password' => 'password',
+        $user = User::factory()->create([
+            'role' => 'customer',
         ]);
 
+        $response = $this->from('/login')
+            ->withSession(['_token' => 'test-token'])
+            ->post('/login', [
+                'email' => $user->email,
+                'password' => 'password',
+                '_token' => 'test-token',
+            ]);
+
         $this->assertAuthenticated();
-        $response->assertRedirect('/dashboard');
+        $response->assertRedirect(route('customer.dashboard'));
     }
 
     public function test_users_can_not_authenticate_with_invalid_password(): void
@@ -46,7 +51,11 @@ class AuthenticationTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)->post('/logout');
+        $response = $this->actingAs($user)
+            ->withSession(['_token' => 'test-token'])
+            ->post('/logout', [
+                '_token' => 'test-token',
+            ]);
 
         $this->assertGuest();
         $response->assertRedirect('/');

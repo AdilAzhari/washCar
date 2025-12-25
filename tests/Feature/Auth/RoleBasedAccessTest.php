@@ -109,7 +109,8 @@ class RoleBasedAccessTest extends TestCase
 
         $response = $this->actingAs($manager)->get(route('manager.dashboard'));
 
-        $response->assertStatus(403);
+        $response->assertRedirect(route('profile.edit'));
+        $response->assertSessionHas('error');
     }
 
     public function test_staff_without_branch_cannot_access_dashboard(): void
@@ -121,7 +122,8 @@ class RoleBasedAccessTest extends TestCase
 
         $response = $this->actingAs($staff)->get(route('staff.dashboard'));
 
-        $response->assertStatus(403);
+        $response->assertRedirect(route('profile.edit'));
+        $response->assertSessionHas('error');
     }
 
     public function test_unauthenticated_user_redirected_to_login(): void
