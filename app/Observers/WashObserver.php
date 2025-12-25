@@ -22,7 +22,7 @@ class WashObserver
     public function updated(Wash $wash): void
     {
         // Check if status changed to completed
-        if ($wash->isDirty('status') && $wash->status === 'completed') {
+        if ($wash->wasChanged('status') && $wash->status === 'completed') {
             // Only process if customer exists
             if ($wash->customer_id && $wash->customer) {
                 // Check if customer has an associated user account for loyalty points

@@ -9,9 +9,6 @@ use App\Models\InventoryItem;
 use App\Models\Package;
 use App\Models\QueueEntry;
 use App\Models\User;
-use App\Models\Wash;
-use App\Observers\QueueEntryObserver;
-use App\Observers\WashObserver;
 use App\Policies\AppointmentPolicy;
 use App\Policies\BayPolicy;
 use App\Policies\BranchPolicy;
@@ -59,9 +56,5 @@ class AppServiceProvider extends ServiceProvider
         foreach ($this->policies as $model => $policy) {
             Gate::policy($model, $policy);
         }
-
-        // Register observers
-        Wash::observe(WashObserver::class);
-        QueueEntry::observe(QueueEntryObserver::class);
     }
 }
