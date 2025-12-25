@@ -64,10 +64,10 @@ class QueueController extends Controller
             if ($queue->payment_status !== 'paid') {
                 return back()->with('error', 'Cannot start wash. Payment must be confirmed first.');
             }
-            if (!$queue->package_id) {
+            if (! $queue->package_id) {
                 return back()->with('error', 'Cannot start wash. A package must be assigned first.');
             }
-            if (!$queue->started_at) {
+            if (! $queue->started_at) {
                 $validated['started_at'] = now();
             }
         }
@@ -131,7 +131,7 @@ class QueueController extends Controller
             return back()->with('error', 'Cannot start wash. Payment must be confirmed first.');
         }
 
-        if (!$queue->package_id) {
+        if (! $queue->package_id) {
             return back()->with('error', 'Cannot start wash. A package must be assigned first.');
         }
 
