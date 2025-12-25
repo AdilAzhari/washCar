@@ -160,8 +160,10 @@ class AppointmentTest extends TestCase
         ]);
 
         $response = $this->actingAs($this->customer)
-            ->withoutMiddleware()
-            ->delete(route('customer.appointments.destroy', $appointment));
+            ->withSession(['_token' => 'test-token'])
+            ->delete(route('customer.appointments.destroy', $appointment), [
+                '_token' => 'test-token',
+            ]);
 
         $response->assertRedirect();
 
@@ -182,7 +184,7 @@ class AppointmentTest extends TestCase
             ->withoutMiddleware()
             ->delete(route('customer.appointments.destroy', $appointment));
 
-        $response->assertSessionHasErrors();
+        $response->assertStatus(403);
 
         $appointment->refresh();
         $this->assertEquals('completed', $appointment->status);

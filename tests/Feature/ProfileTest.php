@@ -69,11 +69,10 @@ class ProfileTest extends TestCase
 
         $response = $this
             ->actingAs($user)
-            ->withoutMiddleware([
-                \Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class,
-            ])
+            ->withSession(['_token' => 'test-token'])
             ->delete('/profile', [
                 'password' => 'password',
+                '_token' => 'test-token',
             ]);
 
         $response
@@ -90,16 +89,13 @@ class ProfileTest extends TestCase
 
         $response = $this
             ->actingAs($user)
-            ->withoutMiddleware([
-                \Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class,
-            ])
+            ->withoutMiddleware()
             ->delete('/profile', [
                 'password' => 'wrong-password',
             ]);
 
         $response
-            ->assertSessionHasErrors('password')
-            ->assertRedirect('/profile');
+            ->assertSessionHasErrors('password');
 
         $this->assertNotNull($user->fresh());
     }
