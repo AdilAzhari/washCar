@@ -59,7 +59,7 @@ final class BayController extends Controller
             'notes' => 'Bay created',
         ]);
 
-        return redirect()->route('bays.index')
+        return redirect()->route(Auth::user()->role . '.bays.index')
             ->with('success', 'Bay created successfully.');
     }
 
@@ -85,7 +85,7 @@ final class BayController extends Controller
             ]);
         }
 
-        return redirect()->route('bays.index')
+        return redirect()->route(Auth::user()->role . '.bays.index')
             ->with('success', 'Bay updated successfully.');
     }
 
@@ -93,7 +93,7 @@ final class BayController extends Controller
     {
         $bay->delete();
 
-        return redirect()->route('bays.index')
+        return redirect()->route(Auth::user()->role . '.bays.index')
             ->with('success', 'Bay deleted successfully.');
     }
 

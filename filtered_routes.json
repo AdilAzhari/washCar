@@ -1,0 +1,2357 @@
+﻿{
+    "value":  [
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "/",
+                      "name":  "generated::t6yvQXoR3j2nHnTg",
+                      "action":  "Closure",
+                      "middleware":  [
+                                         "web"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "_boost/browser-logs",
+                      "name":  "boost.browser-logs",
+                      "action":  "Closure",
+                      "middleware":  [
+
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "admin/appointments",
+                      "name":  "admin.appointments.index",
+                      "action":  "App\\Http\\Controllers\\AppointmentController@index",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "admin/appointments",
+                      "name":  "admin.appointments.store",
+                      "action":  "App\\Http\\Controllers\\AppointmentController@store",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "admin/appointments/create",
+                      "name":  "admin.appointments.create",
+                      "action":  "App\\Http\\Controllers\\AppointmentController@create",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "admin/appointments/{appointment}",
+                      "name":  "admin.appointments.show",
+                      "action":  "App\\Http\\Controllers\\AppointmentController@show",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "PUT|PATCH",
+                      "uri":  "admin/appointments/{appointment}",
+                      "name":  "admin.appointments.update",
+                      "action":  "App\\Http\\Controllers\\AppointmentController@update",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "DELETE",
+                      "uri":  "admin/appointments/{appointment}",
+                      "name":  "admin.appointments.destroy",
+                      "action":  "App\\Http\\Controllers\\AppointmentController@destroy",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "admin/appointments/{appointment}/complete",
+                      "name":  "admin.appointments.complete",
+                      "action":  "App\\Http\\Controllers\\AppointmentController@complete",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "admin/appointments/{appointment}/confirm",
+                      "name":  "admin.appointments.confirm",
+                      "action":  "App\\Http\\Controllers\\AppointmentController@confirm",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "admin/appointments/{appointment}/edit",
+                      "name":  "admin.appointments.edit",
+                      "action":  "App\\Http\\Controllers\\AppointmentController@edit",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "admin/appointments/{appointment}/no-show",
+                      "name":  "admin.appointments.no-show",
+                      "action":  "App\\Http\\Controllers\\AppointmentController@markNoShow",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "admin/appointments/{appointment}/start",
+                      "name":  "admin.appointments.start",
+                      "action":  "App\\Http\\Controllers\\AppointmentController@start",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "admin/bays",
+                      "name":  "admin.bays.index",
+                      "action":  "App\\Http\\Controllers\\BayController@index",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "admin/bays",
+                      "name":  "admin.bays.store",
+                      "action":  "App\\Http\\Controllers\\BayController@store",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "admin/bays/{bay}",
+                      "name":  "admin.bays.show",
+                      "action":  "App\\Http\\Controllers\\BayController@show",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "PUT|PATCH",
+                      "uri":  "admin/bays/{bay}",
+                      "name":  "admin.bays.update",
+                      "action":  "App\\Http\\Controllers\\BayController@update",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "DELETE",
+                      "uri":  "admin/bays/{bay}",
+                      "name":  "admin.bays.destroy",
+                      "action":  "App\\Http\\Controllers\\BayController@destroy",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "admin/bays/{bay}/activity-log",
+                      "name":  "admin.bays.activity-log",
+                      "action":  "App\\Http\\Controllers\\BayController@activityLog",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "PATCH",
+                      "uri":  "admin/bays/{bay}/status",
+                      "name":  "admin.bays.update-status",
+                      "action":  "App\\Http\\Controllers\\BayController@updateStatus",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "admin/branches",
+                      "name":  "admin.branches.index",
+                      "action":  "App\\Http\\Controllers\\BranchController@index",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "admin/branches",
+                      "name":  "admin.branches.store",
+                      "action":  "App\\Http\\Controllers\\BranchController@store",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "admin/branches/create",
+                      "name":  "admin.branches.create",
+                      "action":  "App\\Http\\Controllers\\BranchController@create",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "admin/branches/{branch}",
+                      "name":  "admin.branches.show",
+                      "action":  "App\\Http\\Controllers\\BranchController@show",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "PUT|PATCH",
+                      "uri":  "admin/branches/{branch}",
+                      "name":  "admin.branches.update",
+                      "action":  "App\\Http\\Controllers\\BranchController@update",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "DELETE",
+                      "uri":  "admin/branches/{branch}",
+                      "name":  "admin.branches.destroy",
+                      "action":  "App\\Http\\Controllers\\BranchController@destroy",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "admin/branches/{branch}/edit",
+                      "name":  "admin.branches.edit",
+                      "action":  "App\\Http\\Controllers\\BranchController@edit",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "admin/branches/{branch}/qrcode",
+                      "name":  "admin.branches.qrcode",
+                      "action":  "App\\Http\\Controllers\\BranchController@qrcode",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "admin/customers",
+                      "name":  "admin.customers.index",
+                      "action":  "App\\Http\\Controllers\\CustomerController@index",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "admin/customers",
+                      "name":  "admin.customers.store",
+                      "action":  "App\\Http\\Controllers\\CustomerController@store",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "admin/customers/{customer}",
+                      "name":  "admin.customers.show",
+                      "action":  "App\\Http\\Controllers\\CustomerController@show",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "PUT|PATCH",
+                      "uri":  "admin/customers/{customer}",
+                      "name":  "admin.customers.update",
+                      "action":  "App\\Http\\Controllers\\CustomerController@update",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "DELETE",
+                      "uri":  "admin/customers/{customer}",
+                      "name":  "admin.customers.destroy",
+                      "action":  "App\\Http\\Controllers\\CustomerController@destroy",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "admin/dashboard",
+                      "name":  "admin.dashboard",
+                      "action":  "App\\Http\\Controllers\\DashboardController@index",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "admin/inventory",
+                      "name":  "admin.inventory.index",
+                      "action":  "App\\Http\\Controllers\\InventoryController@index",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "admin/inventory",
+                      "name":  "admin.inventory.store",
+                      "action":  "App\\Http\\Controllers\\InventoryController@store",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "PUT|PATCH",
+                      "uri":  "admin/inventory/{inventory}",
+                      "name":  "admin.inventory.update",
+                      "action":  "App\\Http\\Controllers\\InventoryController@update",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "DELETE",
+                      "uri":  "admin/inventory/{inventory}",
+                      "name":  "admin.inventory.destroy",
+                      "action":  "App\\Http\\Controllers\\InventoryController@destroy",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "admin/packages",
+                      "name":  "admin.packages.index",
+                      "action":  "App\\Http\\Controllers\\PackageController@index",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "admin/packages",
+                      "name":  "admin.packages.store",
+                      "action":  "App\\Http\\Controllers\\PackageController@store",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "PUT|PATCH",
+                      "uri":  "admin/packages/{package}",
+                      "name":  "admin.packages.update",
+                      "action":  "App\\Http\\Controllers\\PackageController@update",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "DELETE",
+                      "uri":  "admin/packages/{package}",
+                      "name":  "admin.packages.destroy",
+                      "action":  "App\\Http\\Controllers\\PackageController@destroy",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "admin/queue",
+                      "name":  "admin.queue.index",
+                      "action":  "App\\Http\\Controllers\\QueueController@index",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "admin/queue",
+                      "name":  "admin.queue.store",
+                      "action":  "App\\Http\\Controllers\\QueueController@store",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "admin/queue-in-progress",
+                      "name":  "admin.queue.in-progress",
+                      "action":  "App\\Http\\Controllers\\QueueController@inProgress",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "admin/queue-view",
+                      "name":  "admin.queue.view",
+                      "action":  "App\\Http\\Controllers\\QueueController@viewQueue",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "admin/queue-waiting",
+                      "name":  "admin.queue.waiting",
+                      "action":  "App\\Http\\Controllers\\QueueController@waitingQueue",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "admin/queue/{queue}",
+                      "name":  "admin.queue.show",
+                      "action":  "App\\Http\\Controllers\\QueueController@show",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "PUT|PATCH",
+                      "uri":  "admin/queue/{queue}",
+                      "name":  "admin.queue.update",
+                      "action":  "App\\Http\\Controllers\\QueueController@update",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "DELETE",
+                      "uri":  "admin/queue/{queue}",
+                      "name":  "admin.queue.destroy",
+                      "action":  "App\\Http\\Controllers\\QueueController@destroy",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "admin/queue/{queue}/cancel",
+                      "name":  "admin.queue.cancel",
+                      "action":  "App\\Http\\Controllers\\QueueController@cancel",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "admin/queue/{queue}/confirm-payment",
+                      "name":  "admin.queue.confirm-payment",
+                      "action":  "App\\Http\\Controllers\\QueueController@confirmPayment",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "admin/queue/{queue}/start",
+                      "name":  "admin.queue.start",
+                      "action":  "App\\Http\\Controllers\\QueueController@start",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "admin/staff",
+                      "name":  "admin.staff.index",
+                      "action":  "App\\Http\\Controllers\\StaffController@index",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "admin/staff",
+                      "name":  "admin.staff.store",
+                      "action":  "App\\Http\\Controllers\\StaffController@store",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "PUT|PATCH",
+                      "uri":  "admin/staff/{staff}",
+                      "name":  "admin.staff.update",
+                      "action":  "App\\Http\\Controllers\\StaffController@update",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "DELETE",
+                      "uri":  "admin/staff/{staff}",
+                      "name":  "admin.staff.destroy",
+                      "action":  "App\\Http\\Controllers\\StaffController@destroy",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "admin/transactions",
+                      "name":  "admin.transactions.index",
+                      "action":  "App\\Http\\Controllers\\TransactionController@index",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "admin/wash/{wash}/cancel",
+                      "name":  "admin.wash.cancel",
+                      "action":  "App\\Http\\Controllers\\QueueController@cancelWash",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "admin/wash/{wash}/complete",
+                      "name":  "admin.wash.complete",
+                      "action":  "App\\Http\\Controllers\\QueueController@completeWash",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "admin/washes",
+                      "name":  "admin.washes.index",
+                      "action":  "App\\Http\\Controllers\\WashController@index",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "admin/washes",
+                      "name":  "admin.washes.store",
+                      "action":  "App\\Http\\Controllers\\WashController@store",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "admin/washes/{wash}",
+                      "name":  "admin.washes.show",
+                      "action":  "App\\Http\\Controllers\\WashController@show",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "PUT|PATCH",
+                      "uri":  "admin/washes/{wash}",
+                      "name":  "admin.washes.update",
+                      "action":  "App\\Http\\Controllers\\WashController@update",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "DELETE",
+                      "uri":  "admin/washes/{wash}",
+                      "name":  "admin.washes.destroy",
+                      "action":  "App\\Http\\Controllers\\WashController@destroy",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:admin"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "api/queue/my-position",
+                      "name":  "api.queue.my-position",
+                      "action":  "App\\Http\\Controllers\\Api\\ApiQueueController@myPosition",
+                      "middleware":  [
+                                         "api",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate:sanctum"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "api/queue/status/{branchCode}",
+                      "name":  "api.queue.branch-status",
+                      "action":  "App\\Http\\Controllers\\Api\\ApiQueueController@branchQueueStatus",
+                      "middleware":  [
+                                         "api"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "confirm-password",
+                      "name":  "password.confirm",
+                      "action":  "App\\Http\\Controllers\\Auth\\ConfirmablePasswordController@show",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "confirm-password",
+                      "name":  "generated::oofQ9yLebUcNyqP5",
+                      "action":  "App\\Http\\Controllers\\Auth\\ConfirmablePasswordController@store",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "customer/appointments",
+                      "name":  "customer.appointments.index",
+                      "action":  "App\\Http\\Controllers\\Customer\\CustomerAppointmentController@index",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:customer"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "customer/appointments",
+                      "name":  "customer.appointments.store",
+                      "action":  "App\\Http\\Controllers\\Customer\\CustomerAppointmentController@store",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:customer"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "customer/appointments/create",
+                      "name":  "customer.appointments.create",
+                      "action":  "App\\Http\\Controllers\\Customer\\CustomerAppointmentController@create",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:customer"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "customer/appointments/{appointment}",
+                      "name":  "customer.appointments.show",
+                      "action":  "App\\Http\\Controllers\\Customer\\CustomerAppointmentController@show",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:customer"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "PUT|PATCH",
+                      "uri":  "customer/appointments/{appointment}",
+                      "name":  "customer.appointments.update",
+                      "action":  "App\\Http\\Controllers\\Customer\\CustomerAppointmentController@update",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:customer"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "DELETE",
+                      "uri":  "customer/appointments/{appointment}",
+                      "name":  "customer.appointments.destroy",
+                      "action":  "App\\Http\\Controllers\\Customer\\CustomerAppointmentController@destroy",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:customer"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "customer/dashboard",
+                      "name":  "customer.dashboard",
+                      "action":  "App\\Http\\Controllers\\Customer\\CustomerDashboardController@index",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:customer"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "customer/history",
+                      "name":  "customer.history",
+                      "action":  "App\\Http\\Controllers\\Customer\\CustomerWashHistoryController@index",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:customer"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "customer/loyalty",
+                      "name":  "customer.loyalty",
+                      "action":  "App\\Http\\Controllers\\Customer\\CustomerLoyaltyController@index",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:customer"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "customer/loyalty/redeem",
+                      "name":  "customer.loyalty.redeem",
+                      "action":  "App\\Http\\Controllers\\Customer\\CustomerLoyaltyController@redeem",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:customer"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "email/verification-notification",
+                      "name":  "verification.send",
+                      "action":  "App\\Http\\Controllers\\Auth\\EmailVerificationNotificationController@store",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Routing\\Middleware\\ThrottleRequests:6,1"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "forgot-password",
+                      "name":  "password.request",
+                      "action":  "App\\Http\\Controllers\\Auth\\PasswordResetLinkController@create",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\RedirectIfAuthenticated"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "forgot-password",
+                      "name":  "password.email",
+                      "action":  "App\\Http\\Controllers\\Auth\\PasswordResetLinkController@store",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\RedirectIfAuthenticated"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "login",
+                      "name":  "login",
+                      "action":  "App\\Http\\Controllers\\Auth\\AuthenticatedSessionController@create",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\RedirectIfAuthenticated"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "login",
+                      "name":  "generated::wucrc6xFCbQkE7kv",
+                      "action":  "App\\Http\\Controllers\\Auth\\AuthenticatedSessionController@store",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\RedirectIfAuthenticated"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "logout",
+                      "name":  "logout",
+                      "action":  "App\\Http\\Controllers\\Auth\\AuthenticatedSessionController@destroy",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "manager/analytics/all-branches",
+                      "name":  "manager.analytics.all-branches",
+                      "action":  "App\\Http\\Controllers\\Manager\\ManagerDashboardController@allBranchesAnalytics",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "manager/appointments",
+                      "name":  "manager.appointments.index",
+                      "action":  "App\\Http\\Controllers\\AppointmentController@index",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "manager/appointments",
+                      "name":  "manager.appointments.store",
+                      "action":  "App\\Http\\Controllers\\AppointmentController@store",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "manager/appointments/create",
+                      "name":  "manager.appointments.create",
+                      "action":  "App\\Http\\Controllers\\AppointmentController@create",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "manager/appointments/{appointment}",
+                      "name":  "manager.appointments.show",
+                      "action":  "App\\Http\\Controllers\\AppointmentController@show",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "PUT|PATCH",
+                      "uri":  "manager/appointments/{appointment}",
+                      "name":  "manager.appointments.update",
+                      "action":  "App\\Http\\Controllers\\AppointmentController@update",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "DELETE",
+                      "uri":  "manager/appointments/{appointment}",
+                      "name":  "manager.appointments.destroy",
+                      "action":  "App\\Http\\Controllers\\AppointmentController@destroy",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "manager/appointments/{appointment}/complete",
+                      "name":  "manager.appointments.complete",
+                      "action":  "App\\Http\\Controllers\\AppointmentController@complete",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "manager/appointments/{appointment}/confirm",
+                      "name":  "manager.appointments.confirm",
+                      "action":  "App\\Http\\Controllers\\AppointmentController@confirm",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "manager/appointments/{appointment}/edit",
+                      "name":  "manager.appointments.edit",
+                      "action":  "App\\Http\\Controllers\\AppointmentController@edit",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "manager/appointments/{appointment}/no-show",
+                      "name":  "manager.appointments.no-show",
+                      "action":  "App\\Http\\Controllers\\AppointmentController@markNoShow",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "manager/appointments/{appointment}/start",
+                      "name":  "manager.appointments.start",
+                      "action":  "App\\Http\\Controllers\\AppointmentController@start",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "manager/bays",
+                      "name":  "manager.bays.index",
+                      "action":  "App\\Http\\Controllers\\BayController@index",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "manager/bays",
+                      "name":  "manager.bays.store",
+                      "action":  "App\\Http\\Controllers\\BayController@store",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "manager/bays/{bay}",
+                      "name":  "manager.bays.show",
+                      "action":  "App\\Http\\Controllers\\BayController@show",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "PUT|PATCH",
+                      "uri":  "manager/bays/{bay}",
+                      "name":  "manager.bays.update",
+                      "action":  "App\\Http\\Controllers\\BayController@update",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "DELETE",
+                      "uri":  "manager/bays/{bay}",
+                      "name":  "manager.bays.destroy",
+                      "action":  "App\\Http\\Controllers\\BayController@destroy",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "manager/bays/{bay}/activity-log",
+                      "name":  "manager.bays.activity-log",
+                      "action":  "App\\Http\\Controllers\\BayController@activityLog",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "PATCH",
+                      "uri":  "manager/bays/{bay}/status",
+                      "name":  "manager.bays.update-status",
+                      "action":  "App\\Http\\Controllers\\BayController@updateStatus",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "manager/customers",
+                      "name":  "manager.customers.index",
+                      "action":  "App\\Http\\Controllers\\CustomerController@index",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "manager/customers",
+                      "name":  "manager.customers.store",
+                      "action":  "App\\Http\\Controllers\\CustomerController@store",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "manager/customers/{customer}",
+                      "name":  "manager.customers.show",
+                      "action":  "App\\Http\\Controllers\\CustomerController@show",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "PUT|PATCH",
+                      "uri":  "manager/customers/{customer}",
+                      "name":  "manager.customers.update",
+                      "action":  "App\\Http\\Controllers\\CustomerController@update",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "DELETE",
+                      "uri":  "manager/customers/{customer}",
+                      "name":  "manager.customers.destroy",
+                      "action":  "App\\Http\\Controllers\\CustomerController@destroy",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "manager/dashboard",
+                      "name":  "manager.dashboard",
+                      "action":  "App\\Http\\Controllers\\Manager\\ManagerDashboardController@index",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "manager/inventory",
+                      "name":  "manager.inventory.index",
+                      "action":  "App\\Http\\Controllers\\InventoryController@index",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "manager/inventory",
+                      "name":  "manager.inventory.store",
+                      "action":  "App\\Http\\Controllers\\InventoryController@store",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "PUT|PATCH",
+                      "uri":  "manager/inventory/{inventory}",
+                      "name":  "manager.inventory.update",
+                      "action":  "App\\Http\\Controllers\\InventoryController@update",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "DELETE",
+                      "uri":  "manager/inventory/{inventory}",
+                      "name":  "manager.inventory.destroy",
+                      "action":  "App\\Http\\Controllers\\InventoryController@destroy",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "manager/packages",
+                      "name":  "manager.packages.index",
+                      "action":  "App\\Http\\Controllers\\PackageController@index",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "manager/packages",
+                      "name":  "manager.packages.store",
+                      "action":  "App\\Http\\Controllers\\PackageController@store",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "PUT|PATCH",
+                      "uri":  "manager/packages/{package}",
+                      "name":  "manager.packages.update",
+                      "action":  "App\\Http\\Controllers\\PackageController@update",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "DELETE",
+                      "uri":  "manager/packages/{package}",
+                      "name":  "manager.packages.destroy",
+                      "action":  "App\\Http\\Controllers\\PackageController@destroy",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "manager/queue",
+                      "name":  "manager.queue.index",
+                      "action":  "App\\Http\\Controllers\\QueueController@index",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "manager/queue",
+                      "name":  "manager.queue.store",
+                      "action":  "App\\Http\\Controllers\\QueueController@store",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "manager/queue-in-progress",
+                      "name":  "manager.queue.in-progress",
+                      "action":  "App\\Http\\Controllers\\QueueController@inProgress",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "manager/queue-view",
+                      "name":  "manager.queue.view",
+                      "action":  "App\\Http\\Controllers\\QueueController@viewQueue",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "manager/queue-waiting",
+                      "name":  "manager.queue.waiting",
+                      "action":  "App\\Http\\Controllers\\QueueController@waitingQueue",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "manager/queue/{queue}",
+                      "name":  "manager.queue.show",
+                      "action":  "App\\Http\\Controllers\\QueueController@show",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "PUT|PATCH",
+                      "uri":  "manager/queue/{queue}",
+                      "name":  "manager.queue.update",
+                      "action":  "App\\Http\\Controllers\\QueueController@update",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "DELETE",
+                      "uri":  "manager/queue/{queue}",
+                      "name":  "manager.queue.destroy",
+                      "action":  "App\\Http\\Controllers\\QueueController@destroy",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "manager/queue/{queue}/cancel",
+                      "name":  "manager.queue.cancel",
+                      "action":  "App\\Http\\Controllers\\QueueController@cancel",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "manager/queue/{queue}/confirm-payment",
+                      "name":  "manager.queue.confirm-payment",
+                      "action":  "App\\Http\\Controllers\\QueueController@confirmPayment",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "manager/queue/{queue}/start",
+                      "name":  "manager.queue.start",
+                      "action":  "App\\Http\\Controllers\\QueueController@start",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "manager/reports",
+                      "name":  "manager.reports",
+                      "action":  "App\\Http\\Controllers\\Manager\\ManagerDashboardController@reports",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "manager/staff",
+                      "name":  "manager.staff.index",
+                      "action":  "App\\Http\\Controllers\\StaffController@index",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "manager/staff",
+                      "name":  "manager.staff.store",
+                      "action":  "App\\Http\\Controllers\\StaffController@store",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "PUT|PATCH",
+                      "uri":  "manager/staff/{staff}",
+                      "name":  "manager.staff.update",
+                      "action":  "App\\Http\\Controllers\\StaffController@update",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "DELETE",
+                      "uri":  "manager/staff/{staff}",
+                      "name":  "manager.staff.destroy",
+                      "action":  "App\\Http\\Controllers\\StaffController@destroy",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "manager/transactions",
+                      "name":  "manager.transactions.index",
+                      "action":  "App\\Http\\Controllers\\TransactionController@index",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "manager/wash/{wash}/cancel",
+                      "name":  "manager.wash.cancel",
+                      "action":  "App\\Http\\Controllers\\QueueController@cancelWash",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "manager/wash/{wash}/complete",
+                      "name":  "manager.wash.complete",
+                      "action":  "App\\Http\\Controllers\\QueueController@completeWash",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "manager/washes",
+                      "name":  "manager.washes.index",
+                      "action":  "App\\Http\\Controllers\\WashController@index",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "manager/washes",
+                      "name":  "manager.washes.store",
+                      "action":  "App\\Http\\Controllers\\WashController@store",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "manager/washes/{wash}",
+                      "name":  "manager.washes.show",
+                      "action":  "App\\Http\\Controllers\\WashController@show",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "PUT|PATCH",
+                      "uri":  "manager/washes/{wash}",
+                      "name":  "manager.washes.update",
+                      "action":  "App\\Http\\Controllers\\WashController@update",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "DELETE",
+                      "uri":  "manager/washes/{wash}",
+                      "name":  "manager.washes.destroy",
+                      "action":  "App\\Http\\Controllers\\WashController@destroy",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:manager",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "notifications",
+                      "name":  "notifications.index",
+                      "action":  "App\\Http\\Controllers\\NotificationController@index",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "notifications/read-all",
+                      "name":  "notifications.mark-all-as-read",
+                      "action":  "App\\Http\\Controllers\\NotificationController@markAllAsRead",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "DELETE",
+                      "uri":  "notifications/{notification}",
+                      "name":  "notifications.destroy",
+                      "action":  "App\\Http\\Controllers\\NotificationController@destroy",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "PATCH",
+                      "uri":  "notifications/{notification}/read",
+                      "name":  "notifications.mark-as-read",
+                      "action":  "App\\Http\\Controllers\\NotificationController@markAsRead",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "PUT",
+                      "uri":  "password",
+                      "name":  "password.update",
+                      "action":  "App\\Http\\Controllers\\Auth\\PasswordController@update",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "profile",
+                      "name":  "profile.edit",
+                      "action":  "App\\Http\\Controllers\\ProfileController@edit",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "PATCH",
+                      "uri":  "profile",
+                      "name":  "profile.update",
+                      "action":  "App\\Http\\Controllers\\ProfileController@update",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "DELETE",
+                      "uri":  "profile",
+                      "name":  "profile.destroy",
+                      "action":  "App\\Http\\Controllers\\ProfileController@destroy",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "queue/join/{branchCode}",
+                      "name":  "queue.join",
+                      "action":  "App\\Http\\Controllers\\PublicQueueController@join",
+                      "middleware":  [
+                                         "web"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "queue/join/{branchCode}",
+                      "name":  "queue.submit",
+                      "action":  "App\\Http\\Controllers\\PublicQueueController@submitJoin",
+                      "middleware":  [
+                                         "web"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "queue/status/{branchCode}/{queueId}",
+                      "name":  "queue.status",
+                      "action":  "App\\Http\\Controllers\\PublicQueueController@status",
+                      "middleware":  [
+                                         "web"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "register",
+                      "name":  "register",
+                      "action":  "App\\Http\\Controllers\\Auth\\RegisteredUserController@create",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\RedirectIfAuthenticated"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "register",
+                      "name":  "generated::5WByyABmyoXNWYMi",
+                      "action":  "App\\Http\\Controllers\\Auth\\RegisteredUserController@store",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\RedirectIfAuthenticated"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "reset-password",
+                      "name":  "password.store",
+                      "action":  "App\\Http\\Controllers\\Auth\\NewPasswordController@store",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\RedirectIfAuthenticated"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "reset-password/{token}",
+                      "name":  "password.reset",
+                      "action":  "App\\Http\\Controllers\\Auth\\NewPasswordController@create",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\RedirectIfAuthenticated"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "sanctum/csrf-cookie",
+                      "name":  "sanctum.csrf-cookie",
+                      "action":  "Laravel\\Sanctum\\Http\\Controllers\\CsrfCookieController@show",
+                      "middleware":  [
+                                         "web"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "staff/appointments",
+                      "name":  "staff.appointments.index",
+                      "action":  "App\\Http\\Controllers\\AppointmentController@index",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:staff",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "staff/appointments/{appointment}",
+                      "name":  "staff.appointments.show",
+                      "action":  "App\\Http\\Controllers\\AppointmentController@show",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:staff",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "staff/appointments/{appointment}/complete",
+                      "name":  "staff.appointments.complete",
+                      "action":  "App\\Http\\Controllers\\AppointmentController@complete",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:staff",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "staff/appointments/{appointment}/start",
+                      "name":  "staff.appointments.start",
+                      "action":  "App\\Http\\Controllers\\AppointmentController@start",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:staff",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "staff/bays",
+                      "name":  "staff.bays.index",
+                      "action":  "App\\Http\\Controllers\\BayController@index",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:staff",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "PUT|PATCH",
+                      "uri":  "staff/bays/{bay}",
+                      "name":  "staff.bays.update",
+                      "action":  "App\\Http\\Controllers\\BayController@update",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:staff",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "PATCH",
+                      "uri":  "staff/bays/{bay}/status",
+                      "name":  "staff.bays.update-status",
+                      "action":  "App\\Http\\Controllers\\BayController@updateStatus",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:staff",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "staff/customers",
+                      "name":  "staff.customers.index",
+                      "action":  "App\\Http\\Controllers\\CustomerController@index",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:staff",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "staff/customers/{customer}",
+                      "name":  "staff.customers.show",
+                      "action":  "App\\Http\\Controllers\\CustomerController@show",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:staff",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "staff/dashboard",
+                      "name":  "staff.dashboard",
+                      "action":  "App\\Http\\Controllers\\Staff\\StaffDashboardController@index",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:staff",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "staff/inventory",
+                      "name":  "staff.inventory.index",
+                      "action":  "App\\Http\\Controllers\\InventoryController@index",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:staff",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "staff/queue",
+                      "name":  "staff.queue.index",
+                      "action":  "App\\Http\\Controllers\\QueueController@index",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:staff",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "staff/queue/{queue}",
+                      "name":  "staff.queue.show",
+                      "action":  "App\\Http\\Controllers\\QueueController@show",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:staff",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "staff/queue/{queue}/cancel",
+                      "name":  "staff.queue.cancel",
+                      "action":  "App\\Http\\Controllers\\QueueController@cancel",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:staff",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "staff/queue/{queue}/confirm-payment",
+                      "name":  "staff.queue.confirm-payment",
+                      "action":  "App\\Http\\Controllers\\QueueController@confirmPayment",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:staff",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "staff/queue/{queue}/start",
+                      "name":  "staff.queue.start",
+                      "action":  "App\\Http\\Controllers\\QueueController@start",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:staff",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "staff/wash/{wash}/cancel",
+                      "name":  "staff.wash.cancel",
+                      "action":  "App\\Http\\Controllers\\QueueController@cancelWash",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:staff",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "POST",
+                      "uri":  "staff/wash/{wash}/complete",
+                      "name":  "staff.wash.complete",
+                      "action":  "App\\Http\\Controllers\\QueueController@completeWash",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified",
+                                         "App\\Http\\Middleware\\EnsureUserHasRole:staff",
+                                         "App\\Http\\Middleware\\EnsureBranchAccess"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "storage/{path}",
+                      "name":  "storage.local",
+                      "action":  "Closure",
+                      "middleware":  [
+
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "up",
+                      "name":  "generated::3xzACzXfYCAv7gkO",
+                      "action":  "Closure",
+                      "middleware":  [
+
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "verify-email",
+                      "name":  "verification.notice",
+                      "action":  "App\\Http\\Controllers\\Auth\\EmailVerificationPromptController",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate"
+                                     ]
+                  },
+                  {
+                      "domain":  null,
+                      "method":  "GET|HEAD",
+                      "uri":  "verify-email/{id}/{hash}",
+                      "name":  "verification.verify",
+                      "action":  "App\\Http\\Controllers\\Auth\\VerifyEmailController",
+                      "middleware":  [
+                                         "web",
+                                         "Illuminate\\Auth\\Middleware\\Authenticate",
+                                         "Illuminate\\Routing\\Middleware\\ValidateSignature",
+                                         "Illuminate\\Routing\\Middleware\\ThrottleRequests:6,1"
+                                     ]
+                  }
+              ],
+    "Count":  180
+}

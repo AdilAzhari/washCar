@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { Head, router } from '@inertiajs/vue3'
+import { Head, router, usePage } from '@inertiajs/vue3'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import BayFormModal from '@/Components/Bay/BayFormModal.vue'
 import BayStatusCard from '@/Components/Dashboard/BayStatusCard.vue'
@@ -36,6 +36,13 @@ const bayToDelete = ref<Bay | null>(null)
 const isDeleting = ref(false)
 const filterStatus = ref<string>('all')
 
+const page = usePage()
+const userRole = computed(() => (page.props.auth as any)?.user?.role || 'admin')
+
+const getRouteName = (routeName: string) => {
+  return `${userRole.value}.${routeName}`
+}
+
 const stats = computed(() => ({
   totalBays: props.bays.length,
   idle: props.bays.filter(b => b.status === 'idle').length,
@@ -64,7 +71,7 @@ const handleDelete = (bayId: number) => {
 const handleDeleteConfirm = () => {
   if (bayToDelete.value) {
     isDeleting.value = true
-    router.delete(route('bays.destroy', bayToDelete.value.id), {
+    router.delete(route(getRouteName('bays.destroy'), bayToDelete.value.id), {
       onSuccess: () => {
         deleteDialogOpen.value = false
         bayToDelete.value = null
@@ -82,7 +89,7 @@ const openCreateModal = () => {
 }
 
 const updateStatus = (bayId: number, status: string) => {
-  router.patch(route('bays.update-status', bayId), { status }, {
+  router.patch(route(getRouteName('bays.update-status'), bayId), { status }, {
     preserveScroll: true,
   })
 }

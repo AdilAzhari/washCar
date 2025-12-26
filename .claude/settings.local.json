@@ -34,7 +34,10 @@
       "Bash(find:*)",
       "Bash(test:*)",
       "Bash(xargs:*)",
-      "mcp__laravel-boost__search-docs"
+      "mcp__laravel-boost__search-docs",
+      "Bash(git log:*)",
+      "Bash(grep:*)",
+      "Bash(ls:*)"
     ]
   },
   "enableAllProjectMcpServers": true,
