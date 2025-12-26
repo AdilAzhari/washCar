@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Feature;
 
-use App\Models\Branch;
 use App\Models\Bay;
+use App\Models\Branch;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -50,7 +50,7 @@ final class BayRoleRouteTest extends TestCase
         $manager = User::factory()->create([
             'role' => 'manager',
             'branch_id' => $this->branch->id,
-            'email_verified_at' => now()
+            'email_verified_at' => now(),
         ]);
         $bay = Bay::create(['name' => 'Bay 2', 'branch_id' => $this->branch->id, 'status' => 'idle']);
 
@@ -72,7 +72,7 @@ final class BayRoleRouteTest extends TestCase
         $staff = User::factory()->create([
             'role' => 'staff',
             'branch_id' => $this->branch->id,
-            'email_verified_at' => now()
+            'email_verified_at' => now(),
         ]);
         $bay = Bay::create(['name' => 'Bay 3', 'branch_id' => $this->branch->id, 'status' => 'idle']);
 
