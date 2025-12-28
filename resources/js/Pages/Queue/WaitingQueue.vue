@@ -4,7 +4,7 @@ import { Head, router, Link, usePage } from '@inertiajs/vue3'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import ManagerLayout from '@/Layouts/ManagerLayout.vue'
 import StaffLayout from '@/Layouts/StaffLayout.vue'
-import { Card, CardContent, CardHeader, CardTitle, Badge, Button } from '@/Components/ui'
+import { Card, CardContent, Badge, Button } from '@/Components/ui'
 import { Play, X, Clock, CheckCircle, ArrowRight } from 'lucide-vue-next'
 
 interface QueueEntry {
@@ -52,9 +52,7 @@ const getRouteName = (routeName: string) => {
 }
 
 const startWash = (queueId: number) => {
-  router.post(route(getRouteName('queue.start'), queueId), {}, {
-    preserveScroll: true
-  })
+  router.post(route(getRouteName('queue.start'), queueId))
 }
 
 const cancelQueue = (queueId: number) => {

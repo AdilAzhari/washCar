@@ -13,11 +13,11 @@ interface Wash {
   customer?: { id: number; name: string }
   package?: { id: number; name: string; duration_minutes: number; price: number }
   bay: { id: number; name: string }
-  plate_number?: string
   status: string
   started_at: string
   queue_entry: {
     id: number
+    plate_number: string
     payment_status: string
   } | null
 }
@@ -142,8 +142,10 @@ const getProgress = (wash: Wash) => {
                 <div class="space-y-3">
                   <div class="flex items-start justify-between">
                     <div>
-                      <p class="font-semibold text-lg">{{ wash.customer?.name || 'Walk-in' }}</p>
-                      <p class="text-sm text-muted-foreground">{{ wash.branch.name }}</p>
+                      <p class="font-semibold text-lg">{{ wash.queue_entry?.plate_number || 'N/A' }}</p>
+                      <p class="text-sm text-muted-foreground">
+                        {{ wash.customer?.name || 'Walk-in' }} • {{ wash.branch.name }}
+                      </p>
                       <Badge variant="outline" class="mt-2">
                         Bay {{ wash.bay.name }}
                       </Badge>

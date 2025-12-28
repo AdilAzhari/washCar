@@ -124,7 +124,7 @@ final class QueueController extends Controller
         ]);
     }
 
-    public function start(QueueEntry $queue): RedirectResponse
+    public function start(Request $request, QueueEntry $queue): RedirectResponse
     {
         // Check payment status and package
         if ($queue->payment_status !== 'paid') {
@@ -164,7 +164,15 @@ final class QueueController extends Controller
         // Update bay status
         $bay->update(['status' => 'active']);
 
-        return back()->with('success', 'Wash started successfully.');
+        // Determine the correct route to redirect to based on user role
+        $user = $request->user();
+        $routePrefix = match ($user->role) {
+            'manager' => 'manager',
+            'staff' => 'staff',
+            default => 'admin',
+        };
+
+        return redirect()->route("{$routePrefix}.queue.waiting")->with('success', 'Wash started successfully.');
     }
 
     public function cancel(QueueEntry $queue): RedirectResponse
